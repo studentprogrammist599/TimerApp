@@ -17,7 +17,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val workManager = WorkManager.getInstance(requireContext())
+        val workManager = WorkManager.getInstance(requireContext().applicationContext)
         workManager.enqueueUniqueWork(
             TimerWorker.TIMER_WORKER_NAME,
             ExistingWorkPolicy.REPLACE,
