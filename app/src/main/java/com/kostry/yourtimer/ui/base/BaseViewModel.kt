@@ -16,7 +16,7 @@ private const val COROUTINE_EXCEPTION_HANDLER = "COROUTINE_EXCEPTION_HANDLER"
 
 abstract class BaseViewModel : ViewModel() {
 
-    protected val mutableStateFlow = MutableStateFlow<AppState>(AppState.Loading)
+    protected val mutableStateFlow = MutableStateFlow<Long>(0)
     val stateFlow = mutableStateFlow.asStateFlow()
 
     @SuppressLint("LongLogTag")

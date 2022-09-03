@@ -9,5 +9,18 @@
         android:id="@+id/homeFragment"
         android:name="com.kostry.yourtimer.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_timerFragment"
+            app:destination="@id/timerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/timerFragment"
+        android:name="com.kostry.yourtimer.ui.timer.TimerFragment"
+        android:label="fragment_timer"
+        tools:layout="@layout/fragment_timer" >
+        <argument
+            android:name="millis"
+            app:argType="long" />
+    </fragment>
 </navigation>

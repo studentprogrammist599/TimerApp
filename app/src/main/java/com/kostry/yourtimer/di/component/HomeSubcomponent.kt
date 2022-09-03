@@ -9,5 +9,6 @@ import dagger.Subcomponent
 @Subcomponent(modules = [HomeModule::class])
 interface HomeSubcomponent {
 
+    fun provideTimerSubcomponent(): TimerSubcomponent
     fun inject(homeFragment: HomeFragment)
 }
