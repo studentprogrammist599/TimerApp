@@ -1,5 +1,6 @@
 package com.kostry.yourtimer.ui.base
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,6 +19,7 @@ abstract class BaseViewModel : ViewModel() {
     protected val mutableStateFlow = MutableStateFlow<AppState>(AppState.Loading)
     val stateFlow = mutableStateFlow.asStateFlow()
 
+    @SuppressLint("LongLogTag")
     private val coroutineContext =
         SupervisorJob() + Dispatchers.Main.immediate + CoroutineExceptionHandler { _, throwable ->
             Log.e(COROUTINE_EXCEPTION_HANDLER, throwable.message.toString())

@@ -1,0 +1,8 @@
+package com.kostry.yourtimer.ui.home
+
+import com.kostry.yourtimer.ui.base.BaseViewModel
+import javax.inject.Inject
+
+class HomeViewModel @Inject constructor() : BaseViewModel() {
+
+}
