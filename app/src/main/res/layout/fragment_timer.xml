@@ -10,19 +10,19 @@
         android:id="@+id/timer_fragment_timer_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="0000000" />
 
     <Button
         android:id="@+id/timer_fragment_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="start"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        tools:text="start" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

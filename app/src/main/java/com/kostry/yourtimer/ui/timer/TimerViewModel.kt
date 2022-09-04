@@ -9,8 +9,6 @@ class TimerViewModel @Inject constructor(
     private val timerSubcomponentProvider: TimerSubcomponentProvider,
 ) : BaseViewModel() {
 
-    private var timer: CountDownTimer? = null
-
     fun startTimer(millis: Long) {
         if (timer == null) {
             timer = object : CountDownTimer(millis, 1000) {
@@ -26,9 +24,11 @@ class TimerViewModel @Inject constructor(
     }
 
     fun pauseTimer(millis: Long) {
-        mutableStateFlow.value = TimerState.Paused(millis)
-        timer?.cancel()
-        timer = null
+        if (timer != null) {
+            mutableStateFlow.value = TimerState.Paused(millis)
+            timer?.cancel()
+            timer = null
+        }
     }
 
     override fun onCleared() {
