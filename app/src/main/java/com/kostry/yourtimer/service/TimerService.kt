@@ -5,16 +5,11 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.kostry.yourtimer.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class TimerService : Service() {
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
@@ -28,8 +23,9 @@ class TimerService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         log("onStartCommand")
+        val startMillis: Long = intent?.getLongExtra(START_MILLIS, 0) ?: 0
         coroutineScope.launch {
-            for (i in 0..100) {
+            for (i in startMillis..startMillis + 100) {
                 delay(1000)
                 log("Timer $i")
             }
@@ -44,9 +40,7 @@ class TimerService : Service() {
         log("onDestroy")
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
-        TODO("Not yet implemented")
-    }
+    override fun onBind(intent: Intent?): IBinder? = null
 
     private fun log(message: String) {
         Log.d("SERVICE_TAG", "MyForegroundService: $message")
@@ -54,30 +48,30 @@ class TimerService : Service() {
 
     private fun createNotificationChannel() {
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            notificationManager.createNotificationChannel(notificationChannel)
-        }
+        val notificationChannel = NotificationChannel(
+            NOTIFICATION_CHANNEL_ID,
+            NOTIFICATION_CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        notificationManager.createNotificationChannel(notificationChannel)
     }
 
-    private fun createNotification() = NotificationCompat.Builder(this, CHANNEL_ID)
-        .setContentTitle("Title")
+    private fun createNotification() = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
         .setContentText("Text")
         .setSmallIcon(R.drawable.ic_launcher_background)
         .build()
 
     companion object {
 
-        private const val CHANNEL_ID = "channel_id"
-        private const val CHANNEL_NAME = "channel_name"
+        private const val START_MILLIS = "START_MILLIS"
+        private const val NOTIFICATION_CHANNEL_ID = "NOTIFICATION_CHANNEL_ID"
+        private const val NOTIFICATION_CHANNEL_NAME = "NOTIFICATION_CHANNEL_NAME"
         private const val NOTIFICATION_ID = 1
 
-        fun newIntent(context: Context): Intent {
-            return Intent(context, TimerService::class.java)
+        fun newIntent(context: Context, startMillis: Long): Intent {
+            return Intent(context, TimerService::class.java).apply {
+                putExtra(START_MILLIS, startMillis)
+            }
         }
     }
 }

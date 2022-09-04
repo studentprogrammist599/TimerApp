@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         ContextCompat.startForegroundService(
             this,
-            TimerService.newIntent(this)
+            TimerService.newIntent(this, 25)
         )
     }
 }
