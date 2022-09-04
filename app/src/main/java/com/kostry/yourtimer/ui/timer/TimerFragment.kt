@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kostry.yourtimer.databinding.FragmentTimerBinding
 import com.kostry.yourtimer.ui.base.BaseFragment
@@ -57,9 +58,16 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                             .mapStringFormatTimeToMillis()
                     )
                 }
+                is TimerState.Finished -> {
+                    navigationBackStack()
+                }
                 else -> {}
             }
         }
+    }
+
+    private fun navigationBackStack() {
+        findNavController().popBackStack()
     }
 
     private fun initTimerState() {
@@ -74,6 +82,10 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                         is TimerState.Paused -> {
                             setTextOnButton("start")
                             setTimeOnView(it.millis.millisToStringFormat())
+                        }
+                        is TimerState.Finished -> {
+                            setTextOnButton("Back")
+                            setTimeOnView("Finished")
                         }
                         else -> {}
                     }

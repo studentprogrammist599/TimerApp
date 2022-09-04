@@ -12,17 +12,20 @@ class TimerViewModel @Inject constructor(
     private var timer: CountDownTimer? = null
 
     fun startTimer(millis: Long) {
-        if (timer == null){
-            timer = object : CountDownTimer(millis, 1000){
+        if (timer == null) {
+            timer = object : CountDownTimer(millis, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     mutableStateFlow.value = TimerState.Running(millisUntilFinished)
                 }
-                override fun onFinish() {}
+
+                override fun onFinish() {
+                    mutableStateFlow.value = TimerState.Finished
+                }
             }.start()
         }
     }
 
-    fun pauseTimer(millis: Long){
+    fun pauseTimer(millis: Long) {
         mutableStateFlow.value = TimerState.Paused(millis)
         timer?.cancel()
         timer = null
