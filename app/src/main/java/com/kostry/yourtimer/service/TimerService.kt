@@ -1,14 +1,14 @@
 package com.kostry.yourtimer.service
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.kostry.yourtimer.R
+import com.kostry.yourtimer.ui.mainactivity.MainActivity.Companion.NOTIFICATION_CHANNEL_ID
 import kotlinx.coroutines.*
 
 class TimerService : Service() {
@@ -17,8 +17,7 @@ class TimerService : Service() {
     override fun onCreate() {
         super.onCreate()
         log("onCreate")
-        createNotificationChannel()
-        startForeground(NOTIFICATION_ID, createNotification())
+        startForeground(NOTIFICATION_ID, createNotification("0"))
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -28,6 +27,9 @@ class TimerService : Service() {
             for (i in startMillis..startMillis + 100) {
                 delay(1000)
                 log("Timer $i")
+                NotificationManagerCompat
+                    .from(this@TimerService)
+                    .notify(NOTIFICATION_ID, createNotification(i.toString()))
             }
             stopSelf()
         }
@@ -46,27 +48,14 @@ class TimerService : Service() {
         Log.d("SERVICE_TAG", "MyForegroundService: $message")
     }
 
-    private fun createNotificationChannel() {
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        val notificationChannel = NotificationChannel(
-            NOTIFICATION_CHANNEL_ID,
-            NOTIFICATION_CHANNEL_NAME,
-            NotificationManager.IMPORTANCE_DEFAULT
-        )
-        notificationManager.createNotificationChannel(notificationChannel)
-    }
-
-    private fun createNotification() = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-        .setContentText("Text")
+    private fun createNotification(time: String) = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+        .setContentText(time)
         .setSmallIcon(R.drawable.ic_launcher_background)
         .build()
 
     companion object {
-
-        private const val START_MILLIS = "START_MILLIS"
-        private const val NOTIFICATION_CHANNEL_ID = "NOTIFICATION_CHANNEL_ID"
-        private const val NOTIFICATION_CHANNEL_NAME = "NOTIFICATION_CHANNEL_NAME"
         private const val NOTIFICATION_ID = 1
+        private const val START_MILLIS = "START_MILLIS"
 
         fun newIntent(context: Context, startMillis: Long): Intent {
             return Intent(context, TimerService::class.java).apply {
