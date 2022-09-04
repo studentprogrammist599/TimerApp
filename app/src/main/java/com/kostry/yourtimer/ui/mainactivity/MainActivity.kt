@@ -2,22 +2,23 @@ package com.kostry.yourtimer.ui.mainactivity
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.work.ExistingWorkPolicy
+import androidx.work.WorkManager
 import com.kostry.yourtimer.R
-import com.kostry.yourtimer.service.TimerService
-import com.kostry.yourtimer.ui.home.HomeFragment
+import com.kostry.yourtimer.service.TimerWorker
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         createNotificationChannel()
-        ContextCompat.startForegroundService(
-            this,
-            TimerService.newIntent(this, 25)
+        val workManager = WorkManager.getInstance(applicationContext)
+        workManager.enqueueUniqueWork(
+            TimerWorker.TIMER_WORKER_NAME,
+            ExistingWorkPolicy.KEEP,
+            TimerWorker.makeRequest(25)
         )
     }
 
