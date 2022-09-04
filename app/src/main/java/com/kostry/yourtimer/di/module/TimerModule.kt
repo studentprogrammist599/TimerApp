@@ -2,12 +2,9 @@ package com.kostry.yourtimer.di.module
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
-import com.kostry.yourtimer.di.annotation.HomeScope
 import com.kostry.yourtimer.di.annotation.TimerScope
 import com.kostry.yourtimer.di.annotation.ViewModelKey
-import com.kostry.yourtimer.ui.home.HomeSubcomponentProvider
-import com.kostry.yourtimer.ui.home.HomeViewModel
-import com.kostry.yourtimer.ui.timer.TimerSubcomponentProvider
+import com.kostry.yourtimer.di.provider.TimerSubcomponentProvider
 import com.kostry.yourtimer.ui.timer.TimerViewModel
 import dagger.Binds
 import dagger.Module

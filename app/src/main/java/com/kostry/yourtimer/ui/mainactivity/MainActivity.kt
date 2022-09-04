@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.kostry.yourtimer.R
+import com.kostry.yourtimer.di.provider.AppComponentProvider
 import com.kostry.yourtimer.service.TimerService
 import com.kostry.yourtimer.util.sharedpref.SharedPrefsRepository
 import javax.inject.Inject

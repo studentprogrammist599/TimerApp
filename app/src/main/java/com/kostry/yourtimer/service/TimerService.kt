@@ -10,7 +10,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.kostry.yourtimer.R
-import com.kostry.yourtimer.ui.mainactivity.AppComponentProvider
+import com.kostry.yourtimer.di.provider.AppComponentProvider
 import com.kostry.yourtimer.ui.mainactivity.MainActivity
 import com.kostry.yourtimer.ui.mainactivity.MainActivity.Companion.NOTIFICATION_CHANNEL_ID
 import com.kostry.yourtimer.util.sharedpref.SharedPrefsRepository

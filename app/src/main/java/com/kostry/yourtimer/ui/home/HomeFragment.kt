@@ -4,17 +4,13 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.kostry.yourtimer.databinding.FragmentHomeBinding
+import com.kostry.yourtimer.di.provider.HomeSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.util.ViewModelFactory
 import com.kostry.yourtimer.util.mapTimeToMillis
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {

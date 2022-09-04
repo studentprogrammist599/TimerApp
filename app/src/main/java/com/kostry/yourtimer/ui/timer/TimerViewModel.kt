@@ -1,6 +1,7 @@
 package com.kostry.yourtimer.ui.timer
 
 import android.os.CountDownTimer
+import com.kostry.yourtimer.di.provider.TimerSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseViewModel
 import com.kostry.yourtimer.util.TimerState
 import javax.inject.Inject

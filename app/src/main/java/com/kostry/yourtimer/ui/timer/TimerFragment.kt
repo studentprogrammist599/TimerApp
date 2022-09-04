@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.FragmentTimerBinding
+import com.kostry.yourtimer.di.provider.TimerSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.util.TimerState
 import com.kostry.yourtimer.util.ViewModelFactory

@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import com.kostry.yourtimer.di.annotation.HomeScope
 import com.kostry.yourtimer.di.annotation.ViewModelKey
-import com.kostry.yourtimer.ui.home.HomeSubcomponentProvider
+import com.kostry.yourtimer.di.provider.HomeSubcomponentProvider
 import com.kostry.yourtimer.ui.home.HomeViewModel
 import dagger.Binds
 import dagger.Module
@@ -26,7 +26,7 @@ interface HomeModule {
         @Provides
         fun provideHomeSubcomponentProvider(
             application: Application
-        ): HomeSubcomponentProvider{
+        ): HomeSubcomponentProvider {
             return (application as HomeSubcomponentProvider)
         }
     }

@@ -1,4 +1,4 @@
-package com.kostry.yourtimer.ui.home
+package com.kostry.yourtimer.di.provider
 
 import com.kostry.yourtimer.di.component.HomeSubcomponent
 
