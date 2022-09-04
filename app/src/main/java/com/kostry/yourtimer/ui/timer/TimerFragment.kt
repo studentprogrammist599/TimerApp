@@ -15,12 +15,16 @@ import com.kostry.yourtimer.util.TimerState
 import com.kostry.yourtimer.util.ViewModelFactory
 import com.kostry.yourtimer.util.mapStringFormatTimeToMillis
 import com.kostry.yourtimer.util.millisToStringFormat
+import com.kostry.yourtimer.util.sharedpref.SharedPrefsRepository
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 class TimerFragment : BaseFragment<FragmentTimerBinding>() {
 
     private val args by navArgs<TimerFragmentArgs>()
+
+    @Inject
+    lateinit var sharedPrefsRepository: SharedPrefsRepository
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory

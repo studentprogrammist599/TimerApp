@@ -7,9 +7,10 @@ import com.kostry.yourtimer.di.component.HomeSubcomponent
 import com.kostry.yourtimer.di.component.TimerSubcomponent
 import com.kostry.yourtimer.di.module.AppModule
 import com.kostry.yourtimer.ui.home.HomeSubcomponentProvider
+import com.kostry.yourtimer.ui.mainactivity.AppComponentProvider
 import com.kostry.yourtimer.ui.timer.TimerSubcomponentProvider
 
-class App : Application(), HomeSubcomponentProvider, TimerSubcomponentProvider {
+class App : Application(), AppComponentProvider, HomeSubcomponentProvider, TimerSubcomponentProvider {
 
     private val appComponent: AppComponent by lazy {
         DaggerAppComponent.builder()
@@ -19,6 +20,10 @@ class App : Application(), HomeSubcomponentProvider, TimerSubcomponentProvider {
 
     private var homeSubcomponent: HomeSubcomponent? = null
     private var timerSubcomponent: TimerSubcomponent? = null
+
+    override fun provideAppComponent(): AppComponent {
+        return appComponent
+    }
 
     override fun initHomeSubcomponent() = appComponent
         .provideHomeSubcomponent()

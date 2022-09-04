@@ -10,14 +10,24 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.kostry.yourtimer.R
+import com.kostry.yourtimer.ui.mainactivity.AppComponentProvider
 import com.kostry.yourtimer.ui.mainactivity.MainActivity
 import com.kostry.yourtimer.ui.mainactivity.MainActivity.Companion.NOTIFICATION_CHANNEL_ID
+import com.kostry.yourtimer.util.sharedpref.SharedPrefsRepository
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
 class TimerService : Service() {
+
+    @Inject
+    lateinit var sharedPrefsRepository: SharedPrefsRepository
+
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate() {
+        (application as AppComponentProvider)
+            .provideAppComponent()
+            .inject(this)
         super.onCreate()
         log("onCreate")
         startForeground(NOTIFICATION_ID, createNotification("0"))
@@ -27,7 +37,7 @@ class TimerService : Service() {
         log("onStartCommand")
         val startMillis: Long = intent?.getLongExtra(START_MILLIS, 0) ?: 0
         coroutineScope.launch {
-            for (i in startMillis..startMillis + 100) {
+            for (i in startMillis..startMillis + 10) {
                 delay(1000)
                 log("Timer $i")
                 NotificationManagerCompat
@@ -36,12 +46,15 @@ class TimerService : Service() {
             }
             stopSelf()
         }
-        return START_STICKY
+        return START_NOT_STICKY
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
         coroutineScope.cancel()
+        sharedPrefsRepository.timerServiceIsActive = false
         log("onDestroy")
     }
 

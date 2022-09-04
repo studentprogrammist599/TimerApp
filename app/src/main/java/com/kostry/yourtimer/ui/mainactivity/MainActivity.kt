@@ -4,22 +4,31 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.work.ExistingWorkPolicy
-import androidx.work.WorkManager
+import androidx.core.content.ContextCompat
 import com.kostry.yourtimer.R
-import com.kostry.yourtimer.service.TimerWorker
+import com.kostry.yourtimer.service.TimerService
+import com.kostry.yourtimer.util.sharedpref.SharedPrefsRepository
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var sharedPrefsRepository: SharedPrefsRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as AppComponentProvider)
+            .provideAppComponent()
+            .inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         createNotificationChannel()
-        val workManager = WorkManager.getInstance(applicationContext)
-        workManager.enqueueUniqueWork(
-            TimerWorker.TIMER_WORKER_NAME,
-            ExistingWorkPolicy.KEEP,
-            TimerWorker.makeRequest(25)
-        )
+        if (sharedPrefsRepository.timerServiceIsActive != true){
+            sharedPrefsRepository.timerServiceIsActive = true
+            ContextCompat.startForegroundService(
+                this,
+                TimerService.newIntent(this, 25)
+            )
+        }
     }
 
     private fun createNotificationChannel() {
