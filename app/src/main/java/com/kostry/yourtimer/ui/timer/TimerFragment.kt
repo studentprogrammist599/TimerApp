@@ -9,7 +9,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.kostry.yourtimer.databinding.FragmentTimerBinding
 import com.kostry.yourtimer.ui.base.BaseFragment
+import com.kostry.yourtimer.util.TimerState
 import com.kostry.yourtimer.util.ViewModelFactory
+import com.kostry.yourtimer.util.mapStringFormatTimeToMillis
 import com.kostry.yourtimer.util.millisToStringFormat
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
@@ -36,16 +38,64 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initTimerState()
+        initButton()
+    }
+
+    private fun initButton() {
+        binding.timerFragmentButton.setOnClickListener {
+            when (viewModel.stateFlow.value) {
+                is TimerState.Running -> {
+                    viewModel.pauseTimer(
+                        binding.timerFragmentTimerTextView.text.toString()
+                            .mapStringFormatTimeToMillis()
+                    )
+                }
+                is TimerState.Paused -> {
+                    viewModel.startTimer(
+                        binding.timerFragmentTimerTextView.text.toString()
+                            .mapStringFormatTimeToMillis()
+                    )
+                }
+                else -> {}
+            }
+        }
+    }
+
+    private fun initTimerState() {
         lifecycleScope.launchWhenCreated {
             viewModel.stateFlow
                 .collectLatest {
-                    binding.textView.text = it.millisToStringFormat()
+                    when (it) {
+                        is TimerState.Running -> {
+                            setTextOnButton("pause")
+                            setTimeOnView(it.millis.millisToStringFormat())
+                        }
+                        is TimerState.Paused -> {
+                            setTextOnButton("start")
+                            setTimeOnView(it.millis.millisToStringFormat())
+                        }
+                        else -> {}
+                    }
                 }
         }
     }
 
+    private fun setTextOnButton(text: String) {
+        binding.timerFragmentButton.text = text
+    }
+
+    private fun setTimeOnView(time: String) {
+        binding.timerFragmentTimerTextView.text = time
+    }
+
     override fun onStart() {
         super.onStart()
-        viewModel.startTimer(args.millis)
+        when (viewModel.stateFlow.value) {
+            is TimerState.NotAttached -> {
+                viewModel.startTimer(args.millis)
+            }
+            else -> {}
+        }
     }
 }

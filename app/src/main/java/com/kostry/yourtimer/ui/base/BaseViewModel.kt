@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kostry.yourtimer.util.AppState
+import com.kostry.yourtimer.util.TimerState
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -16,7 +16,7 @@ private const val COROUTINE_EXCEPTION_HANDLER = "COROUTINE_EXCEPTION_HANDLER"
 
 abstract class BaseViewModel : ViewModel() {
 
-    protected val mutableStateFlow = MutableStateFlow<Long>(0)
+    protected val mutableStateFlow = MutableStateFlow<TimerState>(TimerState.NotAttached)
     val stateFlow = mutableStateFlow.asStateFlow()
 
     @SuppressLint("LongLogTag")
