@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.FragmentTimerBinding
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.util.TimerState
@@ -76,16 +77,16 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                 .collectLatest {
                     when (it) {
                         is TimerState.Running -> {
-                            setTextOnButton("pause")
+                            setTextOnButton(getString(R.string.pause))
                             setTimeOnView(it.millis.millisToStringFormat())
                         }
                         is TimerState.Paused -> {
-                            setTextOnButton("start")
+                            setTextOnButton(getString(R.string.start))
                             setTimeOnView(it.millis.millisToStringFormat())
                         }
                         is TimerState.Finished -> {
-                            setTextOnButton("Back")
-                            setTimeOnView("Finished")
+                            setTextOnButton(getString(R.string.back))
+                            setTimeOnView(getString(R.string.finished))
                         }
                         else -> {}
                     }
