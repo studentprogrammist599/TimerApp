@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         if (!isTimerServiceRunning()) {
             ContextCompat.startForegroundService(
                 this,
-                TimerService.newIntent(this, 25)
+                TimerService.newIntent(this)
             )
         }
     }

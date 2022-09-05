@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
@@ -29,10 +28,10 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
 
     private val args by navArgs<TimerFragmentArgs>()
     private val timerBroadcastReceiver: BroadcastReceiver by lazy {
-        object :BroadcastReceiver(){
+        object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                val time: Long = intent?.extras?.getLong(TimerService.INTENT_KEY_TIMER) ?: 0
-                Log.d("SERVICE_TAG", "BroadcastReceiver Message $time")
+                val timeMillis: Long = intent?.extras?.getLong(TimerService.INTENT_EXTRA_KEY_SERVICE_TIMER) ?: 0
+                binding.timerFragmentService.text = timeMillis.millisToStringFormat()
             }
         }
     }
@@ -63,10 +62,32 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         initButton()
     }
 
+    override fun onStart() {
+        super.onStart()
+        when (viewModel.stateFlow.value) {
+            is TimerState.NotAttached -> {
+                sendBroadcastToTimerService(TimerService.TIMER_START)
+                viewModel.startTimer(args.millis)
+            }
+            else -> {}
+        }
+    }
+
+    override fun onDestroy() {
+        requireContext().unregisterReceiver(timerBroadcastReceiver)
+        super.onDestroy()
+    }
+
     private fun initBroadcastReceiver() {
         val intentFilter = IntentFilter()
-        intentFilter.addAction(TimerService.INTENT_FILTER_TIMER)
+        intentFilter.addAction(TimerService.INTENT_FILTER_SERVICE_TIMER_SEND_BROADCAST)
         requireContext().registerReceiver(timerBroadcastReceiver, intentFilter)
+    }
+
+    private fun sendBroadcastToTimerService(command: Int){
+        val intent = Intent(TimerService.INTENT_FILTER_FRAGMENT_TIMER_SEND_BROADCAST)
+        intent.putExtra(TimerService.INTENT_EXTRA_KEY_FRAGMENT_TIMER, command)
+        requireActivity().sendBroadcast(intent)
     }
 
     private fun initButton() {
@@ -77,12 +98,14 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                         binding.timerFragmentTimerTextView.text.toString()
                             .mapStringFormatTimeToMillis()
                     )
+                    sendBroadcastToTimerService(TimerService.TIMER_PAUSE)
                 }
                 is TimerState.Paused -> {
                     viewModel.startTimer(
                         binding.timerFragmentTimerTextView.text.toString()
                             .mapStringFormatTimeToMillis()
                     )
+                    sendBroadcastToTimerService(TimerService.TIMER_START)
                 }
                 is TimerState.Finished -> {
                     navigationBackStack()
@@ -125,20 +148,5 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
 
     private fun setTimeOnView(time: String) {
         binding.timerFragmentTimerTextView.text = time
-    }
-
-    override fun onStart() {
-        super.onStart()
-        when (viewModel.stateFlow.value) {
-            is TimerState.NotAttached -> {
-                viewModel.startTimer(args.millis)
-            }
-            else -> {}
-        }
-    }
-
-    override fun onDestroy() {
-        requireContext().unregisterReceiver(timerBroadcastReceiver)
-        super.onDestroy()
     }
 }
