@@ -40,6 +40,9 @@ class TimerService : Service() {
             for (i in startMillis..startMillis + 100) {
                 delay(1000)
                 log("Timer $i")
+                val intent = Intent(INTENT_FILTER_TIMER)
+                intent.putExtra(INTENT_KEY_TIMER, i)
+                sendBroadcast(intent)
                 NotificationManagerCompat
                     .from(this@TimerService)
                     .notify(NOTIFICATION_ID, createNotification(i.toString()))
@@ -85,6 +88,8 @@ class TimerService : Service() {
     }
 
     companion object {
+        const val INTENT_FILTER_TIMER = "INTENT_FILTER_TIMER"
+        const val INTENT_KEY_TIMER = "INTENT_KEY_TIMER"
         private const val NOTIFICATION_ID = 1
         private const val START_MILLIS = "START_MILLIS"
 
