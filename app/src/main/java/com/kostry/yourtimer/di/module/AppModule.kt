@@ -2,6 +2,7 @@ package com.kostry.yourtimer.di.module
 
 import android.app.Application
 import android.content.Context
+import com.kostry.yourtimer.util.MyTimer
 import com.kostry.yourtimer.util.sharedpref.SharedPrefsRepository
 import com.kostry.yourtimer.util.sharedpref.SharedPrefsRepositoryImpl
 import dagger.Module
@@ -26,4 +27,7 @@ class AppModule(private val application: Application) {
             application.getSharedPreferences("SHARED", Context.MODE_PRIVATE)
         )
     }
+
+    @Provides
+    fun provideMyTimer(): MyTimer = MyTimer()
 }

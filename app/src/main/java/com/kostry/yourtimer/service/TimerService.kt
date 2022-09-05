@@ -7,7 +7,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -16,13 +15,13 @@ import com.kostry.yourtimer.R
 import com.kostry.yourtimer.di.provider.AppComponentProvider
 import com.kostry.yourtimer.ui.mainactivity.MainActivity
 import com.kostry.yourtimer.ui.mainactivity.MainActivity.Companion.NOTIFICATION_CHANNEL_ID
+import com.kostry.yourtimer.util.MyTimer
 import com.kostry.yourtimer.util.TimerState
 import com.kostry.yourtimer.util.millisToStringFormat
 import com.kostry.yourtimer.util.sharedpref.SharedPrefsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,10 +30,10 @@ class TimerService : Service() {
 
     @Inject
     lateinit var sharedPrefsRepository: SharedPrefsRepository
+    @Inject
+    lateinit var myTimer: MyTimer
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
-    private var timer: CountDownTimer? = null
-    private val timerState = MutableStateFlow<TimerState>(TimerState.NotAttached)
 
     override fun onCreate() {
         (application as AppComponentProvider)
@@ -50,16 +49,18 @@ class TimerService : Service() {
         log("onStartCommand")
         initBroadcastReceiver()
         coroutineScope.launch {
-            timerState.collectLatest { state ->
+            myTimer.timerState.collectLatest { state ->
                 when (state) {
                     is TimerState.NotAttached -> {
                         sendNotification("Timer is not attached")
                     }
                     is TimerState.Running -> {
-                        sendNotification((timerState.value as TimerState.Running).millis.millisToStringFormat())
+                        sendNotification(state.millis.millisToStringFormat())
+                        serviceSendBroadcast(state.millis)
                     }
                     is TimerState.Paused -> {
-                        sendNotification((timerState.value as TimerState.Paused).millis.millisToStringFormat())
+                        sendNotification(state.millis.millisToStringFormat())
+                        serviceSendBroadcast(state.millis)
                     }
                     is TimerState.Finished -> {
                         sendNotification("Timer is finished")
@@ -93,48 +94,16 @@ class TimerService : Service() {
                 when (command) {
                     TIMER_START -> {
                         log("broadcastReceiver -> startTimer")
-                        startTimer(millis)
+                        myTimer.startTimer(millis)
                     }
                     TIMER_PAUSE -> {
                         log("broadcastReceiver -> pauseTimer")
-                        pauseTimer(millis)
+                        myTimer.pauseTimer(millis)
                     }
                 }
             }
         }
         this.registerReceiver(broadcastReceiver, intentFilter)
-    }
-
-    private fun startTimer(millis: Long) {
-        log("startTimer")
-        if (timer == null) {
-            log("startTimer -> timer init")
-            timer = object : CountDownTimer(millis, TIMER_INTERVAL) {
-                override fun onTick(millisUntilFinished: Long) {
-                    timerState.value = TimerState.Running(millisUntilFinished)
-                    log("startTimer -> onTick -> ${millisUntilFinished.millisToStringFormat()}")
-                    serviceSendBroadcast(millisUntilFinished)
-                }
-
-                override fun onFinish() {
-                    timerState.value = TimerState.Finished
-                    log("startTimer -> finished")
-                }
-            }.start()
-        }
-    }
-
-    private fun pauseTimer(millis: Long) {
-        log("pauseTimer")
-        if (timer != null) {
-            timerState.value = TimerState.Paused(millis)
-            log("pauseTimer -> TimerState.Paused(${millis.millisToStringFormat()})")
-            timer?.cancel()
-            log("pauseTimer -> timer cancel")
-            timer = null
-            log("pauseTimer -> timer = null")
-            serviceSendBroadcast(millis)
-        }
     }
 
     private fun log(message: String) {
@@ -190,7 +159,6 @@ class TimerService : Service() {
         const val TIMER_START = 1
         const val TIMER_PAUSE = 2
 
-        private const val TIMER_INTERVAL = 1000L
         private const val NOTIFICATION_ID = 1
 
         fun newIntent(context: Context): Intent {
