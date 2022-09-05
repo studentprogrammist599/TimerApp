@@ -7,14 +7,6 @@
     tools:context=".ui.timer.TimerFragment">
 
     <TextView
-        android:id="@+id/timer_fragment_service"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="0000000" />
-
-    <TextView
         android:id="@+id/timer_fragment_timer_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,12 +17,19 @@
         tools:text="0000000" />
 
     <Button
-        android:id="@+id/timer_fragment_button"
+        android:id="@+id/timer_fragment_button_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/start" />
+
+    <Button
+        android:id="@+id/timer_fragment_button_pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/start" />
+        android:text="@string/pause" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

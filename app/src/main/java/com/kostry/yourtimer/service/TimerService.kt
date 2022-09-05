@@ -35,14 +35,13 @@ class TimerService : Service() {
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
     private var timer: CountDownTimer? = null
     private val timerState = MutableStateFlow<TimerState>(TimerState.NotAttached)
-    private val serviceInForeground = MutableStateFlow(false)
 
     override fun onCreate() {
         (application as AppComponentProvider)
             .provideAppComponent()
             .inject(this)
         super.onCreate()
-        startForeground(NOTIFICATION_ID, createNotification(timerState.value.toString()))
+        startForeground(NOTIFICATION_ID, createNotification("Timer is not attached"))
         log("onCreate")
 
     }
@@ -51,9 +50,20 @@ class TimerService : Service() {
         log("onStartCommand")
         initBroadcastReceiver()
         coroutineScope.launch {
-            serviceInForeground.collectLatest { isForeground ->
-                if (isForeground && timerState.value is TimerState.Running) {
-                    sendNotification((timerState.value as TimerState.Running).millis.toString())
+            timerState.collectLatest { state ->
+                when (state) {
+                    is TimerState.NotAttached -> {
+                        sendNotification("Timer is not attached")
+                    }
+                    is TimerState.Running -> {
+                        sendNotification((timerState.value as TimerState.Running).millis.millisToStringFormat())
+                    }
+                    is TimerState.Paused -> {
+                        sendNotification((timerState.value as TimerState.Paused).millis.millisToStringFormat())
+                    }
+                    is TimerState.Finished -> {
+                        sendNotification("Timer is finished")
+                    }
                 }
             }
         }
@@ -76,14 +86,18 @@ class TimerService : Service() {
         val broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 log("broadcastReceiver -> onReceive")
-                when (intent?.extras?.getInt(INTENT_EXTRA_KEY_FRAGMENT_TIMER) ?: 0) {
+                val command: Int =
+                    intent?.extras?.getInt(INTENT_EXTRA_KEY_FRAGMENT_TIMER_COMMAND) ?: 0
+                val millis: Long =
+                    intent?.extras?.getLong(INTENT_EXTRA_KEY_FRAGMENT_TIMER_MILLIS) ?: 0
+                when (command) {
                     TIMER_START -> {
                         log("broadcastReceiver -> startTimer")
-                        startTimer(99000)
+                        startTimer(millis)
                     }
                     TIMER_PAUSE -> {
                         log("broadcastReceiver -> pauseTimer")
-                        pauseTimer(10000)
+                        pauseTimer(millis)
                     }
                 }
             }
@@ -140,7 +154,7 @@ class TimerService : Service() {
         sendBroadcast(intent)
     }
 
-    private fun createNotification(time: String): Notification {
+    private fun createNotification(message: String): Notification {
         log("createNotification")
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -153,7 +167,7 @@ class TimerService : Service() {
         )
 
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-            .setContentText(time)
+            .setContentText(message)
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentIntent(pendingIntent)
             .setSilent(true)
@@ -169,7 +183,9 @@ class TimerService : Service() {
 
         const val INTENT_FILTER_FRAGMENT_TIMER_SEND_BROADCAST =
             "INTENT_FILTER_FRAGMENT_TIMER_SEND_BROADCAST"
-        const val INTENT_EXTRA_KEY_FRAGMENT_TIMER = "INTENT_EXTRA_KEY_FRAGMENT_TIMER"
+        const val INTENT_EXTRA_KEY_FRAGMENT_TIMER_COMMAND =
+            "INTENT_EXTRA_KEY_FRAGMENT_TIMER_COMMAND"
+        const val INTENT_EXTRA_KEY_FRAGMENT_TIMER_MILLIS = "INTENT_EXTRA_KEY_FRAGMENT_TIMER_MILLIS"
 
         const val TIMER_START = 1
         const val TIMER_PAUSE = 2
