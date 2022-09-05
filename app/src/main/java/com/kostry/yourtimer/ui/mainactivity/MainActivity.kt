@@ -1,5 +1,6 @@
 package com.kostry.yourtimer.ui.mainactivity
 
+import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Bundle
@@ -23,13 +24,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         createNotificationChannel()
-        if (sharedPrefsRepository.timerServiceIsActive != true){
-            sharedPrefsRepository.timerServiceIsActive = true
+        if (!isTimerServiceRunning()) {
             ContextCompat.startForegroundService(
                 this,
                 TimerService.newIntent(this, 25)
             )
         }
+    }
+
+    private fun isTimerServiceRunning(): Boolean {
+        val manager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+            if (TimerService::class.java.name == service.service.className) {
+                return true
+            }
+        }
+        return false
     }
 
     private fun createNotificationChannel() {

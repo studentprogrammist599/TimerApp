@@ -37,7 +37,7 @@ class TimerService : Service() {
         log("onStartCommand")
         val startMillis: Long = intent?.getLongExtra(START_MILLIS, 0) ?: 0
         coroutineScope.launch {
-            for (i in startMillis..startMillis + 10) {
+            for (i in startMillis..startMillis + 100) {
                 delay(1000)
                 log("Timer $i")
                 NotificationManagerCompat
@@ -54,7 +54,6 @@ class TimerService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         coroutineScope.cancel()
-        sharedPrefsRepository.timerServiceIsActive = false
         log("onDestroy")
     }
 
