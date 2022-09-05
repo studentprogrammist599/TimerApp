@@ -1,26 +1,17 @@
 package com.kostry.yourtimer.ui.base
 
 import android.annotation.SuppressLint
-import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kostry.yourtimer.util.TimerState
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.plus
 
 private const val COROUTINE_EXCEPTION_HANDLER = "COROUTINE_EXCEPTION_HANDLER"
 
 abstract class BaseViewModel : ViewModel() {
-
-    protected var timer: CountDownTimer? = null
-
-    protected val mutableStateFlow = MutableStateFlow<TimerState>(TimerState.NotAttached)
-    val stateFlow = mutableStateFlow.asStateFlow()
 
     @SuppressLint("LongLogTag")
     private val coroutineContext =

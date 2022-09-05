@@ -16,23 +16,19 @@ import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.util.ViewModelFactory
 import com.kostry.yourtimer.util.mapStringFormatTimeToMillis
 import com.kostry.yourtimer.util.millisToStringFormat
-import com.kostry.yourtimer.util.sharedpref.SharedPrefsRepository
 import javax.inject.Inject
 
 class TimerFragment : BaseFragment<FragmentTimerBinding>() {
 
-    private val args by navArgs<TimerFragmentArgs>()
     private val timerBroadcastReceiver: BroadcastReceiver by lazy {
         object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                val timeMillis: Long = intent?.extras?.getLong(TimerService.INTENT_EXTRA_KEY_SERVICE_TIMER) ?: 0
+                val timeMillis: Long =
+                    intent?.extras?.getLong(TimerService.INTENT_EXTRA_KEY_SERVICE_TIMER) ?: 0
                 binding.timerFragmentTimerTextView.text = timeMillis.millisToStringFormat()
             }
         }
     }
-
-    @Inject
-    lateinit var sharedPrefsRepository: SharedPrefsRepository
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -56,11 +52,6 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         initButton()
     }
 
-    override fun onStart() {
-        super.onStart()
-        sendBroadcastToTimerService(TimerService.TIMER_START, args.millis)
-    }
-
     override fun onDestroy() {
         requireContext().unregisterReceiver(timerBroadcastReceiver)
         super.onDestroy()
@@ -72,7 +63,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         requireContext().registerReceiver(timerBroadcastReceiver, intentFilter)
     }
 
-    private fun sendBroadcastToTimerService(command: Int, timeMillis: Long){
+    private fun sendBroadcastToTimerService(command: Int, timeMillis: Long) {
         val intent = Intent(TimerService.INTENT_FILTER_FRAGMENT_TIMER_SEND_BROADCAST)
         intent.putExtra(TimerService.INTENT_EXTRA_KEY_FRAGMENT_TIMER_COMMAND, command)
         intent.putExtra(TimerService.INTENT_EXTRA_KEY_FRAGMENT_TIMER_MILLIS, timeMillis)

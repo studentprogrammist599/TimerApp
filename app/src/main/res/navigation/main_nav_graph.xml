@@ -18,9 +18,5 @@
         android:id="@+id/timerFragment"
         android:name="com.kostry.yourtimer.ui.timer.TimerFragment"
         android:label="fragment_timer"
-        tools:layout="@layout/fragment_timer" >
-        <argument
-            android:name="millis"
-            app:argType="long" />
-    </fragment>
+        tools:layout="@layout/fragment_timer" />
 </navigation>

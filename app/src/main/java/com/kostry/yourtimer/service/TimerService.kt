@@ -18,7 +18,6 @@ import com.kostry.yourtimer.ui.mainactivity.MainActivity.Companion.NOTIFICATION_
 import com.kostry.yourtimer.util.MyTimer
 import com.kostry.yourtimer.util.TimerState
 import com.kostry.yourtimer.util.millisToStringFormat
-import com.kostry.yourtimer.util.sharedpref.SharedPrefsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -28,8 +27,6 @@ import javax.inject.Inject
 
 class TimerService : Service() {
 
-    @Inject
-    lateinit var sharedPrefsRepository: SharedPrefsRepository
     @Inject
     lateinit var myTimer: MyTimer
 
@@ -52,17 +49,21 @@ class TimerService : Service() {
             myTimer.timerState.collectLatest { state ->
                 when (state) {
                     is TimerState.NotAttached -> {
+                        log("onStartCommand -> TimerState.NotAttached")
                         sendNotification("Timer is not attached")
                     }
                     is TimerState.Running -> {
+                        log("onStartCommand -> TimerState.Running: ${state.millis.millisToStringFormat()}")
                         sendNotification(state.millis.millisToStringFormat())
                         serviceSendBroadcast(state.millis)
                     }
                     is TimerState.Paused -> {
+                        log("onStartCommand -> TimerState.Paused: ${state.millis.millisToStringFormat()}")
                         sendNotification(state.millis.millisToStringFormat())
                         serviceSendBroadcast(state.millis)
                     }
                     is TimerState.Finished -> {
+                        log("onStartCommand -> TimerState.Finished")
                         sendNotification("Timer is finished")
                     }
                 }
