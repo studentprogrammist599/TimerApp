@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.kostry.yourtimer">
 
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -24,6 +25,7 @@
             </intent-filter>
         </activity>
         <service android:name=".service.TimerService"/>
+        <receiver android:name=".broadcastreceiver.AlarmReceiver" />
     </application>
 
 </manifest>
