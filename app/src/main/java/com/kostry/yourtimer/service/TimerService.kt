@@ -13,7 +13,6 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavDeepLinkBuilder
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.di.provider.AppComponentProvider
-import com.kostry.yourtimer.ui.mainactivity.MainActivity
 import com.kostry.yourtimer.ui.mainactivity.MainActivity.Companion.NOTIFICATION_CHANNEL_ID
 import com.kostry.yourtimer.ui.timer.TimerFragment
 import com.kostry.yourtimer.util.MyTimer
@@ -89,10 +88,22 @@ class TimerService : Service() {
     private fun createNotification(message: String): Notification {
         log("createNotification")
 
+        val time: Long = when (val state = myTimer.timerState.value){
+            is TimerState.Running -> {
+                state.millis
+            }
+            is TimerState.Paused -> {
+                state.millis
+            }
+            is TimerState.Stopped -> {
+                0L
+            }
+        }
+
         val pendingIntent: PendingIntent = NavDeepLinkBuilder(this)
             .setGraph(R.navigation.main_nav_graph)
             .setDestination(R.id.timerFragment)
-            .setArguments(args = bundleOf(TimerFragment.TIMER_FRAGMENT_ARGS_KEY to 99000L))
+            .setArguments(args = bundleOf(TimerFragment.TIMER_FRAGMENT_ARGS_KEY to time))
             .createPendingIntent()
 
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)

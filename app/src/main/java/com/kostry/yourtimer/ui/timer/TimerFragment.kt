@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.FragmentTimerBinding
 import com.kostry.yourtimer.di.provider.TimerSubcomponentProvider
@@ -18,7 +17,6 @@ import com.kostry.yourtimer.util.ViewModelFactory
 import com.kostry.yourtimer.util.mapStringFormatTimeToMillis
 import com.kostry.yourtimer.util.millisToStringFormat
 import kotlinx.coroutines.flow.collectLatest
-import java.lang.RuntimeException
 import javax.inject.Inject
 
 class TimerFragment : BaseFragment<FragmentTimerBinding>() {
@@ -48,6 +46,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainActivityCallback.stopTimerService()
         viewModel.startTimer(args)
         initViewState()
         initButtonClickListener()
@@ -55,7 +54,14 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
 
     override fun onStop() {
         super.onStop()
+        startTimerService()
         mainActivityCallback.startTimerService()
+    }
+
+    private fun startTimerService() {
+        if (viewModel.timerState.value !is TimerState.Stopped){
+            mainActivityCallback.startTimerService()
+        }
     }
 
     private fun initViewState() {
@@ -98,6 +104,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
             }
         }
     }
+
     companion object {
         const val TIMER_FRAGMENT_ARGS_KEY = "TIMER_FRAGMENT_ARGS_KEY"
     }

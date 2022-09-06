@@ -9,17 +9,14 @@
         android:id="@+id/homeFragment"
         android:name="com.kostry.yourtimer.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_timerFragment"
-            app:destination="@id/timerFragment"
-            app:popUpTo="@id/main_nav_graph"
-            app:popUpToInclusive="true" />
+            app:destination="@id/timerFragment" />
     </fragment>
     <fragment
         android:id="@+id/timerFragment"
         android:name="com.kostry.yourtimer.ui.timer.TimerFragment"
         android:label="fragment_timer"
-        tools:layout="@layout/fragment_timer" >
-    </fragment>
+        tools:layout="@layout/fragment_timer" />
 </navigation>
