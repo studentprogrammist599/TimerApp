@@ -7,29 +7,35 @@ import kotlinx.coroutines.flow.asStateFlow
 class MyTimer {
 
     private var timer: CountDownTimer? = null
-    private val _timerState = MutableStateFlow<TimerState>(TimerState.NotAttached)
+    private val _timerState = MutableStateFlow<TimerState>(TimerState.Stopped)
     val timerState = _timerState.asStateFlow()
 
     fun startTimer(millis: Long) {
-        if (timer == null) {
+        if (timerState.value !is TimerState.Running) {
             timer = object : CountDownTimer(millis, TIMER_INTERVAL) {
                 override fun onTick(millisUntilFinished: Long) {
                     _timerState.value = TimerState.Running(millisUntilFinished)
                 }
 
                 override fun onFinish() {
-                    _timerState.value = TimerState.Finished
+                    stopTimer()
                 }
             }.start()
         }
     }
 
     fun pauseTimer(millis: Long) {
-        if (timer != null) {
+        if (timerState.value !is TimerState.Paused) {
             _timerState.value = TimerState.Paused(millis)
             timer?.cancel()
             timer = null
         }
+    }
+
+    fun stopTimer(){
+        timer?.cancel()
+        timer = null
+        _timerState.value = TimerState.Stopped
     }
 
     companion object {

@@ -44,14 +44,12 @@ class TimerService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         log("onStartCommand")
+//        val startMillis: Long = intent?.getLongExtra(START_MILLIS, 0) ?: 0
+//        myTimer.startTimer(startMillis)
         initBroadcastReceiver()
         coroutineScope.launch {
             myTimer.timerState.collectLatest { state ->
                 when (state) {
-                    is TimerState.NotAttached -> {
-                        log("onStartCommand -> TimerState.NotAttached")
-                        sendNotification("Timer is not attached")
-                    }
                     is TimerState.Running -> {
                         log("onStartCommand -> TimerState.Running: ${state.millis.millisToStringFormat()}")
                         sendNotification(state.millis.millisToStringFormat())
@@ -62,9 +60,10 @@ class TimerService : Service() {
                         sendNotification(state.millis.millisToStringFormat())
                         serviceSendBroadcast(state.millis)
                     }
-                    is TimerState.Finished -> {
+                    is TimerState.Stopped -> {
                         log("onStartCommand -> TimerState.Finished")
                         sendNotification("Timer is finished")
+                        stopSelf()
                     }
                 }
             }
@@ -161,9 +160,12 @@ class TimerService : Service() {
         const val TIMER_PAUSE = 2
 
         private const val NOTIFICATION_ID = 1
+        private const val START_MILLIS = "START_MILLIS"
 
-        fun newIntent(context: Context): Intent {
-            return Intent(context, TimerService::class.java)
+        fun newIntent(context: Context, startMillis: Long): Intent {
+            return Intent(context, TimerService::class.java).apply {
+                putExtra(START_MILLIS, startMillis)
+            }
         }
     }
 }

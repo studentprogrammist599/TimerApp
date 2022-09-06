@@ -1,31 +1,33 @@
 package com.kostry.yourtimer.ui.mainactivity
 
-import android.app.*
+import android.app.ActivityManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.kostry.yourtimer.R
-import com.kostry.yourtimer.broadcastreceiver.AlarmReceiver
 import com.kostry.yourtimer.service.TimerService
-import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainActivityCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        createNotificationChannel()
-//        if (!isTimerServiceRunning()) {
-//            ContextCompat.startForegroundService(
-//                this,
-//                TimerService.newIntent(this)
-//            )
-//        }
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.SECOND, 10)
-        val intent = AlarmReceiver.newIntent(this)
-        val pendingIntent = PendingIntent.getBroadcast(this, 100, intent, PendingIntent.FLAG_MUTABLE)
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+        createNotificationChannel()
+    }
+
+    override fun startTimerService(startMillis: Long) {
+        if (!isTimerServiceRunning()) {
+            ContextCompat.startForegroundService(
+                this,
+                TimerService.newIntent(this, startMillis)
+            )
+        }
+    }
+
+    override fun stopTimerService() {
+        stopService(TimerService.newIntent(this, 0))
     }
 
     private fun isTimerServiceRunning(): Boolean {

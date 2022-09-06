@@ -15,6 +15,7 @@ class AppModule(private val application: Application) {
         return application
     }
 
+    @Singleton
     @Provides
     fun provideMyTimer(): MyTimer = MyTimer()
 }

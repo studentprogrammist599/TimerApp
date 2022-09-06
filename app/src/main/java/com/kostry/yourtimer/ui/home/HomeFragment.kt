@@ -1,16 +1,13 @@
 package com.kostry.yourtimer.ui.home
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.FragmentHomeBinding
 import com.kostry.yourtimer.di.provider.HomeSubcomponentProvider
-import com.kostry.yourtimer.service.TimerService
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.util.ViewModelFactory
 import com.kostry.yourtimer.util.mapTimeToMillis
@@ -50,15 +47,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 seconds = binding.homeFragmentQuickStartSecondsEditText.text.toString()
                     .toIntOrNull() ?: 0,
             )
-            sendBroadcastToTimerService(TimerService.TIMER_START, millis)
-            findNavController().navigate(R.id.action_homeFragment_to_timerFragment)
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToTimerFragment(millis)
+            )
         }
-    }
-
-    private fun sendBroadcastToTimerService(command: Int, timeMillis: Long) {
-        val intent = Intent(TimerService.INTENT_FILTER_FRAGMENT_TIMER_SEND_BROADCAST)
-        intent.putExtra(TimerService.INTENT_EXTRA_KEY_FRAGMENT_TIMER_COMMAND, command)
-        intent.putExtra(TimerService.INTENT_EXTRA_KEY_FRAGMENT_TIMER_MILLIS, timeMillis)
-        requireActivity().sendBroadcast(intent)
     }
 }
