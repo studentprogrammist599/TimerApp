@@ -47,21 +47,20 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainActivityCallback.stopTimerService()
-        if(viewModel.timerState.value !is TimerState.Paused){
+        if (viewModel.timerState.value !is TimerState.Paused) {
             viewModel.startTimer(args)
         }
         initViewState()
         initButtonClickListener()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onStop() {
+        super.onStop()
         startTimerService()
     }
 
     private fun startTimerService() {
-        requireActivity().isChangingConfigurations
-        if (viewModel.timerState.value !is TimerState.Stopped && !isVisible) {
+        if (viewModel.timerState.value !is TimerState.Stopped) {
             mainActivityCallback.startTimerService()
         }
     }
@@ -73,17 +72,17 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                     is TimerState.Running -> {
                         binding.timerFragmentTextView.text = state.millis.millisToStringFormat()
                         binding.timerFragmentButtonStartPause.text = getString(R.string.pause)
-                        binding.timerFragmentButtonCancel.visibility =View.VISIBLE
+                        binding.timerFragmentButtonCancel.visibility = View.VISIBLE
                     }
                     is TimerState.Paused -> {
                         binding.timerFragmentTextView.text = state.millis.millisToStringFormat()
                         binding.timerFragmentButtonStartPause.text = getString(R.string.start)
-                        binding.timerFragmentButtonCancel.visibility =View.VISIBLE
+                        binding.timerFragmentButtonCancel.visibility = View.VISIBLE
                     }
                     is TimerState.Stopped -> {
                         binding.timerFragmentTextView.text = getString(R.string.finished)
                         binding.timerFragmentButtonStartPause.text = getString(R.string.back)
-                        binding.timerFragmentButtonCancel.visibility =View.GONE
+                        binding.timerFragmentButtonCancel.visibility = View.GONE
                     }
                 }
             }

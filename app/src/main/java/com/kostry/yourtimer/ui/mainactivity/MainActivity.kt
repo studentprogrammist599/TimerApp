@@ -18,16 +18,16 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
     }
 
     override fun startTimerService() {
-        if (!isTimerServiceRunning() && !isChangingConfigurations) {
+        if (!isTimerServiceRunning() && !isChangingConfigurations && !isInMultiWindowMode) {
             ContextCompat.startForegroundService(
-                this,
-                TimerService.newIntent(this)
+                applicationContext,
+                TimerService.newIntent(applicationContext)
             )
         }
     }
 
     override fun stopTimerService() {
-        stopService(TimerService.newIntent(baseContext))
+        stopService(TimerService.newIntent(applicationContext))
     }
 
     private fun isTimerServiceRunning(): Boolean {
