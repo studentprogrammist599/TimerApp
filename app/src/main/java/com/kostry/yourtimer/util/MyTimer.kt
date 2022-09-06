@@ -12,7 +12,8 @@ class MyTimer {
 
     fun startTimer(millis: Long) {
         if (timer == null && timerState.value !is TimerState.Running) {
-            stopTimer()
+            timer?.cancel()
+            timer = null
             timer = object : CountDownTimer(millis, TIMER_INTERVAL) {
                 override fun onTick(millisUntilFinished: Long) {
                     _timerState.value = TimerState.Running(millisUntilFinished)

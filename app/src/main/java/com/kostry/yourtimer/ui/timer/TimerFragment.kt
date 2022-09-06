@@ -47,7 +47,9 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainActivityCallback.stopTimerService()
-        viewModel.startTimer(args)
+        if(viewModel.timerState.value !is TimerState.Paused){
+            viewModel.startTimer(args)
+        }
         initViewState()
         initButtonClickListener()
     }
@@ -71,14 +73,17 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                     is TimerState.Running -> {
                         binding.timerFragmentTextView.text = state.millis.millisToStringFormat()
                         binding.timerFragmentButtonStartPause.text = getString(R.string.pause)
+                        binding.timerFragmentButtonCancel.visibility =View.VISIBLE
                     }
                     is TimerState.Paused -> {
                         binding.timerFragmentTextView.text = state.millis.millisToStringFormat()
                         binding.timerFragmentButtonStartPause.text = getString(R.string.start)
+                        binding.timerFragmentButtonCancel.visibility =View.VISIBLE
                     }
                     is TimerState.Stopped -> {
                         binding.timerFragmentTextView.text = getString(R.string.finished)
                         binding.timerFragmentButtonStartPause.text = getString(R.string.back)
+                        binding.timerFragmentButtonCancel.visibility =View.GONE
                     }
                 }
             }
