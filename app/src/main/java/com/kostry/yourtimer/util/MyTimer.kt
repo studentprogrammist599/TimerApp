@@ -28,7 +28,6 @@ class MyTimer {
         if (timerState.value !is TimerState.Paused) {
             _timerState.value = TimerState.Paused(millis)
             timer?.cancel()
-            timer = null
         }
     }
 
