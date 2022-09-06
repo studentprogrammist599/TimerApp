@@ -6,6 +6,7 @@
     <string name="quick_start">Quick start</string>
     <string name="start">start</string>
     <string name="pause">pause</string>
+    <string name="stop">stop</string>
     <string name="finished">Finished</string>
     <string name="back">Back</string>
 </resources>

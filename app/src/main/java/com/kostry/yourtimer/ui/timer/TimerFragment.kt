@@ -70,15 +70,15 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                 when (state) {
                     is TimerState.Running -> {
                         binding.timerFragmentTextView.text = state.millis.millisToStringFormat()
-                        binding.timerFragmentButton.text = getString(R.string.pause)
+                        binding.timerFragmentButtonStartPause.text = getString(R.string.pause)
                     }
                     is TimerState.Paused -> {
                         binding.timerFragmentTextView.text = state.millis.millisToStringFormat()
-                        binding.timerFragmentButton.text = getString(R.string.start)
+                        binding.timerFragmentButtonStartPause.text = getString(R.string.start)
                     }
                     is TimerState.Stopped -> {
                         binding.timerFragmentTextView.text = getString(R.string.finished)
-                        binding.timerFragmentButton.text = getString(R.string.back)
+                        binding.timerFragmentButtonStartPause.text = getString(R.string.back)
                     }
                 }
             }
@@ -86,7 +86,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
     }
 
     private fun initButtonClickListener() {
-        binding.timerFragmentButton.setOnClickListener {
+        binding.timerFragmentButtonStartPause.setOnClickListener {
             when (viewModel.timerState.value) {
                 is TimerState.Running -> {
                     viewModel.pauseTimer(
@@ -102,6 +102,10 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                     findNavController().popBackStack()
                 }
             }
+        }
+        binding.timerFragmentButtonCancel.setOnClickListener {
+            viewModel.stopTimer()
+            findNavController().popBackStack()
         }
     }
 

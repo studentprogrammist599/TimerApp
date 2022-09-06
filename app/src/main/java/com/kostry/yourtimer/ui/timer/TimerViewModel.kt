@@ -29,6 +29,10 @@ class TimerViewModel @Inject constructor(
         myTimer.pauseTimer(timeMillis)
     }
 
+    fun stopTimer(){
+        myTimer.stopTimer()
+    }
+
     override fun onCleared() {
         timerSubcomponentProvider.destroyTimerSubcomponent()
         super.onCleared()
