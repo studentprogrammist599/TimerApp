@@ -17,17 +17,17 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
         createNotificationChannel()
     }
 
-    override fun startTimerService(startMillis: Long) {
+    override fun startTimerService() {
         if (!isTimerServiceRunning()) {
             ContextCompat.startForegroundService(
                 this,
-                TimerService.newIntent(this, startMillis)
+                TimerService.newIntent(this)
             )
         }
     }
 
     override fun stopTimerService() {
-        stopService(TimerService.newIntent(this, 0))
+        stopService(TimerService.newIntent(this))
     }
 
     private fun isTimerServiceRunning(): Boolean {

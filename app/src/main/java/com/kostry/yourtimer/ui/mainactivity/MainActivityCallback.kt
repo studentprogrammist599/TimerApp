@@ -2,6 +2,6 @@ package com.kostry.yourtimer.ui.mainactivity
 
 interface MainActivityCallback {
 
-    fun startTimerService(startMillis: Long)
+    fun startTimerService()
     fun stopTimerService()
 }

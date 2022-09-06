@@ -12,6 +12,7 @@ import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.FragmentTimerBinding
 import com.kostry.yourtimer.di.provider.TimerSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
+import com.kostry.yourtimer.ui.mainactivity.MainActivityCallback
 import com.kostry.yourtimer.util.TimerState
 import com.kostry.yourtimer.util.ViewModelFactory
 import com.kostry.yourtimer.util.mapStringFormatTimeToMillis
@@ -28,6 +29,9 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
     }
 
     private val args by navArgs<TimerFragmentArgs>()
+    private val mainActivityCallback by lazy {
+        activity as MainActivityCallback
+    }
 
     override fun onAttach(context: Context) {
         (requireActivity().application as TimerSubcomponentProvider)
@@ -44,6 +48,11 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         viewModel.startTimer(args.timeMillis)
         initViewState()
         initButtonClickListener()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mainActivityCallback.startTimerService()
     }
 
     private fun initViewState() {
