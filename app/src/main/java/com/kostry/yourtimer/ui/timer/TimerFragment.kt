@@ -52,14 +52,14 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         initButtonClickListener()
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroyView() {
+        super.onDestroyView()
         startTimerService()
-        mainActivityCallback.startTimerService()
     }
 
     private fun startTimerService() {
-        if (viewModel.timerState.value !is TimerState.Stopped){
+        requireActivity().isChangingConfigurations
+        if (viewModel.timerState.value !is TimerState.Stopped && !isVisible) {
             mainActivityCallback.startTimerService()
         }
     }

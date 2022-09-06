@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
     }
 
     override fun startTimerService() {
-        if (!isTimerServiceRunning()) {
+        if (!isTimerServiceRunning() && !isChangingConfigurations) {
             ContextCompat.startForegroundService(
                 this,
                 TimerService.newIntent(this)
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
     }
 
     override fun stopTimerService() {
-        stopService(TimerService.newIntent(this))
+        stopService(TimerService.newIntent(baseContext))
     }
 
     private fun isTimerServiceRunning(): Boolean {
