@@ -9,10 +9,13 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.os.bundleOf
+import androidx.navigation.NavDeepLinkBuilder
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.di.provider.AppComponentProvider
 import com.kostry.yourtimer.ui.mainactivity.MainActivity
 import com.kostry.yourtimer.ui.mainactivity.MainActivity.Companion.NOTIFICATION_CHANNEL_ID
+import com.kostry.yourtimer.ui.timer.TimerFragment
 import com.kostry.yourtimer.util.MyTimer
 import com.kostry.yourtimer.util.TimerState
 import com.kostry.yourtimer.util.millisToStringFormat
@@ -85,15 +88,12 @@ class TimerService : Service() {
 
     private fun createNotification(message: String): Notification {
         log("createNotification")
-        val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(
-            this,
-            0,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE
-        )
+
+        val pendingIntent: PendingIntent = NavDeepLinkBuilder(this)
+            .setGraph(R.navigation.main_nav_graph)
+            .setDestination(R.id.timerFragment)
+            .setArguments(args = bundleOf(TimerFragment.TIMER_FRAGMENT_ARGS_KEY to 99000L))
+            .createPendingIntent()
 
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
             .setContentText(message)

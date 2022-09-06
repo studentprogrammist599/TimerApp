@@ -18,6 +18,7 @@ import com.kostry.yourtimer.util.ViewModelFactory
 import com.kostry.yourtimer.util.mapStringFormatTimeToMillis
 import com.kostry.yourtimer.util.millisToStringFormat
 import kotlinx.coroutines.flow.collectLatest
+import java.lang.RuntimeException
 import javax.inject.Inject
 
 class TimerFragment : BaseFragment<FragmentTimerBinding>() {
@@ -28,7 +29,9 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         ViewModelProvider(this, viewModelFactory)[TimerViewModel::class.java]
     }
 
-    private val args by navArgs<TimerFragmentArgs>()
+    private val args: Long by lazy {
+        arguments?.getLong(TIMER_FRAGMENT_ARGS_KEY) ?: throw RuntimeException("args is null")
+    }
     private val mainActivityCallback by lazy {
         activity as MainActivityCallback
     }
@@ -45,7 +48,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.startTimer(args.timeMillis)
+        viewModel.startTimer(args)
         initViewState()
         initButtonClickListener()
     }
@@ -94,5 +97,8 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                 }
             }
         }
+    }
+    companion object {
+        const val TIMER_FRAGMENT_ARGS_KEY = "TIMER_FRAGMENT_ARGS_KEY"
     }
 }

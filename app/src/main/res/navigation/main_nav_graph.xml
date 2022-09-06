@@ -21,7 +21,5 @@
         android:name="com.kostry.yourtimer.ui.timer.TimerFragment"
         android:label="fragment_timer"
         tools:layout="@layout/fragment_timer" >
-        <argument android:name="timeMillis"
-            app:argType="long" />
     </fragment>
 </navigation>

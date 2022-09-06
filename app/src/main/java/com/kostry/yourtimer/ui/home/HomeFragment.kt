@@ -4,11 +4,14 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.FragmentHomeBinding
 import com.kostry.yourtimer.di.provider.HomeSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
+import com.kostry.yourtimer.ui.timer.TimerFragment
 import com.kostry.yourtimer.util.ViewModelFactory
 import com.kostry.yourtimer.util.mapTimeToMillis
 import javax.inject.Inject
@@ -48,7 +51,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     .toIntOrNull() ?: 0,
             )
             findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToTimerFragment(millis)
+                R.id.action_homeFragment_to_timerFragment,
+                bundleOf(TimerFragment.TIMER_FRAGMENT_ARGS_KEY to millis)
             )
         }
     }
