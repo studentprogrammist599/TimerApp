@@ -25,12 +25,6 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
         checkTimerService()
     }
 
-    private fun checkTimerService() {
-        if (isTimerServiceRunning()){
-            navController.navigate(R.id.timerFragment)
-        }
-    }
-
     override fun startTimerService() {
         if (!isTimerServiceRunning() && !isChangingConfigurations) {
             ContextCompat.startForegroundService(
@@ -62,8 +56,18 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
         notificationManager.createNotificationChannel(channel)
     }
 
+    private fun checkTimerService() {
+        if (isTimerServiceRunning() && !currentFragmentIsTimerFragment()){
+            navController.navigate(R.id.timerFragment)
+        }
+    }
+
+    private fun currentFragmentIsTimerFragment(): Boolean {
+        return navController.currentDestination == navController.graph[R.id.timerFragment]
+    }
+
     override fun onBackPressed() {
-        if (navController.currentDestination != navController.graph[R.id.timerFragment]){
+        if (!currentFragmentIsTimerFragment()){
             super.onBackPressed()
         }
     }
