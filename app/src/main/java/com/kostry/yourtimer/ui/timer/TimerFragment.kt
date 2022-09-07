@@ -46,12 +46,16 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainActivityCallback.stopTimerService()
         if (viewModel.timerState.value !is TimerState.Paused) {
             viewModel.startTimer(args)
         }
         initViewState()
         initButtonClickListener()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mainActivityCallback.stopTimerService()
     }
 
     override fun onStop() {
