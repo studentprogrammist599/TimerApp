@@ -23,6 +23,11 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
                 applicationContext,
                 TimerService.newIntent(applicationContext)
             )
+        } else if(isInMultiWindowMode && !isTimerServiceRunning() && !isChangingConfigurations) {
+            ContextCompat.startForegroundService(
+                applicationContext,
+                TimerService.newIntent(applicationContext)
+            )
         }
     }
 
