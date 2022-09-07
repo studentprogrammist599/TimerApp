@@ -6,10 +6,17 @@ import android.app.NotificationManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.get
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.service.TimerService
 
 class MainActivity : AppCompatActivity(), MainActivityCallback {
+
+    private val navController: NavController by lazy {
+        (supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment).navController
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +53,12 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
         val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance)
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
+    }
+
+    override fun onBackPressed() {
+        if (navController.currentDestination != navController.graph[R.id.timerFragment]){
+            super.onBackPressed()
+        }
     }
 
     companion object {
