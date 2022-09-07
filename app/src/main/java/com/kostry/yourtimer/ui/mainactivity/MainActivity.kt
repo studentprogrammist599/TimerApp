@@ -22,6 +22,13 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         createNotificationChannel()
+        checkTimerService()
+    }
+
+    private fun checkTimerService() {
+        if (isTimerServiceRunning()){
+            navController.navigate(R.id.timerFragment)
+        }
     }
 
     override fun startTimerService() {

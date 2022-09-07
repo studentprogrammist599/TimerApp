@@ -28,7 +28,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
     }
 
     private val args: Long by lazy {
-        arguments?.getLong(TIMER_FRAGMENT_ARGS_KEY) ?: throw RuntimeException("args is null")
+        arguments?.getLong(TIMER_FRAGMENT_ARGS_KEY) ?: 0
     }
     private val mainActivityCallback by lazy {
         activity as MainActivityCallback
