@@ -11,7 +11,7 @@ class MyTimer {
     val timerState = _timerState.asStateFlow()
 
     fun startTimer(millis: Long) {
-        if (timer == null && timerState.value !is TimerState.Running) {
+        if (timer == null && timerState.value !is TimerState.Running && millis != 0L) {
             timer?.cancel()
             timer = null
             timer = object : CountDownTimer(millis, TIMER_INTERVAL) {
@@ -28,9 +28,9 @@ class MyTimer {
 
     fun pauseTimer(millis: Long) {
         if (timer != null && timerState.value is TimerState.Running) {
-            _timerState.value = TimerState.Paused(millis)
             timer?.cancel()
             timer = null
+            _timerState.value = TimerState.Paused(millis)
         }
     }
 
