@@ -37,7 +37,7 @@ class TimerService : Service() {
             .provideAppComponent()
             .inject(this)
         super.onCreate()
-        startForeground(NOTIFICATION_ID, createNotification("Timer is not attached"))
+        startForeground(NOTIFICATION_ID, createNotification(TIMER_IS_STOPPED))
         log("onCreate")
 
     }
@@ -49,15 +49,15 @@ class TimerService : Service() {
                 when (state) {
                     is TimerState.Running -> {
                         log("onStartCommand -> TimerState.Running: ${state.millis.millisToStringFormat()}")
-                        sendNotification(state.millis.millisToStringFormat())
+                        sendNotification(state.millis)
                     }
                     is TimerState.Paused -> {
                         log("onStartCommand -> TimerState.Paused: ${state.millis.millisToStringFormat()}")
-                        sendNotification(state.millis.millisToStringFormat())
+                        sendNotification(state.millis)
                     }
                     is TimerState.Stopped -> {
                         log("onStartCommand -> TimerState.Finished")
-                        sendNotification("Timer is finished")
+                        sendNotification(TIMER_IS_STOPPED)
                         stopSelf()
                     }
                 }
@@ -78,36 +78,23 @@ class TimerService : Service() {
         Log.d("SERVICE_TAG", "MyForegroundService: $message")
     }
 
-    private fun sendNotification(message: String) {
+    private fun sendNotification(timeMillis: Long) {
         log("sendNotification")
         NotificationManagerCompat
             .from(this)
-            .notify(NOTIFICATION_ID, createNotification(message))
+            .notify(NOTIFICATION_ID, createNotification(timeMillis))
     }
 
-    private fun createNotification(message: String): Notification {
+    private fun createNotification(timeMillis: Long): Notification {
         log("createNotification")
-
-        val time: Long = when (val state = myTimer.timerState.value){
-            is TimerState.Running -> {
-                state.millis
-            }
-            is TimerState.Paused -> {
-                state.millis
-            }
-            is TimerState.Stopped -> {
-                0L
-            }
-        }
-
         val pendingIntent: PendingIntent = NavDeepLinkBuilder(this)
             .setGraph(R.navigation.main_nav_graph)
             .setDestination(R.id.timerFragment)
-            .setArguments(args = bundleOf(TimerFragment.TIMER_FRAGMENT_ARGS_KEY to time))
+            .setArguments(args = bundleOf(TimerFragment.TIMER_FRAGMENT_ARGS_KEY to timeMillis))
             .createPendingIntent()
 
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-            .setContentText(message)
+            .setContentText(timeMillis.millisToStringFormat())
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentIntent(pendingIntent)
             .setSilent(true)
@@ -117,6 +104,7 @@ class TimerService : Service() {
     }
 
     companion object {
+        private const val TIMER_IS_STOPPED: Long = 0L
         private const val NOTIFICATION_ID = 1
         fun newIntent(context: Context) = Intent(context, TimerService::class.java)
     }
