@@ -12,10 +12,7 @@ import com.kostry.yourtimer.databinding.FragmentTimerBinding
 import com.kostry.yourtimer.di.provider.TimerSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.ui.mainactivity.MainActivityCallback
-import com.kostry.yourtimer.util.TimerState
-import com.kostry.yourtimer.util.ViewModelFactory
-import com.kostry.yourtimer.util.mapStringFormatTimeToMillis
-import com.kostry.yourtimer.util.millisToStringFormat
+import com.kostry.yourtimer.util.*
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
@@ -28,7 +25,8 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
     }
 
     private val args: Long by lazy {
-        arguments?.getLong(TIMER_FRAGMENT_ARGS_KEY) ?: 0
+        arguments?.getLong(TIMER_FRAGMENT_ARGS_KEY)
+            ?: throw RuntimeException("TimerFragment args is null")
     }
     private val mainActivityCallback by lazy {
         activity as MainActivityCallback
@@ -74,23 +72,44 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
             viewModel.timerState.collectLatest { state ->
                 when (state) {
                     is TimerState.Running -> {
-                        binding.timerFragmentTextView.text = state.millis.millisToStringFormat()
-                        binding.timerFragmentButtonStartPause.text = getString(R.string.pause)
-                        binding.timerFragmentButtonCancel.visibility = View.VISIBLE
+                        renderState(
+                            time = state.millis.millisToStringFormat(),
+                            buttonStartPauseText = getString(R.string.pause),
+                            buttonCancelVisibility = View.VISIBLE,
+                            setProgress = getPercentProgressTime(state.millis, args)
+                        )
                     }
                     is TimerState.Paused -> {
-                        binding.timerFragmentTextView.text = state.millis.millisToStringFormat()
-                        binding.timerFragmentButtonStartPause.text = getString(R.string.start)
-                        binding.timerFragmentButtonCancel.visibility = View.VISIBLE
+                        renderState(
+                            time = state.millis.millisToStringFormat(),
+                            buttonStartPauseText = getString(R.string.start),
+                            buttonCancelVisibility = View.VISIBLE,
+                            setProgress = getPercentProgressTime(state.millis, args)
+                        )
                     }
                     is TimerState.Stopped -> {
-                        binding.timerFragmentTextView.text = getString(R.string.finished)
-                        binding.timerFragmentButtonStartPause.text = getString(R.string.back)
-                        binding.timerFragmentButtonCancel.visibility = View.GONE
+                        renderState(
+                            time = getString(R.string.finished),
+                            buttonStartPauseText = getString(R.string.back),
+                            buttonCancelVisibility = View.GONE,
+                            setProgress = 0
+                        )
                     }
                 }
             }
         }
+    }
+
+    private fun renderState(
+        time: String,
+        buttonStartPauseText: String,
+        buttonCancelVisibility: Int,
+        setProgress: Int
+    ) {
+        binding.timerFragmentTextView.text = time
+        binding.timerFragmentButtonStartPause.text = buttonStartPauseText
+        binding.timerFragmentButtonCancel.visibility = buttonCancelVisibility
+        binding.timerFragmentProgressBar.setProgress(setProgress, true)
     }
 
     private fun initButtonClickListener() {

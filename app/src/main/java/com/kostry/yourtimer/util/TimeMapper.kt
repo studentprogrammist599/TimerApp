@@ -20,3 +20,6 @@ fun String.mapStringFormatTimeToMillis(): Long {
 fun mapTimeToMillis(hour: Int, minutes: Int, seconds: Int): Long {
     return ((seconds * 1000) + (minutes * 1000 * 60) + (hour * 1000 * 60 * 60)).toLong()
 }
+
+fun getPercentProgressTime(actualTime: Long, startTIme: Long): Int =
+    (actualTime.toFloat() / startTIme.toFloat() * 100).toInt()
