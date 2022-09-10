@@ -43,12 +43,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun initNavigationToTimerFragment() {
         binding.homeFragmentQuickStartButton.setOnClickListener {
             val millis: Long = mapTimeToMillis(
-                hour = binding.homeFragmentQuickStartHourEditText.text.toString().toIntOrNull()
-                    ?: 0,
-                minutes = binding.homeFragmentQuickStartMinutesEditText.text.toString()
-                    .toIntOrNull() ?: 0,
-                seconds = binding.homeFragmentQuickStartSecondsEditText.text.toString()
-                    .toIntOrNull() ?: 0,
+                hour = binding.homeFragmentQuickStartHourEditText.text
+                    .toString().toIntOrNull() ?: 0,
+                minutes = binding.homeFragmentQuickStartMinutesEditText.text
+                    .toString().toIntOrNull() ?: 0,
+                seconds = binding.homeFragmentQuickStartSecondsEditText.text
+                    .toString().toIntOrNull() ?: 0,
             )
             if (millis != 0L) {
                 findNavController().navigate(
