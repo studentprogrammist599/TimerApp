@@ -16,34 +16,39 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="0000000" />
 
-    <Button
-        android:id="@+id/timer_fragment_button_start_pause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/timer_fragment_button_cancel"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="@string/start" />
-
-    <Button
-        android:id="@+id/timer_fragment_button_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/stop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/timer_fragment_button_start_pause" />
-
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/timer_fragment_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:trackThickness="4dp"
-        app:indicatorSize="200dp"
         app:indicatorDirectionCircular="counterclockwise"
+        app:indicatorSize="200dp"
+        app:trackCornerRadius="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:trackThickness="4dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/timer_fragment_negative_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stop"
+        app:cornerRadius="24dp"
+        app:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/timer_fragment_positive_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/timer_fragment_positive_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cornerRadius="24dp"
+        app:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/timer_fragment_negative_button"
+        tools:text="@string/start" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

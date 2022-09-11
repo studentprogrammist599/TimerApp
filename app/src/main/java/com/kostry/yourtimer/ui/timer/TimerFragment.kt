@@ -107,13 +107,13 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         setProgress: Int
     ) {
         binding.timerFragmentTextView.text = time
-        binding.timerFragmentButtonStartPause.text = buttonStartPauseText
-        binding.timerFragmentButtonCancel.visibility = buttonCancelVisibility
+        binding.timerFragmentPositiveButton.text = buttonStartPauseText
+        binding.timerFragmentNegativeButton.visibility = buttonCancelVisibility
         binding.timerFragmentProgressBar.setProgress(setProgress, true)
     }
 
     private fun initButtonClickListener() {
-        binding.timerFragmentButtonStartPause.setOnClickListener {
+        binding.timerFragmentPositiveButton.setOnClickListener {
             when (viewModel.timerState.value) {
                 is TimerState.Running -> {
                     viewModel.pauseTimer(
@@ -130,7 +130,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                 }
             }
         }
-        binding.timerFragmentButtonCancel.setOnClickListener {
+        binding.timerFragmentNegativeButton.setOnClickListener {
             viewModel.stopTimer()
             findNavController().popBackStack()
         }
