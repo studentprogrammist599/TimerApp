@@ -21,9 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/timer_fragment_button_cancel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timer_fragment_text_view"
         tools:text="@string/start" />
 
     <Button
@@ -32,8 +31,8 @@
         android:layout_height="wrap_content"
         android:text="@string/stop"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/timer_fragment_button_start_pause" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/timer_fragment_progress_bar"
