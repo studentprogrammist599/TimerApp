@@ -12,6 +12,7 @@ import com.kostry.yourtimer.databinding.FragmentHomeBinding
 import com.kostry.yourtimer.di.provider.HomeSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.ui.timer.TimerFragment
+import com.kostry.yourtimer.util.MinMaxTimeFilter
 import com.kostry.yourtimer.util.ViewModelFactory
 import com.kostry.yourtimer.util.mapTimeToMillis
 import javax.inject.Inject
@@ -38,6 +39,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initNavigationToTimerFragment()
+        initEditTextFilters()
+    }
+
+    private fun initEditTextFilters() {
+        binding.homeFragmentQuickStartSecondsEditText.filters = arrayOf(MinMaxTimeFilter())
+        binding.homeFragmentQuickStartMinutesEditText.filters = arrayOf(MinMaxTimeFilter())
     }
 
     private fun initNavigationToTimerFragment() {
