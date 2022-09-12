@@ -15,7 +15,7 @@ class MinMaxTimeFilter() : InputFilter {
         dStart: Int,
         dEnd: Int,
     ): CharSequence? {
-        val input = Integer.parseInt(dest.toString() + source.toString())
+        val input = (dest.toString() + source.toString()).toIntOrNull()
         if (input in intMin..intMax) {
             return null
         }
