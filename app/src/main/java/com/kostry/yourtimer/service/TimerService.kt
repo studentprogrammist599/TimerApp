@@ -2,9 +2,12 @@ package com.kostry.yourtimer.service
 
 import android.app.Notification
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.Service
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -89,6 +92,19 @@ class TimerService : Service() {
 
     private fun createNotification(timeMillis: Long): Notification {
         log("createNotification")
+        initBroadcastReceiver()
+
+        val stopIntent = Intent(ACTION_FROM_NOTIFICATION).apply {
+            putExtra(TIMER_COMMAND_EXTRA, TIMER_COMMAND_STOP)
+            putExtra(TIMER_MILLIS_EXTRA, timeMillis)
+        }
+        val stopPendingAction = PendingIntent.getBroadcast(
+            this,
+            0,
+            stopIntent,
+            FLAG_IMMUTABLE
+        )
+
         val pendingIntent: PendingIntent = NavDeepLinkBuilder(this)
             .setGraph(R.navigation.main_nav_graph)
             .setDestination(R.id.timerFragment)
@@ -102,10 +118,55 @@ class TimerService : Service() {
             .setSilent(true)
             .setPriority(NotificationCompat.PRIORITY_MIN)
             .setAutoCancel(true)
+            .addAction(
+                R.drawable.ic_baseline_close_24,
+                applicationContext.getString(R.string.stop),
+                stopPendingAction
+            )
             .build()
     }
 
+    private fun initBroadcastReceiver() {
+        log("initBroadcastReceiver")
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(ACTION_FROM_NOTIFICATION)
+        val broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                log("broadcastReceiver -> onReceive")
+                val command: Int =
+                    intent?.extras?.getInt(TIMER_COMMAND_EXTRA) ?: 0
+                val millis: Long =
+                    intent?.extras?.getLong(TIMER_MILLIS_EXTRA) ?: 0
+                when (command) {
+                    TIMER_COMMAND_START_PAUSE -> {
+                        log("broadcastReceiver -> TIMER_START_PAUSE")
+                        when (myTimer.timerState.value) {
+                            is TimerState.Running -> {
+                                myTimer.pauseTimer(millis)
+                            }
+                            is TimerState.Paused -> {
+                                myTimer.startTimer(millis)
+                            }
+                            is TimerState.Stopped -> {}
+                        }
+                    }
+                    TIMER_COMMAND_STOP -> {
+                        log("broadcastReceiver -> TIMER_STOP")
+                        myTimer.stopTimer()
+                    }
+                }
+            }
+        }
+        this.registerReceiver(broadcastReceiver, intentFilter)
+    }
+
     companion object {
+
+        private const val ACTION_FROM_NOTIFICATION = "ACTION_FROM_NOTIFICATION"
+        private const val TIMER_MILLIS_EXTRA = "TIMER_MILLIS_EXTRA"
+        private const val TIMER_COMMAND_EXTRA = "TIMER_COMMAND_EXTRA"
+        private const val TIMER_COMMAND_START_PAUSE = 1
+        private const val TIMER_COMMAND_STOP = 2
         private const val TIMER_IS_STOPPED: Long = 0L
         fun newIntent(context: Context) = Intent(context, TimerService::class.java)
     }
