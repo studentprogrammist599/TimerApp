@@ -12,8 +12,10 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.os.bundleOf
 import androidx.navigation.NavDeepLinkBuilder
 import com.kostry.yourtimer.R
+import com.kostry.yourtimer.broadcastreceiver.AlarmReceiver
 import com.kostry.yourtimer.di.provider.AppComponentProvider
 import com.kostry.yourtimer.ui.mainactivity.MainActivity.Companion.NOTIFICATION_CHANNEL_ID
+import com.kostry.yourtimer.ui.mainactivity.MainActivity.Companion.TIMER_NOTIFICATION_ID
 import com.kostry.yourtimer.ui.timer.TimerFragment
 import com.kostry.yourtimer.util.MyTimer
 import com.kostry.yourtimer.util.TimerState
@@ -37,7 +39,7 @@ class TimerService : Service() {
             .provideAppComponent()
             .inject(this)
         super.onCreate()
-        startForeground(NOTIFICATION_ID, createNotification(TIMER_IS_STOPPED))
+        startForeground(TIMER_NOTIFICATION_ID, createNotification(TIMER_IS_STOPPED))
         log("onCreate")
 
     }
@@ -57,7 +59,7 @@ class TimerService : Service() {
                     }
                     is TimerState.Stopped -> {
                         log("onStartCommand -> TimerState.Finished")
-                        sendNotification(TIMER_IS_STOPPED)
+                        sendBroadcast(AlarmReceiver.newIntent(this@TimerService))
                         stopSelf()
                     }
                 }
@@ -82,7 +84,7 @@ class TimerService : Service() {
         log("sendNotification")
         NotificationManagerCompat
             .from(this)
-            .notify(NOTIFICATION_ID, createNotification(timeMillis))
+            .notify(TIMER_NOTIFICATION_ID, createNotification(timeMillis))
     }
 
     private fun createNotification(timeMillis: Long): Notification {
@@ -105,7 +107,6 @@ class TimerService : Service() {
 
     companion object {
         private const val TIMER_IS_STOPPED: Long = 0L
-        private const val NOTIFICATION_ID = 1
         fun newIntent(context: Context) = Intent(context, TimerService::class.java)
     }
 }
