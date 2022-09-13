@@ -6,11 +6,13 @@ import android.app.NotificationManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.get
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.service.TimerService
+import com.kostry.yourtimer.ui.timer.TimerFragment
 
 class MainActivity : AppCompatActivity(), MainActivityCallback {
 
@@ -58,7 +60,10 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
 
     private fun checkTimerService() {
         if (isTimerServiceRunning() && !currentFragmentIsTimerFragment()){
-            navController.navigate(R.id.timerFragment)
+            navController.navigate(
+                R.id.timerFragment,
+                bundleOf(TimerFragment.TIMER_FRAGMENT_ARGS_KEY to 0L)
+            )
         }
     }
 
