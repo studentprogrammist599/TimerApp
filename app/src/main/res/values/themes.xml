@@ -13,4 +13,9 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="NumberPickerTheme" parent="Theme.YourTimer">
+        <!-- NumberPicker divider color -->
+        <item name="colorControlNormal">#00FF0000</item>
+    </style>
 </resources>

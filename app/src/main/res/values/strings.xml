@@ -10,4 +10,7 @@
     <string name="finished">Finished</string>
     <string name="back">Back</string>
     <string name="time_is_out">Time is out</string>
+    <string name="hour">hour</string>
+    <string name="min">min</string>
+    <string name="sec">sec</string>
 </resources>

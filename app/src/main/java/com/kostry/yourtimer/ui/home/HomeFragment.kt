@@ -12,7 +12,6 @@ import com.kostry.yourtimer.databinding.FragmentHomeBinding
 import com.kostry.yourtimer.di.provider.HomeSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.ui.timer.TimerFragment
-import com.kostry.yourtimer.util.MinMaxTimeFilter
 import com.kostry.yourtimer.util.ViewModelFactory
 import com.kostry.yourtimer.util.mapTimeToMillis
 import javax.inject.Inject
@@ -39,24 +38,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initNavigationToTimerFragment()
-        initEditTextFilters()
+        initTimePicker()
+
+
     }
 
-    private fun initEditTextFilters() {
-        binding.homeFragmentQuickStartSecondsEditText.filters = arrayOf(MinMaxTimeFilter())
-        binding.homeFragmentQuickStartMinutesEditText.filters = arrayOf(MinMaxTimeFilter())
+    private fun initTimePicker() {
+        with(binding.homeFragmentQuickStartTimePicker) {
+            hoursPicker.maxValue = 99
+            hoursPicker.minValue = 0
+            minutesPicker.maxValue = 59
+            minutesPicker.minValue = 0
+            secondsPicker.maxValue = 59
+            secondsPicker.minValue = 0
+        }
     }
 
     private fun initNavigationToTimerFragment() {
         binding.homeFragmentQuickStartButton.setOnClickListener {
-            val millis: Long = mapTimeToMillis(
-                hour = binding.homeFragmentQuickStartHourEditText.text
-                    .toString().toIntOrNull() ?: 0,
-                minutes = binding.homeFragmentQuickStartMinutesEditText.text
-                    .toString().toIntOrNull() ?: 0,
-                seconds = binding.homeFragmentQuickStartSecondsEditText.text
-                    .toString().toIntOrNull() ?: 0,
-            )
+            val seconds = binding.homeFragmentQuickStartTimePicker.secondsPicker.value
+            val minutes = binding.homeFragmentQuickStartTimePicker.minutesPicker.value
+            val hours = binding.homeFragmentQuickStartTimePicker.hoursPicker.value
+            val millis: Long = mapTimeToMillis(hours, minutes, seconds)
             if (millis != 0L) {
                 findNavController().navigate(
                     R.id.action_homeFragment_to_timerFragment,
