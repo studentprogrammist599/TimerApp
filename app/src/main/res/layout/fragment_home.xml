@@ -17,6 +17,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <include
+        layout="@layout/timer_view"
+        android:id="@+id/home_fragment_quick_start_timer_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_fragment_quick_start_text_view"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/home_fragment_quick_start_button"
         android:layout_width="wrap_content"
@@ -26,15 +35,6 @@
         app:elevation="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_fragment_quick_start_time_picker" />
-
-    <include
-        layout="@layout/timer_view"
-        android:id="@+id/home_fragment_quick_start_time_picker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_fragment_quick_start_text_view"/>
+        app:layout_constraintTop_toBottomOf="@id/home_fragment_quick_start_timer_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
