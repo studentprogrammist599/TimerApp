@@ -44,7 +44,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initTimePicker() {
-        with(binding.homeFragmentQuickStartTimePicker) {
+        with(binding.homeFragmentQuickStartTimerView) {
             hoursPicker.maxValue = 99
             hoursPicker.minValue = 0
             minutesPicker.maxValue = 59
@@ -56,9 +56,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun initNavigationToTimerFragment() {
         binding.homeFragmentQuickStartButton.setOnClickListener {
-            val seconds = binding.homeFragmentQuickStartTimePicker.secondsPicker.value
-            val minutes = binding.homeFragmentQuickStartTimePicker.minutesPicker.value
-            val hours = binding.homeFragmentQuickStartTimePicker.hoursPicker.value
+            val seconds = binding.homeFragmentQuickStartTimerView.secondsPicker.value
+            val minutes = binding.homeFragmentQuickStartTimerView.minutesPicker.value
+            val hours = binding.homeFragmentQuickStartTimerView.hoursPicker.value
             val millis: Long = mapTimeToMillis(hours, minutes, seconds)
             if (millis != 0L) {
                 findNavController().navigate(
