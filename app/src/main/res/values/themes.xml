@@ -18,7 +18,7 @@
 
     <style name="NumberPickerTheme" parent="Theme.YourTimer">
         <item name="colorControlNormal">#00000000</item>
-        <item name="android:textColor">@color/primary_text_color</item>
+        <item name="android:textColorPrimary">@color/primary_text_color</item>
         <item name="android:textSize">@dimen/timer_picker_text_size</item>
     </style>
 </resources>
