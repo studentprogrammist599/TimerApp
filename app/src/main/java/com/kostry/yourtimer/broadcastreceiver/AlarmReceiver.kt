@@ -11,8 +11,8 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavDeepLinkBuilder
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.ui.mainactivity.MainActivity
-import com.kostry.yourtimer.ui.mainactivity.MainActivity.Companion.TIMER_NOTIFICATION_ID
 import com.kostry.yourtimer.ui.timer.TimerFragment
+import com.kostry.yourtimer.util.TIMER_NOTIFICATION_ID
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {

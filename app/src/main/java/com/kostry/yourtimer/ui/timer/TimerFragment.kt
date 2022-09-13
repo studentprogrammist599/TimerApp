@@ -141,12 +141,12 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
 
     private fun initTimePicker() {
         with(binding.timerFragmentTimerView) {
-            hoursPicker.maxValue = 99
-            hoursPicker.minValue = 0
-            minutesPicker.maxValue = 59
-            minutesPicker.minValue = 0
-            secondsPicker.maxValue = 59
-            secondsPicker.minValue = 0
+            hoursPicker.maxValue = TIMER_HOUR_PICKER_MAX_VALUE
+            hoursPicker.minValue = TIMER_HOUR_PICKER_MIN_VALUE
+            minutesPicker.maxValue = TIMER_MINUTE_SECOND_PICKER_MAX_VALUE
+            minutesPicker.minValue = TIMER_MINUTE_SECOND_PICKER_MIN_VALUE
+            secondsPicker.maxValue = TIMER_MINUTE_SECOND_PICKER_MAX_VALUE
+            secondsPicker.minValue = TIMER_MINUTE_SECOND_PICKER_MIN_VALUE
         }
     }
 

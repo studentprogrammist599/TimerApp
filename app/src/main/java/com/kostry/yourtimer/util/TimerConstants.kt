@@ -1,0 +1,8 @@
+package com.kostry.yourtimer.util
+
+const val TIMER_NOTIFICATION_ID = 1
+const val TIMER_MINUTE_SECOND_PICKER_MAX_VALUE = 59
+const val TIMER_MINUTE_SECOND_PICKER_MIN_VALUE = 0
+const val TIMER_HOUR_PICKER_MAX_VALUE = 99
+const val TIMER_HOUR_PICKER_MIN_VALUE = 0
+const val TIMER_PICKER_VIBRATE_TIME = 5L

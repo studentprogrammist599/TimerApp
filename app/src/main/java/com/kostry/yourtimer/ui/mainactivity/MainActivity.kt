@@ -79,6 +79,5 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
 
     companion object {
         const val NOTIFICATION_CHANNEL_ID = "NOTIFICATION_CHANNEL_ID"
-        const val TIMER_NOTIFICATION_ID = 1
     }
 }

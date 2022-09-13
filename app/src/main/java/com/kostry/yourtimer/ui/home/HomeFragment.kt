@@ -14,8 +14,7 @@ import com.kostry.yourtimer.databinding.FragmentHomeBinding
 import com.kostry.yourtimer.di.provider.HomeSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.ui.timer.TimerFragment
-import com.kostry.yourtimer.util.ViewModelFactory
-import com.kostry.yourtimer.util.mapTimeToMillis
+import com.kostry.yourtimer.util.*
 import javax.inject.Inject
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
@@ -41,29 +40,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
         initNavigationToTimerFragment()
         initTimePicker()
-
-
     }
 
     private fun initTimePicker() {
         with(binding.homeFragmentQuickStartTimerView) {
-            hoursPicker.maxValue = 99
-            hoursPicker.minValue = 0
-            minutesPicker.maxValue = 59
-            minutesPicker.minValue = 0
-            secondsPicker.maxValue = 59
-            secondsPicker.minValue = 0
+            hoursPicker.maxValue = TIMER_HOUR_PICKER_MAX_VALUE
+            hoursPicker.minValue = TIMER_HOUR_PICKER_MIN_VALUE
+            minutesPicker.maxValue = TIMER_MINUTE_SECOND_PICKER_MAX_VALUE
+            minutesPicker.minValue = TIMER_MINUTE_SECOND_PICKER_MIN_VALUE
+            secondsPicker.maxValue = TIMER_MINUTE_SECOND_PICKER_MAX_VALUE
+            secondsPicker.minValue = TIMER_MINUTE_SECOND_PICKER_MIN_VALUE
             val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             hoursPicker.setOnValueChangedListener { _, _, _ ->
-                vibrator.vibrate(VibrationEffect.createOneShot(5,
+                vibrator.vibrate(VibrationEffect.createOneShot(TIMER_PICKER_VIBRATE_TIME,
                     VibrationEffect.DEFAULT_AMPLITUDE))
             }
             minutesPicker.setOnValueChangedListener { _, _, _ ->
-                vibrator.vibrate(VibrationEffect.createOneShot(5,
+                vibrator.vibrate(VibrationEffect.createOneShot(TIMER_PICKER_VIBRATE_TIME,
                     VibrationEffect.DEFAULT_AMPLITUDE))
             }
             secondsPicker.setOnValueChangedListener { _, _, _ ->
-                vibrator.vibrate(VibrationEffect.createOneShot(5,
+                vibrator.vibrate(VibrationEffect.createOneShot(TIMER_PICKER_VIBRATE_TIME,
                     VibrationEffect.DEFAULT_AMPLITUDE))
             }
         }

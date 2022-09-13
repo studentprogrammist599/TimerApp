@@ -18,9 +18,9 @@ import com.kostry.yourtimer.R
 import com.kostry.yourtimer.broadcastreceiver.AlarmReceiver
 import com.kostry.yourtimer.di.provider.AppComponentProvider
 import com.kostry.yourtimer.ui.mainactivity.MainActivity.Companion.NOTIFICATION_CHANNEL_ID
-import com.kostry.yourtimer.ui.mainactivity.MainActivity.Companion.TIMER_NOTIFICATION_ID
 import com.kostry.yourtimer.ui.timer.TimerFragment
 import com.kostry.yourtimer.util.MyTimer
+import com.kostry.yourtimer.util.TIMER_NOTIFICATION_ID
 import com.kostry.yourtimer.util.TimerState
 import com.kostry.yourtimer.util.millisToStringFormat
 import kotlinx.coroutines.CoroutineScope
