@@ -77,7 +77,8 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                             timeMillis = state.millis,
                             buttonStartPauseText = getString(R.string.pause),
                             buttonCancelVisibility = View.VISIBLE,
-                            setProgress = getPercentProgressTime(state.millis, args)
+                            setProgress = getPercentProgressTime(state.millis, args),
+                            positiveButtonColor = requireContext().getColor(R.color.primary_button_color),
                         )
                     }
                     is TimerState.Paused -> {
@@ -85,7 +86,8 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                             timeMillis = state.millis,
                             buttonStartPauseText = getString(R.string.start),
                             buttonCancelVisibility = View.VISIBLE,
-                            setProgress = getPercentProgressTime(state.millis, args)
+                            setProgress = getPercentProgressTime(state.millis, args),
+                            positiveButtonColor = requireContext().getColor(R.color.third_button_color),
                         )
                     }
                     is TimerState.Stopped -> {
@@ -93,7 +95,8 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                             timeMillis = 0,
                             buttonStartPauseText = getString(R.string.back),
                             buttonCancelVisibility = View.GONE,
-                            setProgress = 0
+                            setProgress = 0,
+                            positiveButtonColor = requireContext().getColor(R.color.primary_button_color),
                         )
                     }
                 }
@@ -106,11 +109,14 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         buttonStartPauseText: String,
         buttonCancelVisibility: Int,
         setProgress: Int,
+        positiveButtonColor: Int,
     ) {
         setTime(timeMillis)
         binding.timerFragmentPositiveButton.text = buttonStartPauseText
         binding.timerFragmentNegativeButton.visibility = buttonCancelVisibility
         binding.timerFragmentProgressBar.setProgress(setProgress, true)
+
+        binding.timerFragmentPositiveButton.setBackgroundColor(positiveButtonColor)
     }
 
     private fun initButtonClickListener() {

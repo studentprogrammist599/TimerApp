@@ -4,37 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#FF1616"
-    android:foregroundTint="#104BDF"
+    android:background="@color/layout_background"
     tools:context=".ui.home.HomeFragment">
 
     <TextView
         android:id="@+id/home_fragment_quick_start_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_xl"
         android:text="@string/quick_start"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/primary_text_color"
+        android:textSize="@dimen/timer_description_text_size"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        layout="@layout/timer_view"
         android:id="@+id/home_fragment_quick_start_timer_view"
+        layout="@layout/timer_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_xxl"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_fragment_quick_start_text_view"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_fragment_quick_start_text_view" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/home_fragment_quick_start_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_xxl"
         android:text="@string/start"
-        app:cornerRadius="24dp"
-        app:elevation="8dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@color/primary_button_color"
+        android:textColor="@color/secondary_text_color"
+        android:textSize="@dimen/button_text_size"
+        app:cornerRadius="@dimen/button_corner_radius"
+        app:elevation="@dimen/button_elevation"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_fragment_quick_start_timer_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
