@@ -47,6 +47,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         if (viewModel.timerState.value !is TimerState.Paused && savedInstanceState == null) {
             viewModel.startTimer(args)
         }
+        initTimePicker()
         initViewState()
         initButtonClickListener()
     }
@@ -73,7 +74,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                 when (state) {
                     is TimerState.Running -> {
                         renderState(
-                            time = state.millis.millisToStringFormat(),
+                            timeMillis = state.millis,
                             buttonStartPauseText = getString(R.string.pause),
                             buttonCancelVisibility = View.VISIBLE,
                             setProgress = getPercentProgressTime(state.millis, args)
@@ -81,7 +82,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                     }
                     is TimerState.Paused -> {
                         renderState(
-                            time = state.millis.millisToStringFormat(),
+                            timeMillis = state.millis,
                             buttonStartPauseText = getString(R.string.start),
                             buttonCancelVisibility = View.VISIBLE,
                             setProgress = getPercentProgressTime(state.millis, args)
@@ -89,7 +90,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                     }
                     is TimerState.Stopped -> {
                         renderState(
-                            time = getString(R.string.finished),
+                            timeMillis = 0,
                             buttonStartPauseText = getString(R.string.back),
                             buttonCancelVisibility = View.GONE,
                             setProgress = 0
@@ -101,12 +102,12 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
     }
 
     private fun renderState(
-        time: String,
+        timeMillis: Long,
         buttonStartPauseText: String,
         buttonCancelVisibility: Int,
-        setProgress: Int
+        setProgress: Int,
     ) {
-        binding.timerFragmentTextView.text = time
+        setTime(timeMillis)
         binding.timerFragmentPositiveButton.text = buttonStartPauseText
         binding.timerFragmentNegativeButton.visibility = buttonCancelVisibility
         binding.timerFragmentProgressBar.setProgress(setProgress, true)
@@ -116,14 +117,10 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         binding.timerFragmentPositiveButton.setOnClickListener {
             when (viewModel.timerState.value) {
                 is TimerState.Running -> {
-                    viewModel.pauseTimer(
-                        binding.timerFragmentTextView.text.toString().mapStringFormatTimeToMillis()
-                    )
+                    viewModel.pauseTimer(getTime())
                 }
                 is TimerState.Paused -> {
-                    viewModel.startTimer(
-                        binding.timerFragmentTextView.text.toString().mapStringFormatTimeToMillis()
-                    )
+                    viewModel.startTimer(getTime())
                 }
                 is TimerState.Stopped -> {
                     findNavController().popBackStack()
@@ -133,6 +130,31 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         binding.timerFragmentNegativeButton.setOnClickListener {
             viewModel.stopTimer()
             findNavController().popBackStack()
+        }
+    }
+
+    private fun initTimePicker() {
+        with(binding.timerFragmentTimerView) {
+            hoursPicker.maxValue = 99
+            hoursPicker.minValue = 0
+            minutesPicker.maxValue = 59
+            minutesPicker.minValue = 0
+            secondsPicker.maxValue = 59
+            secondsPicker.minValue = 0
+        }
+    }
+
+    private fun setTime(timeMillis: Long) {
+        with(binding.timerFragmentTimerView) {
+            hoursPicker.value = timeMillis.fromMillisGetHours().toInt()
+            minutesPicker.value = timeMillis.fromMillisGetMinutes().toInt()
+            secondsPicker.value = timeMillis.fromMillisGetSeconds().toInt()
+        }
+    }
+
+    private fun getTime(): Long {
+        with(binding.timerFragmentTimerView) {
+            return mapTimeToMillis(hoursPicker.value, minutesPicker.value, secondsPicker.value)
         }
     }
 
