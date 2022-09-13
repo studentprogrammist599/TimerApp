@@ -2,6 +2,8 @@ package com.kostry.yourtimer.ui.home
 
 import android.content.Context
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
@@ -51,6 +53,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             minutesPicker.minValue = 0
             secondsPicker.maxValue = 59
             secondsPicker.minValue = 0
+            val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            hoursPicker.setOnValueChangedListener { _, _, _ ->
+                vibrator.vibrate(VibrationEffect.createOneShot(5,
+                    VibrationEffect.DEFAULT_AMPLITUDE))
+            }
+            minutesPicker.setOnValueChangedListener { _, _, _ ->
+                vibrator.vibrate(VibrationEffect.createOneShot(5,
+                    VibrationEffect.DEFAULT_AMPLITUDE))
+            }
+            secondsPicker.setOnValueChangedListener { _, _, _ ->
+                vibrator.vibrate(VibrationEffect.createOneShot(5,
+                    VibrationEffect.DEFAULT_AMPLITUDE))
+            }
         }
     }
 
