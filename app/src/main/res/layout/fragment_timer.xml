@@ -29,44 +29,31 @@
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/timer_fragment_progress_bar"
+        style="@style/ProgressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:indicatorDirectionCircular="counterclockwise"
-        app:indicatorSize="@dimen/progress_bar_indicator_size"
-        app:trackColor="@color/progress_bar_track_color"
-        app:indicatorColor="@color/progress_bar_indicator_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:trackCornerRadius="@dimen/progress_bar_track_corner_radius"
-        app:trackThickness="@dimen/progress_bar_track_thickness" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/timer_fragment_negative_button"
+        style="@style/SecondaryButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_xxl"
+        android:layout_marginBottom="@dimen/_16dp"
         android:text="@string/stop"
-        android:backgroundTint="@color/secondary_button_color"
-        android:textColor="@color/primary_text_color"
-        android:textSize="@dimen/button_text_size"
-        app:cornerRadius="@dimen/button_corner_radius"
-        app:elevation="@dimen/button_elevation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/timer_fragment_positive_button"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/timer_fragment_positive_button"
+        style="@style/PrimaryButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_xxl"
-        app:cornerRadius="@dimen/button_corner_radius"
-        app:elevation="@dimen/button_elevation"
-        android:backgroundTint="@color/primary_button_color"
-        android:textColor="@color/secondary_text_color"
-        android:textSize="@dimen/button_text_size"
+        android:layout_marginBottom="@dimen/_16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/timer_fragment_negative_button"

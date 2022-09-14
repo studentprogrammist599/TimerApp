@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="timer_picker_text_size">36sp</dimen>
-    <dimen name="timer_description_text_size">20sp</dimen>
-    <dimen name="button_corner_radius">24dp</dimen>
-    <dimen name="button_elevation">8dp</dimen>
-    <dimen name="margin_s">2dp</dimen>
-    <dimen name="margin_xs">4dp</dimen>
-    <dimen name="margin_m">6dp</dimen>
-    <dimen name="margin_xm">8dp</dimen>
-    <dimen name="margin_l">10dp</dimen>
-    <dimen name="margin_xl">12dp</dimen>
-    <dimen name="margin_xxl">14dp</dimen>
-    <dimen name="button_text_size">16sp</dimen>
-    <dimen name="progress_bar_indicator_size">300dp</dimen>
-    <dimen name="progress_bar_track_corner_radius">24dp</dimen>
-    <dimen name="progress_bar_track_thickness">4dp</dimen>
+    <dimen name="text_16_sp">16sp</dimen>
+    <dimen name="text_20_sp">20sp</dimen>
+    <dimen name="text_36_sp">36sp</dimen>
+
+    <dimen name="_4dp">4dp</dimen>
+    <dimen name="_8dp">8dp</dimen>
+    <dimen name="_16dp">16dp</dimen>
+    <dimen name="_300dp">300dp</dimen>
 </resources>

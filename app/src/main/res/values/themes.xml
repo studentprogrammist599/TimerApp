@@ -19,6 +19,33 @@
     <style name="NumberPickerTheme" parent="Theme.YourTimer">
         <item name="colorControlNormal">#00000000</item>
         <item name="android:textColorPrimary">@color/primary_text_color</item>
-        <item name="android:textSize">@dimen/timer_picker_text_size</item>
+        <item name="android:textSize">@dimen/text_36_sp</item>
+    </style>
+
+    <style name="PrimaryButtonStyle">
+        <item name="android:backgroundTint">@color/primary_button_color</item>
+        <item name="android:textColor">@color/secondary_text_color</item>
+        <item name="android:textSize">@dimen/text_16_sp</item>
+        <item name="cornerRadius">@dimen/_16dp</item>
+        <item name="elevation">@dimen/_8dp</item>
+    </style>
+
+    <style name="SecondaryButtonStyle" parent="PrimaryButtonStyle">
+        <item name="android:backgroundTint">@color/secondary_button_color</item>
+        <item name="android:textColor">@color/primary_text_color</item>
+    </style>
+
+    <style name="PrimaryTextViewStyle">
+        <item name="android:textColor">@color/primary_text_color</item>
+        <item name="android:textSize">@dimen/text_20_sp</item>
+    </style>
+
+    <style name="ProgressBarStyle">
+        <item name="indicatorColor">@color/progress_bar_indicator_color</item>
+        <item name="indicatorDirectionCircular">counterclockwise</item>
+        <item name="indicatorSize">@dimen/_300dp</item>
+        <item name="trackColor">@color/progress_bar_track_color</item>
+        <item name="trackCornerRadius">@dimen/_16dp</item>
+        <item name="trackThickness">@dimen/_4dp</item>
     </style>
 </resources>
