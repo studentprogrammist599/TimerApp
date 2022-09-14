@@ -26,7 +26,7 @@ class MyTimer {
 
     fun stopTimer(){
         repsCount = 0
-        finishTimer()
+        onFinishTimer()
     }
 
     fun pauseTimer() {
@@ -52,16 +52,21 @@ class MyTimer {
 
                 override fun onFinish() {
                     repsCount -= 1
-                    finishTimer()
+                    _timerState.value = TimerState.OnFinished
+                    onFinishTimer()
                 }
             }.start()
         }
     }
 
-    private fun finishTimer() {
+    private fun onFinishTimer() {
         timer?.cancel()
         timer = null
-        _timerState.value = TimerState.Stopped
+        if (repsCount > 0){
+            startTimer(startTimeMillis)
+        }else {
+            _timerState.value = TimerState.Stopped
+        }
     }
 
     companion object {
