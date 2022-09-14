@@ -28,7 +28,7 @@ class AlarmReceiver : BroadcastReceiver() {
         val pendingIntent: PendingIntent = NavDeepLinkBuilder(context)
             .setGraph(R.navigation.main_nav_graph)
             .setDestination(R.id.timerFragment)
-            .setArguments(args = bundleOf(TimerFragment.TIMER_FRAGMENT_ARGS_KEY to 0))
+            .setArguments(args = bundleOf(TimerFragment.TIMER_FRAGMENT_TIME_ARGS_KEY to 0))
             .createPendingIntent()
 
         return NotificationCompat.Builder(context, MainActivity.NOTIFICATION_CHANNEL_ID)

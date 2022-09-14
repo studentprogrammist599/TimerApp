@@ -6,35 +6,53 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class MyTimer {
 
+    private var repsCount = 0
     private var timer: CountDownTimer? = null
     private val _timerState = MutableStateFlow<TimerState>(TimerState.Stopped)
     val timerState = _timerState.asStateFlow()
 
-    fun startTimer(millis: Long) {
-        if (timer == null && timerState.value !is TimerState.Running && millis != 0L) {
+    fun runTimer(reps: Int, millis: Long){
+        repsCount = reps
+        startTimer(millis)
+    }
+
+    fun restartTimer(){
+        if (timer == null && timerState.value is TimerState.Paused && repsCount != 0){
+            startTimer((timerState.value as TimerState.Paused).millis)
+        }
+    }
+
+    fun stopTimer(){
+        repsCount = 0
+        finishTimer()
+    }
+
+    private fun startTimer(millis: Long) {
+        if (timer == null && timerState.value !is TimerState.Running && millis != 0L && repsCount != 0) {
             timer?.cancel()
             timer = null
             timer = object : CountDownTimer(millis, TIMER_INTERVAL) {
                 override fun onTick(millisUntilFinished: Long) {
-                    _timerState.value = TimerState.Running(millisUntilFinished)
+                    _timerState.value = TimerState.Running(repsCount, millisUntilFinished)
                 }
 
                 override fun onFinish() {
-                    stopTimer()
+                    repsCount -= 1
+                    finishTimer()
                 }
             }.start()
         }
     }
 
-    fun pauseTimer(millis: Long) {
+    fun pauseTimer() {
         if (timer != null && timerState.value is TimerState.Running) {
             timer?.cancel()
             timer = null
-            _timerState.value = TimerState.Paused(millis)
+            _timerState.value = TimerState.Paused(repsCount, (timerState.value as TimerState.Running).millis)
         }
     }
 
-    fun stopTimer(){
+    private fun finishTimer() {
         timer?.cancel()
         timer = null
         _timerState.value = TimerState.Stopped

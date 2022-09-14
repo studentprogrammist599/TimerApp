@@ -5,6 +5,16 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/reps_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reps"
+        style="?attrPrimaryTextView"
+        app:layout_constraintEnd_toEndOf="@id/reps_picker"
+        app:layout_constraintStart_toStartOf="@id/reps_picker"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/hours_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,11 +45,31 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <NumberPicker
-        android:id="@+id/hours_picker"
+        android:id="@+id/reps_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:theme="?attrNumberPicker"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reps_text_view" />
+
+    <TextView
+        android:id="@+id/reps_dots_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time_dots"
+        style="?attrPrimaryTextView"
+        android:textSize="@dimen/text_36_sp"
+        app:layout_constraintBottom_toBottomOf="@id/reps_picker"
+        app:layout_constraintStart_toEndOf="@id/reps_picker"
+        app:layout_constraintTop_toTopOf="@id/reps_picker"
+        app:layout_constraintVertical_bias="0.49" />
+
+    <NumberPicker
+        android:id="@+id/hours_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="?attrNumberPicker"
+        app:layout_constraintStart_toEndOf="@id/reps_dots_text_view"
         app:layout_constraintTop_toBottomOf="@id/hours_text_view" />
 
     <TextView

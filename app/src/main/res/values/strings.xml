@@ -13,4 +13,5 @@
     <string name="hour">hour</string>
     <string name="min">min</string>
     <string name="sec">sec</string>
+    <string name="reps">reps</string>
 </resources>

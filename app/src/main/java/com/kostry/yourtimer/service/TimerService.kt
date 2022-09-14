@@ -42,7 +42,7 @@ class TimerService : Service() {
             .provideAppComponent()
             .inject(this)
         super.onCreate()
-        startForeground(TIMER_NOTIFICATION_ID, createNotification(TIMER_IS_STOPPED))
+        startForeground(TIMER_NOTIFICATION_ID, createNotification(TIMER_IS_STOPPED.toInt(),TIMER_IS_STOPPED))
         log("onCreate")
 
     }
@@ -54,11 +54,11 @@ class TimerService : Service() {
                 when (state) {
                     is TimerState.Running -> {
                         log("onStartCommand -> TimerState.Running: ${state.millis.millisToStringFormat()}")
-                        sendNotification(state.millis)
+                        sendNotification(state.reps, state.millis)
                     }
                     is TimerState.Paused -> {
                         log("onStartCommand -> TimerState.Paused: ${state.millis.millisToStringFormat()}")
-                        sendNotification(state.millis)
+                        sendNotification(state.reps, state.millis)
                     }
                     is TimerState.Stopped -> {
                         log("onStartCommand -> TimerState.Finished")
@@ -83,20 +83,19 @@ class TimerService : Service() {
         Log.d("SERVICE_TAG", "MyForegroundService: $message")
     }
 
-    private fun sendNotification(timeMillis: Long) {
+    private fun sendNotification(reps: Int, timeMillis: Long) {
         log("sendNotification")
         NotificationManagerCompat
             .from(this)
-            .notify(TIMER_NOTIFICATION_ID, createNotification(timeMillis))
+            .notify(TIMER_NOTIFICATION_ID, createNotification(reps, timeMillis))
     }
 
-    private fun createNotification(timeMillis: Long): Notification {
+    private fun createNotification(reps: Int, timeMillis: Long): Notification {
         log("createNotification")
         initBroadcastReceiver()
 
         val stopIntent = Intent(ACTION_FROM_NOTIFICATION).apply {
             putExtra(TIMER_COMMAND_EXTRA, TIMER_COMMAND_STOP)
-            putExtra(TIMER_MILLIS_EXTRA, timeMillis)
         }
         val stopPendingAction = PendingIntent.getBroadcast(
             this,
@@ -108,7 +107,12 @@ class TimerService : Service() {
         val pendingIntent: PendingIntent = NavDeepLinkBuilder(this)
             .setGraph(R.navigation.main_nav_graph)
             .setDestination(R.id.timerFragment)
-            .setArguments(args = bundleOf(TimerFragment.TIMER_FRAGMENT_ARGS_KEY to timeMillis))
+            .setArguments(
+                bundleOf(
+                    TimerFragment.TIMER_FRAGMENT_TIME_ARGS_KEY to timeMillis,
+                    TimerFragment.TIMER_FRAGMENT_ROUND_ARGS_KEY to reps
+                )
+            )
             .createPendingIntent()
 
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
@@ -135,17 +139,15 @@ class TimerService : Service() {
                 log("broadcastReceiver -> onReceive")
                 val command: Int =
                     intent?.extras?.getInt(TIMER_COMMAND_EXTRA) ?: 0
-                val millis: Long =
-                    intent?.extras?.getLong(TIMER_MILLIS_EXTRA) ?: 0
                 when (command) {
                     TIMER_COMMAND_START_PAUSE -> {
                         log("broadcastReceiver -> TIMER_START_PAUSE")
                         when (myTimer.timerState.value) {
                             is TimerState.Running -> {
-                                myTimer.pauseTimer(millis)
+                                myTimer.pauseTimer()
                             }
                             is TimerState.Paused -> {
-                                myTimer.startTimer(millis)
+                                myTimer.restartTimer()
                             }
                             is TimerState.Stopped -> {}
                         }
@@ -163,7 +165,6 @@ class TimerService : Service() {
     companion object {
 
         private const val ACTION_FROM_NOTIFICATION = "ACTION_FROM_NOTIFICATION"
-        private const val TIMER_MILLIS_EXTRA = "TIMER_MILLIS_EXTRA"
         private const val TIMER_COMMAND_EXTRA = "TIMER_COMMAND_EXTRA"
         private const val TIMER_COMMAND_START_PAUSE = 1
         private const val TIMER_COMMAND_STOP = 2

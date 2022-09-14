@@ -21,12 +21,16 @@ class TimerViewModel @Inject constructor(
             initialValue = TimerState.Stopped
         )
 
-    fun startTimer(timeMillis: Long) {
-        myTimer.startTimer(timeMillis)
+    fun runTimer(rounds: Int, timeMillis: Long){
+        myTimer.runTimer(rounds, timeMillis)
     }
 
-    fun pauseTimer(timeMillis: Long) {
-        myTimer.pauseTimer(timeMillis)
+    fun restartTimer() {
+        myTimer.restartTimer()
+    }
+
+    fun pauseTimer() {
+        myTimer.pauseTimer()
     }
 
     fun stopTimer(){
