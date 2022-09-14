@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="attrNumberPicker" format="reference"/>
+    <attr name="attrPrimaryButton" format="reference"/>
+    <attr name="attrSecondaryButton" format="reference"/>
+    <attr name="attrPrimaryTextView" format="reference"/>
+    <attr name="attrProgressBar" format="reference"/>
+</resources>

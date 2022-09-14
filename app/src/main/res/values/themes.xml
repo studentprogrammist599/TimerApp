@@ -14,9 +14,15 @@
         <!-- Customize your theme here. -->
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:windowBackground">@color/layout_background</item>
+        <item name="attrNumberPicker">@style/NumberPickerStyle</item>
+        <item name="attrPrimaryButton">@style/PrimaryButtonStyle</item>
+        <item name="attrSecondaryButton">@style/SecondaryButtonStyle</item>
+        <item name="attrPrimaryTextView">@style/PrimaryTextViewStyle</item>
+        <item name="attrProgressBar">@style/ProgressBarStyle</item>
     </style>
 
-    <style name="NumberPickerTheme" parent="Theme.YourTimer">
+    <style name="NumberPickerStyle" parent="Theme.YourTimer">
         <item name="colorControlNormal">#00000000</item>
         <item name="android:textColorPrimary">@color/primary_text_color</item>
         <item name="android:textSize">@dimen/text_36_sp</item>

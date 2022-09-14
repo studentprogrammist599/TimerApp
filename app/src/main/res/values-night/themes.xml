@@ -10,7 +10,40 @@
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/layout_background</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:windowBackground">@color/layout_background</item>
+        <item name="attrNumberPicker">@style/NumberPickerStyle.DarkTheme</item>
+        <item name="attrPrimaryButton">@style/PrimaryButtonStyle.DarkTheme</item>
+        <item name="attrSecondaryButton">@style/SecondaryButtonStyle.DarkTheme</item>
+        <item name="attrPrimaryTextView">@style/PrimaryTextViewStyle.DarkTheme</item>
+        <item name="attrProgressBar">@style/ProgressBarStyle.DarkTheme</item>
+    </style>
+
+    <style name="NumberPickerStyle.DarkTheme" parent="Theme.YourTimer">
+        <item name="colorControlNormal">#00000000</item>
+        <item name="android:textColorPrimary">@color/secondary_text_color</item>
+        <item name="android:textSize">@dimen/text_36_sp</item>
+    </style>
+
+    <style name="PrimaryButtonStyle.DarkTheme">
+        <item name="android:backgroundTint">@color/primary_button_color</item>
+        <item name="android:textColor">@color/secondary_text_color</item>
+    </style>
+
+    <style name="SecondaryButtonStyle.DarkTheme" parent="PrimaryButtonStyle">
+        <item name="android:backgroundTint">@color/secondary_button_color</item>
+        <item name="android:textColor">@color/secondary_text_color</item>
+    </style>
+
+    <style name="PrimaryTextViewStyle.DarkTheme">
+        <item name="android:textColor">@color/secondary_text_color</item>
+    </style>
+
+    <style name="ProgressBarStyle.DarkTheme">
+        <item name="indicatorColor">@color/progress_bar_indicator_color</item>
+        <item name="trackColor">@color/progress_bar_track_color</item>
     </style>
 </resources>

@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hour"
-        style="@style/PrimaryTextViewStyle"
+        style="?attrPrimaryTextView"
         app:layout_constraintEnd_toEndOf="@id/hours_picker"
         app:layout_constraintStart_toStartOf="@id/hours_picker"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/min"
-        style="@style/PrimaryTextViewStyle"
+        style="?attrPrimaryTextView"
         app:layout_constraintEnd_toEndOf="@id/minutes_picker"
         app:layout_constraintStart_toStartOf="@id/minutes_picker"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sec"
-        style="@style/PrimaryTextViewStyle"
+        style="?attrPrimaryTextView"
         app:layout_constraintEnd_toEndOf="@id/seconds_picker"
         app:layout_constraintStart_toStartOf="@id/seconds_picker"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +38,7 @@
         android:id="@+id/hours_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:theme="@style/NumberPickerTheme"
+        android:theme="?attrNumberPicker"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/hours_text_view" />
 
@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/time_dots"
-        style="@style/PrimaryTextViewStyle"
+        style="?attrPrimaryTextView"
         android:textSize="@dimen/text_36_sp"
         app:layout_constraintBottom_toBottomOf="@id/hours_picker"
         app:layout_constraintStart_toEndOf="@id/hours_picker"
@@ -58,7 +58,7 @@
         android:id="@+id/minutes_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:theme="@style/NumberPickerTheme"
+        android:theme="?attrNumberPicker"
         app:layout_constraintStart_toEndOf="@id/hours_dots_text_view"
         app:layout_constraintTop_toBottomOf="@id/minutes_text_view" />
 
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/time_dots"
-        style="@style/PrimaryTextViewStyle"
+        style="?attrPrimaryTextView"
         android:textSize="@dimen/text_36_sp"
         app:layout_constraintBottom_toBottomOf="@id/minutes_picker"
         app:layout_constraintStart_toEndOf="@id/minutes_picker"
@@ -78,7 +78,7 @@
         android:id="@+id/seconds_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:theme="@style/NumberPickerTheme"
+        android:theme="?attrNumberPicker"
         app:layout_constraintStart_toEndOf="@id/minutes_dots_text_view"
         app:layout_constraintTop_toBottomOf="@id/seconds_text_view" />
 
