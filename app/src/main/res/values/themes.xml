@@ -49,7 +49,7 @@
     <style name="ProgressBarStyle">
         <item name="indicatorColor">@color/progress_bar_indicator_color</item>
         <item name="indicatorDirectionCircular">counterclockwise</item>
-        <item name="indicatorSize">@dimen/_300dp</item>
+        <item name="indicatorSize">@dimen/_350dp</item>
         <item name="trackColor">@color/progress_bar_track_color</item>
         <item name="trackCornerRadius">@dimen/_16dp</item>
         <item name="trackThickness">@dimen/_4dp</item>

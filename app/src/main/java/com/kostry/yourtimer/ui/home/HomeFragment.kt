@@ -57,6 +57,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 vibrator.vibrate(VibrationEffect.createOneShot(TIMER_PICKER_VIBRATE_TIME,
                     VibrationEffect.DEFAULT_AMPLITUDE))
             }
+            repsPicker.setOnValueChangedListener { _, _, _ ->
+                vibrator.vibrate(VibrationEffect.createOneShot(TIMER_PICKER_VIBRATE_TIME,
+                    VibrationEffect.DEFAULT_AMPLITUDE))
+            }
             minutesPicker.setOnValueChangedListener { _, _, _ ->
                 vibrator.vibrate(VibrationEffect.createOneShot(TIMER_PICKER_VIBRATE_TIME,
                     VibrationEffect.DEFAULT_AMPLITUDE))

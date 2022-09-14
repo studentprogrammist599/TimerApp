@@ -60,10 +60,7 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
 
     private fun checkTimerService() {
         if (isTimerServiceRunning() && !currentFragmentIsTimerFragment()){
-            navController.navigate(
-                R.id.timerFragment,
-                bundleOf(TimerFragment.TIMER_FRAGMENT_TIME_ARGS_KEY to 0L)
-            )
+            navController.navigate(R.id.timerFragment)
         }
     }
 

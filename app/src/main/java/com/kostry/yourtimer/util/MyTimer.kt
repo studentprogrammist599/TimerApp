@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class MyTimer {
 
+    private var startTimeMillis: Long = 0L
     private var repsCount = 0
     private var timer: CountDownTimer? = null
     private val _timerState = MutableStateFlow<TimerState>(TimerState.Stopped)
@@ -13,6 +14,7 @@ class MyTimer {
 
     fun runTimer(reps: Int, millis: Long){
         repsCount = reps
+        startTimeMillis = millis
         startTimer(millis)
     }
 
@@ -25,6 +27,18 @@ class MyTimer {
     fun stopTimer(){
         repsCount = 0
         finishTimer()
+    }
+
+    fun pauseTimer() {
+        if (timer != null && timerState.value is TimerState.Running) {
+            timer?.cancel()
+            timer = null
+            _timerState.value = TimerState.Paused(repsCount, (timerState.value as TimerState.Running).millis)
+        }
+    }
+
+    fun getStartTime(): Long {
+        return startTimeMillis
     }
 
     private fun startTimer(millis: Long) {
@@ -41,14 +55,6 @@ class MyTimer {
                     finishTimer()
                 }
             }.start()
-        }
-    }
-
-    fun pauseTimer() {
-        if (timer != null && timerState.value is TimerState.Running) {
-            timer?.cancel()
-            timer = null
-            _timerState.value = TimerState.Paused(repsCount, (timerState.value as TimerState.Running).millis)
         }
     }
 

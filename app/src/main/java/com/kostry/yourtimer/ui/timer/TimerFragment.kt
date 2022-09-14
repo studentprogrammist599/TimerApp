@@ -24,14 +24,12 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         ViewModelProvider(this, viewModelFactory)[TimerViewModel::class.java]
     }
 
-    private val roundArgs: Int by lazy {
+    private val roundArgs: Int? by lazy {
         arguments?.getInt(TIMER_FRAGMENT_ROUND_ARGS_KEY)
-            ?: throw RuntimeException("TimerFragment ROUND args is null")
     }
 
-    private val timeArgs: Long by lazy {
+    private val timeArgs: Long? by lazy {
         arguments?.getLong(TIMER_FRAGMENT_TIME_ARGS_KEY)
-            ?: throw RuntimeException("TimerFragment TIME args is null")
     }
 
     private val mainActivityCallback by lazy {
@@ -50,8 +48,12 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (viewModel.timerState.value !is TimerState.Paused && savedInstanceState == null) {
-            viewModel.runTimer(roundArgs, timeArgs)
+        if (viewModel.timerState.value !is TimerState.Paused
+            && savedInstanceState == null
+            && roundArgs != null
+            && timeArgs != null
+        ) {
+            viewModel.runTimer(roundArgs!!, timeArgs!!)
         }
         initTimePicker()
         initViewState()
@@ -84,7 +86,10 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                             timeMillis = state.millis,
                             buttonStartPauseText = getString(R.string.pause),
                             buttonCancelVisibility = View.VISIBLE,
-                            setProgress = getPercentProgressTime(state.millis, timeArgs),
+                            setProgress = getPercentProgressTime(
+                                state.millis,
+                                viewModel.getStartTime()
+                            ),
                             positiveButtonColor = requireContext().getColor(R.color.third_button_color),
                         )
                     }
@@ -94,7 +99,10 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                             timeMillis = state.millis,
                             buttonStartPauseText = getString(R.string.start),
                             buttonCancelVisibility = View.VISIBLE,
-                            setProgress = getPercentProgressTime(state.millis, timeArgs),
+                            setProgress = getPercentProgressTime(
+                                state.millis,
+                                viewModel.getStartTime()
+                            ),
                             positiveButtonColor = requireContext().getColor(R.color.primary_button_color),
                         )
                     }
