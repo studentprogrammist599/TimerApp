@@ -1,17 +1,15 @@
 package com.kostry.yourtimer
 
 import android.app.Application
-import com.kostry.yourtimer.di.component.AppComponent
-import com.kostry.yourtimer.di.component.DaggerAppComponent
-import com.kostry.yourtimer.di.component.HomeSubcomponent
-import com.kostry.yourtimer.di.component.TimerSubcomponent
+import com.kostry.yourtimer.di.component.*
 import com.kostry.yourtimer.di.module.AppModule
-import com.kostry.yourtimer.di.provider.HomeSubcomponentProvider
 import com.kostry.yourtimer.di.provider.AppComponentProvider
+import com.kostry.yourtimer.di.provider.HomeSubcomponentProvider
+import com.kostry.yourtimer.di.provider.PresetSubcomponentProvider
 import com.kostry.yourtimer.di.provider.TimerSubcomponentProvider
 
 class App : Application(), AppComponentProvider, HomeSubcomponentProvider,
-    TimerSubcomponentProvider {
+    TimerSubcomponentProvider, PresetSubcomponentProvider {
 
     private val appComponent: AppComponent by lazy {
         DaggerAppComponent.builder()
@@ -21,6 +19,7 @@ class App : Application(), AppComponentProvider, HomeSubcomponentProvider,
 
     private var homeSubcomponent: HomeSubcomponent? = null
     private var timerSubcomponent: TimerSubcomponent? = null
+    private var presetSubcomponent: PresetSubcomponent? = null
 
     override fun provideAppComponent(): AppComponent {
         return appComponent
@@ -45,5 +44,13 @@ class App : Application(), AppComponentProvider, HomeSubcomponentProvider,
 
     override fun destroyTimerSubcomponent() {
         timerSubcomponent = null
+    }
+
+    override fun iniPresetSubcomponent() = appComponent
+        .providePresetSubcomponent()
+        .also { presetSubcomponent = it }
+
+    override fun destroyPresetSubcomponent() {
+        presetSubcomponent = null
     }
 }

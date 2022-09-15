@@ -16,5 +16,6 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun provideHomeSubcomponent(): HomeSubcomponent
+    fun providePresetSubcomponent(): PresetSubcomponent
     fun inject(service: TimerService)
 }

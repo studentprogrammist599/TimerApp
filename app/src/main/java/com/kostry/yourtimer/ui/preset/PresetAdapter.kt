@@ -37,6 +37,10 @@ class PresetAdapter(
         with(holder.viewBinding){
             itemPresetDeleteButton.tag = card
             itemPresetTextNameEditText.setText(card.name)
+            itemPresetRepsEditText.setText(card.reps.toString())
+            itemPresetHoursEditText.setText(card.hours.toString())
+            itemPresetMinutesEditText.setText(card.minutes.toString())
+            itemPresetSecondsEditText.setText(card.seconds.toString())
         }
     }
 
@@ -49,7 +53,7 @@ class PresetAdapter(
             oldItem: TimeCardModel,
             newItem: TimeCardModel,
         ): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem.reps == newItem.reps
         }
 
         override fun areContentsTheSame(
