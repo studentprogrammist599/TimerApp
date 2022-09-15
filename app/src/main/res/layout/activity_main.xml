@@ -22,9 +22,11 @@
         android:id="@+id/main_bnv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:labelVisibilityMode="selected"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/layout_background"
+        app:itemIconTint="@color/bottom_navigation_color_selector"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_bottom_navigation_view" />
 
