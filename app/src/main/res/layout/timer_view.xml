@@ -6,40 +6,40 @@
 
     <TextView
         android:id="@+id/reps_text_view"
+        style="?attrPrimaryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/reps"
-        style="?attrPrimaryTextView"
         app:layout_constraintEnd_toEndOf="@id/reps_picker"
         app:layout_constraintStart_toStartOf="@id/reps_picker"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/hours_text_view"
+        style="?attrPrimaryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hour"
-        style="?attrPrimaryTextView"
         app:layout_constraintEnd_toEndOf="@id/hours_picker"
         app:layout_constraintStart_toStartOf="@id/hours_picker"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/minutes_text_view"
+        style="?attrPrimaryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/min"
-        style="?attrPrimaryTextView"
         app:layout_constraintEnd_toEndOf="@id/minutes_picker"
         app:layout_constraintStart_toStartOf="@id/minutes_picker"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/seconds_text_view"
+        style="?attrPrimaryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sec"
-        style="?attrPrimaryTextView"
         app:layout_constraintEnd_toEndOf="@id/seconds_picker"
         app:layout_constraintStart_toStartOf="@id/seconds_picker"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,10 +54,10 @@
 
     <TextView
         android:id="@+id/reps_dots_text_view"
+        style="?attrPrimaryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/time_dots"
-        style="?attrPrimaryTextView"
         android:textSize="@dimen/text_36_sp"
         app:layout_constraintBottom_toBottomOf="@id/reps_picker"
         app:layout_constraintStart_toEndOf="@id/reps_picker"
@@ -74,10 +74,10 @@
 
     <TextView
         android:id="@+id/hours_dots_text_view"
+        style="?attrPrimaryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/time_dots"
-        style="?attrPrimaryTextView"
         android:textSize="@dimen/text_36_sp"
         app:layout_constraintBottom_toBottomOf="@id/hours_picker"
         app:layout_constraintStart_toEndOf="@id/hours_picker"
@@ -94,10 +94,10 @@
 
     <TextView
         android:id="@+id/minutes_dots_text_view"
+        style="?attrPrimaryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/time_dots"
-        style="?attrPrimaryTextView"
         android:textSize="@dimen/text_36_sp"
         app:layout_constraintBottom_toBottomOf="@id/minutes_picker"
         app:layout_constraintStart_toEndOf="@id/minutes_picker"

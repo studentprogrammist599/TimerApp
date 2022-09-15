@@ -33,23 +33,22 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="New preset"
-        app:endIconMode="clear_text"
         android:textColorHint="@color/third_text_color"
-        app:hintTextColor="@color/third_text_color"
         app:boxStrokeColor="@color/third_text_color"
-        app:placeholderTextColor="@color/third_text_color"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/third_text_color"
         app:layout_constraintEnd_toEndOf="@id/setting_fragment_end_guideline"
         app:layout_constraintStart_toStartOf="@id/setting_fragment_start_guideline"
         app:layout_constraintTop_toTopOf="@id/setting_fragment_top_guideline"
-        app:placeholderText="Enter the name">
+        app:placeholderText="Enter the name"
+        app:placeholderTextColor="@color/third_text_color">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
             android:textColor="@color/primary_text_color"
-            android:textSize="@dimen/text_20_sp"
-            android:inputType="textMultiLine" />
-
+            android:textSize="@dimen/text_20_sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
