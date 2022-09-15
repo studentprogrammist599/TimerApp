@@ -6,20 +6,21 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/item_time_card_text_input_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minWidth="150dp"
         android:textColorHint="@color/third_text_color"
         app:boxStrokeColor="@color/third_text_color"
         app:endIconMode="clear_text"
+        android:hint="Card name"
         app:hintTextColor="@color/third_text_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:placeholderText="Enter the name"
         app:placeholderTextColor="@color/third_text_color">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/item_time_card_text_name_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
