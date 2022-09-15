@@ -1,4 +1,4 @@
-package com.kostry.yourtimer.ui.settings
+package com.kostry.yourtimer.ui.preset
 
 data class TimeCardModel(
     val name: String,

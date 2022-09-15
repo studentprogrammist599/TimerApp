@@ -1,16 +1,16 @@
-package com.kostry.yourtimer.ui.settings
+package com.kostry.yourtimer.ui.preset
 
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.kostry.yourtimer.databinding.FragmentSettingsBinding
+import com.kostry.yourtimer.databinding.FragmentPresetBinding
 import com.kostry.yourtimer.ui.base.BaseFragment
 
-class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
+class PresetFragment : BaseFragment<FragmentPresetBinding>() {
 
-    private val adapter: TimeCardAdapter by lazy {
-        TimeCardAdapter(object : TimeCardAdapter.TimeCardAdapterListener{
+    private val adapter: PresetAdapter by lazy {
+        PresetAdapter(object : PresetAdapter.TimeCardAdapterListener{
             override fun onDelete(timeCardModel: TimeCardModel) {
                 Toast.makeText(context, "${timeCardModel.reps}", Toast.LENGTH_SHORT).show()
             }
@@ -22,12 +22,12 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     private val testList = mutableListOf<TimeCardModel>()
 
     override fun getViewBinding(container: ViewGroup?) =
-        FragmentSettingsBinding.inflate(layoutInflater, container, false)
+        FragmentPresetBinding.inflate(layoutInflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.settingFragmentRecycler.adapter = adapter
-        binding.settingFragmentAddCardButton.setOnClickListener {
+        binding.presetFragmentRecycler.adapter = adapter
+        binding.presetFragmentAddCardButton.setOnClickListener {
             testList.add(TimeCardModel("", testCounter, 0, 0, 0))
             testCounter += 1
             adapter.submitList(testList)

@@ -20,9 +20,9 @@
         android:label="fragment_timer"
         tools:layout="@layout/fragment_timer" />
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.kostry.yourtimer.ui.settings.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        android:id="@+id/presetFragment"
+        android:name="com.kostry.yourtimer.ui.preset.PresetFragment"
+        android:label="fragment_preset"
+        tools:layout="@layout/fragment_preset" />
 
 </navigation>
