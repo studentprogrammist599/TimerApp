@@ -19,4 +19,10 @@
         android:name="com.kostry.yourtimer.ui.timer.TimerFragment"
         android:label="fragment_timer"
         tools:layout="@layout/fragment_timer" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.kostry.yourtimer.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+
 </navigation>

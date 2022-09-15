@@ -6,15 +6,20 @@ import android.app.NotificationManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.get
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.kostry.yourtimer.R
+import com.kostry.yourtimer.databinding.ActivityMainBinding
 import com.kostry.yourtimer.service.TimerService
-import com.kostry.yourtimer.ui.timer.TimerFragment
 
 class MainActivity : AppCompatActivity(), MainActivityCallback {
+
+    private val binding: ActivityMainBinding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
 
     private val navController: NavController by lazy {
         (supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment).navController
@@ -22,9 +27,16 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
+        initBottomNavigationView()
         createNotificationChannel()
         checkTimerService()
+    }
+
+    private fun initBottomNavigationView() {
+        val bottomNavView = binding.mainBnv
+        NavigationUI.setupWithNavController(bottomNavView, navController)
+        bottomNavView.setupWithNavController(navController)
     }
 
     override fun startTimerService() {
@@ -59,7 +71,7 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
     }
 
     private fun checkTimerService() {
-        if (isTimerServiceRunning() && !currentFragmentIsTimerFragment()){
+        if (isTimerServiceRunning() && !currentFragmentIsTimerFragment()) {
             navController.navigate(R.id.timerFragment)
         }
     }
@@ -69,7 +81,7 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
     }
 
     override fun onBackPressed() {
-        if (!currentFragmentIsTimerFragment()){
+        if (!currentFragmentIsTimerFragment()) {
             super.onBackPressed()
         }
     }

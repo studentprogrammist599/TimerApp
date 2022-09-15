@@ -14,4 +14,6 @@
     <string name="min">min</string>
     <string name="sec">sec</string>
     <string name="reps">reps</string>
+    <string name="home">home</string>
+    <string name="settings">settings</string>
 </resources>
