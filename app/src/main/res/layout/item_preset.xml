@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/item_preset_layout"
     android:layout_height="wrap_content">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -9,11 +10,11 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint="Card name"
         android:minWidth="150dp"
         android:textColorHint="@color/third_text_color"
         app:boxStrokeColor="@color/third_text_color"
         app:endIconMode="clear_text"
-        android:hint="Card name"
         app:hintTextColor="@color/third_text_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,8 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/reps"
-        app:layout_constraintStart_toStartOf="@id/item_preset_reps_edit_text"
         app:layout_constraintEnd_toEndOf="@id/item_preset_reps_edit_text"
+        app:layout_constraintStart_toStartOf="@id/item_preset_reps_edit_text"
         app:layout_constraintTop_toBottomOf="@id/item_preset_text_input_layout" />
 
     <TextView
@@ -42,8 +43,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hour"
-        app:layout_constraintStart_toStartOf="@id/item_preset_hours_edit_text"
         app:layout_constraintEnd_toEndOf="@id/item_preset_hours_edit_text"
+        app:layout_constraintStart_toStartOf="@id/item_preset_hours_edit_text"
         app:layout_constraintTop_toBottomOf="@id/item_preset_text_input_layout" />
 
     <TextView
@@ -51,8 +52,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/min"
-        app:layout_constraintStart_toStartOf="@id/item_preset_minutes_edit_text"
         app:layout_constraintEnd_toEndOf="@id/item_preset_minutes_edit_text"
+        app:layout_constraintStart_toStartOf="@id/item_preset_minutes_edit_text"
         app:layout_constraintTop_toBottomOf="@id/item_preset_text_input_layout" />
 
     <TextView
@@ -60,8 +61,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sec"
-        app:layout_constraintStart_toStartOf="@id/item_preset_seconds_edit_text"
         app:layout_constraintEnd_toEndOf="@id/item_preset_seconds_edit_text"
+        app:layout_constraintStart_toStartOf="@id/item_preset_seconds_edit_text"
         app:layout_constraintTop_toBottomOf="@id/item_preset_text_input_layout" />
 
     <EditText
@@ -78,10 +79,10 @@
         android:id="@+id/item_preset_hours_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16dp"
         android:hint="@string/_00"
         android:inputType="number"
         android:maxLength="2"
-        android:layout_marginStart="@dimen/_16dp"
         app:layout_constraintStart_toEndOf="@id/item_preset_reps_edit_text"
         app:layout_constraintTop_toBottomOf="@id/item_preset_reps_text_view" />
 
@@ -124,11 +125,30 @@
         app:layout_constraintTop_toBottomOf="@id/item_preset_reps_text_view" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        style="@style/PrimaryButtonStyle"
-        android:id="@+id/item_preset_delete_button"
-        android:src="@drawable/ic_baseline_delete_24"
+        android:id="@+id/item_preset_move_up_button"
+        style="@style/SecondaryButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/item_preset_delete_button"
+        style="@style/SecondaryButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_outline_delete_outline_24"
+        app:layout_constraintBottom_toTopOf="@id/item_preset_move_down_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_preset_move_up_button" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/item_preset_move_down_button"
+        style="@style/SecondaryButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
