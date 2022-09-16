@@ -84,6 +84,6 @@
         app:layout_constraintEnd_toEndOf="@id/preset_fragment_end_guideline"
         app:layout_constraintStart_toStartOf="@id/preset_fragment_start_guideline"
         app:layout_constraintTop_toBottomOf="@id/preset_fragment_add_card_button"
-        tools:listitem="@layout/item_preset" />
+        tools:listitem="@layout/item_time_card" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

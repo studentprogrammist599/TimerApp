@@ -4,6 +4,7 @@ import com.kostry.yourtimer.di.provider.PresetSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseViewModel
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 typealias PresetListener = (cards: List<TimeCardModel>) -> Unit
 
@@ -21,6 +22,7 @@ class PresetViewModel @Inject constructor(
     private val listeners = mutableSetOf<PresetListener>()
 
     fun addCard() {
+        preset = ArrayList(preset)
         val card = TimeCardModel(id = cardId++, name = "Example $cardId", reps = 0, hours = 0, minutes = 0, seconds = 0,)
         preset.add(card)
     }
@@ -34,6 +36,7 @@ class PresetViewModel @Inject constructor(
             it.id == card.id
         }
         if (indexToDelete != -1) {
+            preset = ArrayList(preset)
             preset.removeAt(indexToDelete)
             notifyChanges()
         }
@@ -50,6 +53,7 @@ class PresetViewModel @Inject constructor(
         if (newIndex < 0 || newIndex >= preset.size){
             return
         }
+        preset = ArrayList(preset)
         preset.removeAt(oldIndex)
         preset.add(oldIndex, card)
         Collections.swap(preset, oldIndex, newIndex)
