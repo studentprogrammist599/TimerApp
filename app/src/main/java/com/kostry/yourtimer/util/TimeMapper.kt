@@ -27,3 +27,11 @@ fun mapTimeToMillis(hour: Int, minutes: Int, seconds: Int): Long {
 
 fun getPercentProgressTime(actualTime: Long, startTIme: Long): Int =
     (actualTime.toFloat() / startTIme.toFloat() * 100).toInt()
+
+fun Int.intSubTimeStringFormat():String {
+    return if (this >= 10){
+        this.toString()
+    }else{
+        "0$this"
+    }
+}

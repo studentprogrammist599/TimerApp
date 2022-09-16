@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.ItemPresetBinding
+import com.kostry.yourtimer.util.intSubTimeStringFormat
 
 interface TimeCardActionListener {
     fun onMove(cardModel: TimeCardModel, moveBy: Int)
@@ -45,10 +46,10 @@ class PresetAdapter(
         with(holder.binding) {
             itemPresetDeleteButton.tag = card
             card.name?.let { itemPresetTextNameEditText.setText(it) }
-            card.reps?.let { itemPresetRepsEditText.setText(it.toString()) }
-            card.hours?.let { itemPresetHoursEditText.setText(it.toString()) }
-            card.minutes?.let { itemPresetMinutesEditText.setText(it.toString()) }
-            card.seconds?.let { itemPresetSecondsEditText.setText(it.toString()) }
+            card.reps?.let { itemPresetRepsEditText.setText(it.intSubTimeStringFormat()) }
+            card.hours?.let { itemPresetHoursEditText.setText(it.intSubTimeStringFormat()) }
+            card.minutes?.let { itemPresetMinutesEditText.setText(it.intSubTimeStringFormat()) }
+            card.seconds?.let { itemPresetSecondsEditText.setText(it.intSubTimeStringFormat()) }
         }
     }
 

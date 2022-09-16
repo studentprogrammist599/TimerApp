@@ -14,15 +14,14 @@ class PresetViewModel @Inject constructor(
     private var cardId = 0
 
     private var preset = mutableListOf<TimeCardModel>(
-        TimeCardModel(101,"AAAA", 11, 11, 11, 11),
-        TimeCardModel(102,"BBBB", 22, 22, 22, 22),
-        TimeCardModel(103,"CCCC", 33, 33, 33, 33),
+        TimeCardModel(id = cardId++, name = "Example $cardId", reps = 0, hours = 0, minutes = 0, seconds = 0,),
+        TimeCardModel(id = cardId++, name = "Example $cardId", reps = 0, hours = 0, minutes = 0, seconds = 0,),
+        TimeCardModel(id = cardId++, name = "Example $cardId", reps = 0, hours = 0, minutes = 0, seconds = 0,),
     )
     private val listeners = mutableSetOf<PresetListener>()
 
     fun addCard() {
-        val card = TimeCardModel(cardId,"${(0..999).random()}", (0..99).random(), (0..99).random(), (0..99).random(), (0..99).random())
-        cardId += 1
+        val card = TimeCardModel(id = cardId++, name = "Example $cardId", reps = 0, hours = 0, minutes = 0, seconds = 0,)
         preset.add(card)
     }
 
