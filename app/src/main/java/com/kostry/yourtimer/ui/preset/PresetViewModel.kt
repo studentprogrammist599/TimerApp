@@ -15,15 +15,15 @@ class PresetViewModel @Inject constructor(
     private var cardId = 0
 
     private var preset = mutableListOf<TimeCardModel>(
-        TimeCardModel(id = cardId++, name = "Example $cardId", reps = 0, hours = 0, minutes = 0, seconds = 0,),
-        TimeCardModel(id = cardId++, name = "Example $cardId", reps = 0, hours = 0, minutes = 0, seconds = 0,),
-        TimeCardModel(id = cardId++, name = "Example $cardId", reps = 0, hours = 0, minutes = 0, seconds = 0,),
+        TimeCardModel(id = cardId++),
+        TimeCardModel(id = cardId++),
+        TimeCardModel(id = cardId++),
     )
     private val listeners = mutableSetOf<PresetListener>()
 
     fun addCard() {
         preset = ArrayList(preset)
-        val card = TimeCardModel(id = cardId++, name = "Example $cardId", reps = 0, hours = 0, minutes = 0, seconds = 0,)
+        val card = TimeCardModel(id = cardId++)
         preset.add(card)
     }
 
@@ -42,15 +42,15 @@ class PresetViewModel @Inject constructor(
         }
     }
 
-    fun moveCard(card: TimeCardModel, moveBy: Int){
+    fun moveCard(card: TimeCardModel, moveBy: Int) {
         val oldIndex = preset.indexOfFirst {
             it.id == card.id
         }
-        if (oldIndex == -1){
+        if (oldIndex == -1) {
             return
         }
         val newIndex = oldIndex + moveBy
-        if (newIndex < 0 || newIndex >= preset.size){
+        if (newIndex < 0 || newIndex >= preset.size) {
             return
         }
         preset = ArrayList(preset)
@@ -60,16 +60,16 @@ class PresetViewModel @Inject constructor(
         notifyChanges()
     }
 
-    fun addListener(listener: PresetListener){
+    fun addListener(listener: PresetListener) {
         listeners.add(listener)
         listener.invoke(preset)
     }
 
-    fun removeListener(listener: PresetListener){
+    fun removeListener(listener: PresetListener) {
         listeners.remove(listener)
     }
 
-    private fun notifyChanges(){
+    private fun notifyChanges() {
         listeners.forEach { it.invoke(preset) }
     }
 

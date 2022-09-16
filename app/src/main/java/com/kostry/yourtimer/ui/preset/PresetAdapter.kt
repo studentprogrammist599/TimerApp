@@ -3,6 +3,7 @@ package com.kostry.yourtimer.ui.preset
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kostry.yourtimer.R
@@ -39,7 +40,7 @@ class PresetAdapter(
     private val actionListener: TimeCardActionListener,
 ) : RecyclerView.Adapter<PresetAdapter.TimeCardViewHolder>(), View.OnClickListener {
 
-    var cards: List<TimeCardModel> = emptyList()
+    var cards: MutableList<TimeCardModel> = mutableListOf()
         set(newValue) {
             val diffCallback = TimeCardDiffCallback(field, newValue)
             val diffResult = DiffUtil.calculateDiff(diffCallback)
@@ -67,6 +68,7 @@ class PresetAdapter(
     override fun onBindViewHolder(holder: TimeCardViewHolder, position: Int) {
         val card = cards[position]
         holder.move(card.id)
+        holder.textChange(card.id, position)
         with(holder.binding) {
             itemTimeCardDeleteButton.tag = card
             card.name?.let { itemTimeCardTextNameEditText.setText(it) }
@@ -106,6 +108,66 @@ class PresetAdapter(
                         minutes = binding.itemTimeCardMinutesEditText.text.toString().toIntOrNull(),
                         seconds = binding.itemTimeCardSecondsEditText.text.toString().toIntOrNull(),
                     ), 1)
+            }
+        }
+
+        fun textChange(cardId: Int, position: Int) {
+            with(binding){
+                itemTimeCardTextNameEditText.addTextChangedListener {
+                    val newCard = TimeCardModel(
+                        id = cardId,
+                        name = binding.itemTimeCardTextNameEditText.text.toString(),
+                        reps = binding.itemTimeCardRepsEditText.text.toString().toIntOrNull(),
+                        hours = binding.itemTimeCardHoursEditText.text.toString().toIntOrNull(),
+                        minutes = binding.itemTimeCardMinutesEditText.text.toString().toIntOrNull(),
+                        seconds = binding.itemTimeCardSecondsEditText.text.toString().toIntOrNull(),
+                    )
+                    cards[position] = newCard
+                }
+                itemTimeCardRepsEditText.addTextChangedListener {
+                    val newCard = TimeCardModel(
+                        id = cardId,
+                        name = binding.itemTimeCardTextNameEditText.text.toString(),
+                        reps = binding.itemTimeCardRepsEditText.text.toString().toIntOrNull(),
+                        hours = binding.itemTimeCardHoursEditText.text.toString().toIntOrNull(),
+                        minutes = binding.itemTimeCardMinutesEditText.text.toString().toIntOrNull(),
+                        seconds = binding.itemTimeCardSecondsEditText.text.toString().toIntOrNull(),
+                    )
+                    cards[position] = newCard
+                }
+                itemTimeCardHoursEditText.addTextChangedListener {
+                    val newCard = TimeCardModel(
+                        id = cardId,
+                        name = binding.itemTimeCardTextNameEditText.text.toString(),
+                        reps = binding.itemTimeCardRepsEditText.text.toString().toIntOrNull(),
+                        hours = binding.itemTimeCardHoursEditText.text.toString().toIntOrNull(),
+                        minutes = binding.itemTimeCardMinutesEditText.text.toString().toIntOrNull(),
+                        seconds = binding.itemTimeCardSecondsEditText.text.toString().toIntOrNull(),
+                    )
+                    cards[position] = newCard
+                }
+                itemTimeCardMinutesEditText.addTextChangedListener {
+                    val newCard = TimeCardModel(
+                        id = cardId,
+                        name = binding.itemTimeCardTextNameEditText.text.toString(),
+                        reps = binding.itemTimeCardRepsEditText.text.toString().toIntOrNull(),
+                        hours = binding.itemTimeCardHoursEditText.text.toString().toIntOrNull(),
+                        minutes = binding.itemTimeCardMinutesEditText.text.toString().toIntOrNull(),
+                        seconds = binding.itemTimeCardSecondsEditText.text.toString().toIntOrNull(),
+                    )
+                    cards[position] = newCard
+                }
+                itemTimeCardSecondsEditText.addTextChangedListener {
+                    val newCard = TimeCardModel(
+                        id = cardId,
+                        name = binding.itemTimeCardTextNameEditText.text.toString(),
+                        reps = binding.itemTimeCardRepsEditText.text.toString().toIntOrNull(),
+                        hours = binding.itemTimeCardHoursEditText.text.toString().toIntOrNull(),
+                        minutes = binding.itemTimeCardMinutesEditText.text.toString().toIntOrNull(),
+                        seconds = binding.itemTimeCardSecondsEditText.text.toString().toIntOrNull(),
+                    )
+                    cards[position] = newCard
+                }
             }
         }
     }
