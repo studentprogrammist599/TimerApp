@@ -26,6 +26,10 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
                 viewModel.moveCard(cardModel, moveBy)
             }
 
+            override fun onTextChange(cardModel: TimeCardModel) {
+                viewModel.cardTextChange(cardModel)
+            }
+
             override fun onDelete(cardModel: TimeCardModel) {
                 viewModel.deleteCard(cardModel)
             }
@@ -52,7 +56,7 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
             adapter.cards = viewModel.getPreset()
         }
         binding.presetFragmentSaveButton.setOnClickListener {
-            adapter.cards.forEach { card ->
+            viewModel.getPreset().forEach { card ->
                 if (!fieldsIsEmpty(card)){
                     Toast.makeText(context, "EMPTY", Toast.LENGTH_SHORT).show()
                 }else{
@@ -88,6 +92,6 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
     }
 
     private val listener: PresetListener = {
-        adapter.cards = it.toMutableList()
+        adapter.cards = it
     }
 }

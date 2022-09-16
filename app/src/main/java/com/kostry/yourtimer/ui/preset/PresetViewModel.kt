@@ -15,15 +15,15 @@ class PresetViewModel @Inject constructor(
     private var cardId = 0
 
     private var preset = mutableListOf<TimeCardModel>(
-        TimeCardModel(id = cardId++),
-        TimeCardModel(id = cardId++),
-        TimeCardModel(id = cardId++),
+        TimeCardModel(id = cardId++, name = "$cardId"),
+        TimeCardModel(id = cardId++, name = "$cardId"),
+        TimeCardModel(id = cardId++, name = "$cardId"),
     )
     private val listeners = mutableSetOf<PresetListener>()
 
     fun addCard() {
         preset = ArrayList(preset)
-        val card = TimeCardModel(id = cardId++)
+        val card = TimeCardModel(id = cardId++, name = "$cardId")
         preset.add(card)
     }
 
@@ -76,5 +76,15 @@ class PresetViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         provider.destroyPresetSubcomponent()
+    }
+
+    fun cardTextChange(cardModel: TimeCardModel) {
+        val indexToChange = preset.indexOfFirst {
+            it.id == cardModel.id
+        }
+        if (indexToChange != -1) {
+            preset = ArrayList(preset)
+            preset[indexToChange] = cardModel
+        }
     }
 }
