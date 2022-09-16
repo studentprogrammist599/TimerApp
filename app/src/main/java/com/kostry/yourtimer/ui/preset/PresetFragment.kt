@@ -46,7 +46,7 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
         viewModel.addListener(listener)
         binding.presetFragmentAddCardButton.setOnClickListener {
             viewModel.addCard()
-            adapter.cards = viewModel.getPreset()
+            adapter.submitList(viewModel.getPreset())
         }
     }
 
@@ -56,6 +56,6 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
     }
 
     private val listener: PresetListener = {
-        adapter.cards = it
+        adapter.submitList(it)
     }
 }

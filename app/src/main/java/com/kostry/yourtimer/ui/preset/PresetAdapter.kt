@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.ItemTimeCardBinding
@@ -14,38 +15,10 @@ interface TimeCardActionListener {
     fun onDelete(cardModel: TimeCardModel)
 }
 
-class TimeCardDiffCallback(
-    private val oldList: List<TimeCardModel>,
-    private val newList: List<TimeCardModel>,
-) : DiffUtil.Callback() {
-    override fun getOldListSize(): Int = oldList.size
-
-    override fun getNewListSize(): Int = newList.size
-
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldUser = oldList[oldItemPosition]
-        val newUser = newList[newItemPosition]
-        return oldUser.id == newUser.id
-    }
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldUser = oldList[oldItemPosition]
-        val newUser = newList[newItemPosition]
-        return oldUser == newUser
-    }
-}
-
 class PresetAdapter(
     private val actionListener: TimeCardActionListener,
-) : RecyclerView.Adapter<PresetAdapter.TimeCardViewHolder>(), View.OnClickListener {
+) : ListAdapter<TimeCardModel, PresetAdapter.TimeCardViewHolder>(TimeCardDiffCallback), View.OnClickListener {
 
-    var cards: List<TimeCardModel> = emptyList()
-        set(newValue) {
-            val diffCallback = TimeCardDiffCallback(field, newValue)
-            val diffResult = DiffUtil.calculateDiff(diffCallback)
-            field = newValue
-            diffResult.dispatchUpdatesTo(this)
-        }
 
     override fun onClick(v: View) {
         val card = v.tag as TimeCardModel
@@ -65,7 +38,7 @@ class PresetAdapter(
     }
 
     override fun onBindViewHolder(holder: TimeCardViewHolder, position: Int) {
-        val card = cards[position]
+        val card: TimeCardModel = currentList[position]
         holder.move(card.id)
         with(holder.binding) {
             itemTimeCardDeleteButton.tag = card
@@ -76,8 +49,6 @@ class PresetAdapter(
             card.seconds?.let { itemTimeCardSecondsEditText.setText(it.intSubTimeStringFormat()) }
         }
     }
-
-    override fun getItemCount(): Int = cards.size
 
     inner class TimeCardViewHolder(
         val binding: ItemTimeCardBinding,
@@ -107,6 +78,16 @@ class PresetAdapter(
                         seconds = binding.itemTimeCardSecondsEditText.text.toString().toIntOrNull(),
                     ), 1)
             }
+        }
+    }
+
+    companion object TimeCardDiffCallback: DiffUtil.ItemCallback<TimeCardModel>() {
+        override fun areItemsTheSame(oldItem: TimeCardModel, newItem: TimeCardModel): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: TimeCardModel, newItem: TimeCardModel): Boolean {
+            return oldItem == newItem
         }
     }
 }
