@@ -51,6 +51,8 @@ class PresetViewModel @Inject constructor(
         if (newIndex < 0 || newIndex >= preset.size){
             return
         }
+        preset.removeAt(oldIndex)
+        preset.add(oldIndex, card)
         Collections.swap(preset, oldIndex, newIndex)
         notifyChanges()
     }

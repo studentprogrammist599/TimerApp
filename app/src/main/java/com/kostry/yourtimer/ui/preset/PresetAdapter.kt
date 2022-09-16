@@ -28,12 +28,6 @@ class PresetAdapter(
             R.id.item_preset_delete_button -> {
                 actionListener.onDelete(card)
             }
-            R.id.item_preset_move_up_button -> {
-                actionListener.onMove(card, -1)
-            }
-            R.id.item_preset_move_down_button -> {
-                actionListener.onMove(card, 1)
-            }
             else -> {}
         }
     }
@@ -42,17 +36,14 @@ class PresetAdapter(
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemPresetBinding.inflate(inflater, parent, false)
         binding.itemPresetDeleteButton.setOnClickListener(this)
-        binding.itemPresetMoveUpButton.setOnClickListener(this)
-        binding.itemPresetMoveDownButton.setOnClickListener(this)
         return PresetViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: PresetViewHolder, position: Int) {
         val card = cards[position]
+        holder.move(card.id)
         with(holder.binding) {
             itemPresetDeleteButton.tag = card
-            itemPresetMoveUpButton.tag = card
-            itemPresetMoveDownButton.tag = card
             card.name?.let { itemPresetTextNameEditText.setText(it) }
             card.reps?.let { itemPresetRepsEditText.setText(it.toString()) }
             card.hours?.let { itemPresetHoursEditText.setText(it.toString()) }
@@ -63,7 +54,34 @@ class PresetAdapter(
 
     override fun getItemCount(): Int = cards.size
 
-    class PresetViewHolder(
+    inner class PresetViewHolder(
         val binding: ItemPresetBinding,
-    ) : RecyclerView.ViewHolder(binding.root)
+    ) : RecyclerView.ViewHolder(binding.root){
+
+        fun move(cardId: Int){
+            binding.itemPresetMoveUpButton.setOnClickListener {
+                actionListener.onMove(
+                    //создавать TimeCardModel и считывать значения полей только при клике, иначе баг
+                    TimeCardModel(
+                        id = cardId,
+                        name = binding.itemPresetTextNameEditText.text.toString(),
+                        reps = binding.itemPresetRepsEditText.text.toString().toIntOrNull(),
+                        hours = binding.itemPresetHoursEditText.text.toString().toIntOrNull(),
+                        minutes = binding.itemPresetMinutesEditText.text.toString().toIntOrNull(),
+                        seconds = binding.itemPresetSecondsEditText.text.toString().toIntOrNull(),
+                ), -1)
+            }
+            binding.itemPresetMoveDownButton.setOnClickListener {
+                actionListener.onMove(
+                    TimeCardModel(
+                        id = cardId,
+                        name = binding.itemPresetTextNameEditText.text.toString(),
+                        reps = binding.itemPresetRepsEditText.text.toString().toIntOrNull(),
+                        hours = binding.itemPresetHoursEditText.text.toString().toIntOrNull(),
+                        minutes = binding.itemPresetMinutesEditText.text.toString().toIntOrNull(),
+                        seconds = binding.itemPresetSecondsEditText.text.toString().toIntOrNull(),
+                    ), 1)
+            }
+        }
+    }
 }
