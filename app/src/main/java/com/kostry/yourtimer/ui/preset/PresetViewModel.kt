@@ -1,7 +1,10 @@
 package com.kostry.yourtimer.ui.preset
 
+import com.kostry.yourtimer.datasource.models.PresetModel
+import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.di.provider.PresetSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseViewModel
+import com.kostry.yourtimer.util.mapTimeToMillis
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -12,57 +15,55 @@ class PresetViewModel @Inject constructor(
     private val provider: PresetSubcomponentProvider,
 ) : BaseViewModel() {
 
-    private var cardId = 0
+    private var index = 0
 
-    private var preset = mutableListOf<TimeCardModel>(
-        TimeCardModel(id = cardId++, name = "$cardId"),
-        TimeCardModel(id = cardId++, name = "$cardId"),
-        TimeCardModel(id = cardId++, name = "$cardId"),
+    private var timeCards = mutableListOf<TimeCardModel>(
+        TimeCardModel(name = "$index", id = index++)
     )
     private val listeners = mutableSetOf<PresetListener>()
 
     fun addCard() {
-        preset = ArrayList(preset)
-        val card = TimeCardModel(id = cardId++, name = "$cardId")
-        preset.add(card)
+        timeCards = ArrayList(timeCards)
+        val card = TimeCardModel(name = "$index", id = index++)
+        timeCards.add(card)
     }
 
     fun getPreset(): MutableList<TimeCardModel> {
-        return preset
+        return timeCards
     }
 
     fun deleteCard(card: TimeCardModel) {
-        val indexToDelete = preset.indexOfFirst {
+        val indexToDelete = timeCards.indexOfFirst {
             it.id == card.id
         }
         if (indexToDelete != -1) {
-            preset = ArrayList(preset)
-            preset.removeAt(indexToDelete)
+            timeCards = ArrayList(timeCards)
+            timeCards.removeAt(indexToDelete)
             notifyChanges()
         }
     }
 
     fun moveCard(card: TimeCardModel, moveBy: Int) {
-        val oldIndex = preset.indexOfFirst {
+        val oldIndex = timeCards.indexOfFirst {
             it.id == card.id
         }
         if (oldIndex == -1) {
             return
         }
         val newIndex = oldIndex + moveBy
-        if (newIndex < 0 || newIndex >= preset.size) {
+        if (newIndex < 0 || newIndex >= timeCards.size) {
             return
         }
-        preset = ArrayList(preset)
-        preset.removeAt(oldIndex)
-        preset.add(oldIndex, card)
-        Collections.swap(preset, oldIndex, newIndex)
+        timeCards = ArrayList(timeCards)
+        timeCards.removeAt(oldIndex)
+        timeCards.add(oldIndex, card)
+        Collections.swap(timeCards, oldIndex, newIndex)
         notifyChanges()
     }
 
     fun addListener(listener: PresetListener) {
         listeners.add(listener)
-        listener.invoke(preset)
+        listener.invoke(timeCards)
     }
 
     fun removeListener(listener: PresetListener) {
@@ -70,7 +71,7 @@ class PresetViewModel @Inject constructor(
     }
 
     private fun notifyChanges() {
-        listeners.forEach { it.invoke(preset) }
+        listeners.forEach { it.invoke(timeCards) }
     }
 
     override fun onCleared() {
@@ -78,13 +79,41 @@ class PresetViewModel @Inject constructor(
         provider.destroyPresetSubcomponent()
     }
 
+    fun savePreset(name: String): Boolean {
+        if (timeCards.isNotEmpty() && name.isNotEmpty() && cardFieldsIsEmpty()) {
+            val presetModel = PresetModel(
+                name = name,
+                timeCards = timeCards
+            )
+            presetModel
+            return true
+        } else {
+            return false
+        }
+    }
+
+    private fun cardFieldsIsEmpty(): Boolean {
+        val filtered = timeCards.filterNot { cardModel ->
+            cardModel.name.isNullOrEmpty()
+        }.filterNot { cardModel ->
+            cardModel.reps == null || cardModel.reps == 0
+        }.filterNot { cardModel ->
+            mapTimeToMillis(
+                cardModel.hours ?: 0,
+                cardModel.minutes ?: 0,
+                cardModel.seconds ?: 0
+            ) <= 0L
+        }
+        return timeCards.size == filtered.size
+    }
+
     fun cardTextChange(cardModel: TimeCardModel) {
-        val indexToChange = preset.indexOfFirst {
+        val indexToChange = timeCards.indexOfFirst {
             it.id == cardModel.id
         }
         if (indexToChange != -1) {
-            preset = ArrayList(preset)
-            preset[indexToChange] = cardModel
+            timeCards = ArrayList(timeCards)
+            timeCards[indexToChange] = cardModel
         }
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.kostry.yourtimer.databinding.FragmentPresetBinding
+import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.di.provider.PresetSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.util.ViewModelFactory
@@ -56,13 +57,8 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
             adapter.cards = viewModel.getPreset()
         }
         binding.presetFragmentSaveButton.setOnClickListener {
-            viewModel.getPreset().forEach { card ->
-                if (!fieldsIsEmpty(card)){
-                    Toast.makeText(context, "EMPTY", Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(context, "SAVE", Toast.LENGTH_SHORT).show()
-                }
-            }
+            val result = viewModel.savePreset(binding.presetFragmentPresetNameEditText.text.toString())
+            Toast.makeText(context, result.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 

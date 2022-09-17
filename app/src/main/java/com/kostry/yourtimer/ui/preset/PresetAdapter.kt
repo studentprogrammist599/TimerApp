@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.ItemTimeCardBinding
+import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.util.intSubTimeStringFormat
 
 interface TimeCardActionListener {
