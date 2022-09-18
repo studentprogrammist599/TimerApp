@@ -28,6 +28,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
     }
 
+    private val parentAdapter by lazy {
+        HomeParentAdapter()
+    }
+
     override fun onAttach(context: Context) {
         (requireActivity().application as HomeSubcomponentProvider)
             .initHomeSubcomponent()
@@ -44,6 +48,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         initNavigationToTimerFragment()
         initTimePicker()
         initPresetObserver()
+        binding.homeFragmentRecycler.adapter = parentAdapter
+        lifecycleScope.launchWhenCreated {
+            viewModel.presets.collectLatest {
+                parentAdapter.submitList(it)
+            }
+        }
     }
 
     private fun initPresetObserver() {
