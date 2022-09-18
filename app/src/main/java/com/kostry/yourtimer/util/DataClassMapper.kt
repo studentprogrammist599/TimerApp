@@ -9,10 +9,11 @@ fun PresetModel.toPresetEntity() = PresetEntity(
     name = this.name
 )
 
-fun PresetModel.getTimeCardEntities() = this.timeCards.map {
+fun PresetModel.getTimeCardEntities(ownerId: Long) = this.timeCards.map {
     TimeCardEntity(
         id = it.id,
-        ownerId = this.id,
+        ownerId = ownerId,
+        enqueue = it.enqueue,
         name = it.name.orEmpty(),
         reps = it.reps ?: 0,
         hours = it.hours ?: 0,

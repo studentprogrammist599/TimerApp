@@ -21,8 +21,8 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
     private val viewModel: PresetViewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[PresetViewModel::class.java]
     }
-    private val adapter: PresetAdapter by lazy {
-        PresetAdapter(actionListener = object : TimeCardActionListener {
+    private val adapter: TimeCardAdapter by lazy {
+        TimeCardAdapter(actionListener = object : TimeCardActionListener {
             override fun onMove(cardModel: TimeCardModel, moveBy: Int) {
                 viewModel.moveCard(cardModel, moveBy)
             }

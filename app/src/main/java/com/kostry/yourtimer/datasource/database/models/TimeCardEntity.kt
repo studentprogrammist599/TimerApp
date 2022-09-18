@@ -17,7 +17,8 @@ import androidx.room.PrimaryKey
 data class TimeCardEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val ownerId: Int,
+    val ownerId: Long,
+    val enqueue: Int,
     val name: String,
     val reps: Int,
     val hours: Int,

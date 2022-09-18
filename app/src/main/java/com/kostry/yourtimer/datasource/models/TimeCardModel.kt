@@ -1,7 +1,7 @@
 package com.kostry.yourtimer.datasource.models
 
 data class TimeCardModel(
-    val id: Int,
+    var id: Int,
     var enqueue: Int = 0,
     val name: String? = null,
     val reps: Int? = null,

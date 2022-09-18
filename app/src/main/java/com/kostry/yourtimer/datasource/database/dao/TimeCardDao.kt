@@ -11,5 +11,5 @@ interface TimeCardDao {
     suspend fun insertAll(timeCardEntity: List<TimeCardEntity>)
 
     @Query("SELECT * FROM TimeCardEntity WHERE ownerId = :ownerId")
-    fun getByOwnerId(ownerId: Int): Flow<List<TimeCardEntity>>
+    suspend fun getByOwnerId(ownerId: Int): List<TimeCardEntity>
 }

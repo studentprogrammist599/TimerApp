@@ -38,9 +38,9 @@ class TimeCardDiffCallback(
     }
 }
 
-class PresetAdapter(
+class TimeCardAdapter(
     private val actionListener: TimeCardActionListener,
-) : RecyclerView.Adapter<PresetAdapter.TimeCardViewHolder>(), View.OnClickListener {
+) : RecyclerView.Adapter<TimeCardAdapter.TimeCardViewHolder>(), View.OnClickListener {
 
     var cards: List<TimeCardModel> = mutableListOf()
         set(newValue) {

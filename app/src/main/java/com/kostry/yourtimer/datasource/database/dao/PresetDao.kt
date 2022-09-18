@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.Flow
 interface PresetDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(presetEntity: PresetEntity)
+    suspend fun insert(presetEntity: PresetEntity): Long
 
     @Delete
     suspend fun delete(presetEntity: PresetEntity)
 
     @Query("SELECT * FROM PresetEntity")
-    fun getAll(): Flow<List<PresetEntity>>
+    suspend fun getAll(): List<PresetEntity>
 }

@@ -1,30 +1,32 @@
 package com.kostry.yourtimer.ui.preset
 
+import com.kostry.yourtimer.datasource.DatasourceRepository
 import com.kostry.yourtimer.datasource.models.PresetModel
 import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.di.provider.PresetSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseViewModel
 import com.kostry.yourtimer.util.mapTimeToMillis
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 typealias PresetListener = (cards: List<TimeCardModel>) -> Unit
 
 class PresetViewModel @Inject constructor(
     private val provider: PresetSubcomponentProvider,
+    private val repository: DatasourceRepository
 ) : BaseViewModel() {
 
     private var index = 0
 
     private var timeCards = mutableListOf<TimeCardModel>(
-        TimeCardModel(name = "$index", id = index++)
+        TimeCardModel(name = "$index", id = index--)
     )
     private val listeners = mutableSetOf<PresetListener>()
 
     fun addCard() {
         timeCards = ArrayList(timeCards)
-        val card = TimeCardModel(name = "$index", id = index++)
+        val card = TimeCardModel(name = "$index", id = index--)
         timeCards.add(card)
     }
 
@@ -81,11 +83,19 @@ class PresetViewModel @Inject constructor(
 
     fun savePreset(name: String): Boolean {
         if (timeCards.isNotEmpty() && name.isNotEmpty() && cardFieldsIsEmpty()) {
+            timeCards.forEachIndexed { index, timeCardModel ->
+                timeCardModel.enqueue = index
+                if (timeCardModel.id <= 0) {
+                    timeCardModel.id = 0
+                }
+            }
             val presetModel = PresetModel(
                 name = name,
                 timeCards = timeCards
             )
-            presetModel
+            baseViewModelScope.launch {
+                repository.savePreset(presetModel)
+            }
             return true
         } else {
             return false
