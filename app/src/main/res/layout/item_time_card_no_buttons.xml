@@ -1,111 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_time_card_layout"
+    style="?attrPrimaryCarView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/item_time_card_text_name"
-        style="?attrPrimaryTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Card name" />
-
-    <TextView
-        android:id="@+id/item_time_card_reps_text_view"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/reps"
-        app:layout_constraintEnd_toEndOf="@id/item_time_card_reps_count_text_view"
-        app:layout_constraintStart_toStartOf="@id/item_time_card_reps_count_text_view"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_text_name" />
+        android:padding="@dimen/_8dp">
 
-    <TextView
-        android:id="@+id/item_time_card_hours_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hour"
-        app:layout_constraintEnd_toEndOf="@id/item_time_card_hours_count_text_view"
-        app:layout_constraintStart_toStartOf="@id/item_time_card_hours_count_text_view"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_text_name" />
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/item_time_card_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="item_time_card_text_name_label, item_time_card_reps_text_view, item_time_card_time_text_view" />
 
-    <TextView
-        android:id="@+id/item_time_card_minutes_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/min"
-        app:layout_constraintEnd_toEndOf="@id/item_time_card_minutes_count_text_view"
-        app:layout_constraintStart_toStartOf="@id/item_time_card_minutes_count_text_view"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_text_name" />
+        <TextView
+            android:id="@+id/item_time_card_text_name_label"
+            style="?attrSecondaryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/item_time_card_seconds_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sec"
-        app:layout_constraintEnd_toEndOf="@id/item_time_card_seconds_count_text_view"
-        app:layout_constraintStart_toStartOf="@id/item_time_card_seconds_count_text_view"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_text_name" />
+        <TextView
+            android:id="@+id/item_time_card_text_name"
+            style="?attrSecondaryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
+            app:layout_constraintStart_toEndOf="@id/item_time_card_barrier"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Card name" />
 
-    <TextView
-        android:id="@+id/item_time_card_reps_count_text_view"
-        style="?attrPrimaryTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_reps_text_view"
-        tools:text="@string/_00" />
+        <TextView
+            android:id="@+id/item_time_card_reps_text_view"
+            style="?attrSecondaryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reps"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_text_name" />
 
-    <TextView
-        android:id="@+id/item_time_card_hours_count_text_view"
-        style="?attrPrimaryTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16dp"
-        app:layout_constraintStart_toEndOf="@id/item_time_card_reps_count_text_view"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_reps_text_view"
-        tools:text="@string/_00" />
+        <TextView
+            android:id="@+id/item_time_card_reps_count_text_view"
+            style="?attrSecondaryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
+            app:layout_constraintStart_toEndOf="@id/item_time_card_barrier"
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_text_name"
+            tools:text="@string/_00" />
 
-    <TextView
-        android:id="@+id/item_time_card_hours_dots"
-        style="?attrPrimaryTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/time_dots"
-        app:layout_constraintBottom_toBottomOf="@id/item_time_card_hours_count_text_view"
-        app:layout_constraintStart_toEndOf="@id/item_time_card_hours_count_text_view"
-        app:layout_constraintTop_toTopOf="@id/item_time_card_hours_count_text_view" />
+        <TextView
+            android:id="@+id/item_time_card_time_text_view"
+            style="?attrSecondaryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_reps_text_view" />
 
-    <TextView
-        android:id="@+id/item_time_card_minutes_count_text_view"
-        style="?attrPrimaryTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/item_time_card_hours_dots"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_reps_text_view"
-        tools:text="@string/_00" />
+        <TextView
+            android:id="@+id/item_time_card_hours_count_text_view"
+            style="?attrSecondaryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
+            app:layout_constraintStart_toEndOf="@id/item_time_card_barrier"
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_reps_text_view"
+            tools:text="@string/_00" />
 
-    <TextView
-        android:id="@+id/item_time_card_minutes_dots"
-        style="?attrPrimaryTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/time_dots"
-        app:layout_constraintBottom_toBottomOf="@id/item_time_card_minutes_count_text_view"
-        app:layout_constraintStart_toEndOf="@id/item_time_card_minutes_count_text_view"
-        app:layout_constraintTop_toTopOf="@id/item_time_card_minutes_count_text_view" />
+        <TextView
+            android:id="@+id/item_time_card_hours_dots"
+            style="?attrSecondaryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time_dots"
+            app:layout_constraintBottom_toBottomOf="@id/item_time_card_hours_count_text_view"
+            app:layout_constraintStart_toEndOf="@id/item_time_card_hours_count_text_view"
+            app:layout_constraintTop_toTopOf="@id/item_time_card_hours_count_text_view" />
 
-    <TextView
-        android:id="@+id/item_time_card_seconds_count_text_view"
-        style="?attrPrimaryTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/item_time_card_minutes_dots"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_reps_text_view"
-        tools:text="@string/_00" />
+        <TextView
+            android:id="@+id/item_time_card_minutes_count_text_view"
+            style="?attrSecondaryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/item_time_card_hours_dots"
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_reps_text_view"
+            tools:text="@string/_00" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/item_time_card_minutes_dots"
+            style="?attrSecondaryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time_dots"
+            app:layout_constraintBottom_toBottomOf="@id/item_time_card_minutes_count_text_view"
+            app:layout_constraintStart_toEndOf="@id/item_time_card_minutes_count_text_view"
+            app:layout_constraintTop_toTopOf="@id/item_time_card_minutes_count_text_view" />
+
+        <TextView
+            android:id="@+id/item_time_card_seconds_count_text_view"
+            style="?attrSecondaryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/item_time_card_minutes_dots"
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_reps_text_view"
+            tools:text="@string/_00" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

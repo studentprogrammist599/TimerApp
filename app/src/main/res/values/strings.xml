@@ -16,4 +16,6 @@
     <string name="reps">reps</string>
     <string name="home">home</string>
     <string name="settings">settings</string>
+    <string name="time">time</string>
+    <string name="name">name</string>
 </resources>

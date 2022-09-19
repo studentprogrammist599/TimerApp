@@ -20,31 +20,42 @@
         <item name="attrPrimaryButton">@style/PrimaryButtonStyle.DarkTheme</item>
         <item name="attrSecondaryButton">@style/SecondaryButtonStyle.DarkTheme</item>
         <item name="attrPrimaryTextView">@style/PrimaryTextViewStyle.DarkTheme</item>
+        <item name="attrSecondaryTextView">@style/SecondaryTextViewStyle.DarkTheme</item>
         <item name="attrProgressBar">@style/ProgressBarStyle.DarkTheme</item>
+        <item name="attrPrimaryCarView">@style/PrimaryCardViewStyle.DarkTheme</item>
     </style>
 
     <style name="NumberPickerStyle.DarkTheme" parent="Theme.YourTimer">
         <item name="colorControlNormal">#00000000</item>
-        <item name="android:textColorPrimary">@color/secondary_text_color</item>
+        <item name="android:textColorPrimary">@color/primary_text_color</item>
         <item name="android:textSize">@dimen/text_36_sp</item>
     </style>
 
     <style name="PrimaryButtonStyle.DarkTheme">
         <item name="android:backgroundTint">@color/primary_button_color</item>
-        <item name="android:textColor">@color/secondary_text_color</item>
+        <item name="android:textColor">@color/primary_text_color</item>
     </style>
 
     <style name="SecondaryButtonStyle.DarkTheme" parent="PrimaryButtonStyle">
         <item name="android:backgroundTint">@color/secondary_button_color</item>
-        <item name="android:textColor">@color/secondary_text_color</item>
+        <item name="android:textColor">@color/primary_text_color</item>
     </style>
 
     <style name="PrimaryTextViewStyle.DarkTheme">
-        <item name="android:textColor">@color/secondary_text_color</item>
+        <item name="android:textColor">@color/primary_text_color</item>
+    </style>
+
+    <style name="SecondaryTextViewStyle.DarkTheme">
+        <item name="android:textColor">@color/primary_text_color</item>
     </style>
 
     <style name="ProgressBarStyle.DarkTheme">
         <item name="indicatorColor">@color/progress_bar_indicator_color</item>
         <item name="trackColor">@color/progress_bar_track_color</item>
+    </style>
+
+    <style name="PrimaryCardViewStyle.DarkTheme">
+        <item name="android:backgroundTint">@color/layout_background</item>
+        <item name="strokeColor">@color/primary_text_color</item>
     </style>
 </resources>

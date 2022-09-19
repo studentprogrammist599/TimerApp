@@ -10,9 +10,29 @@
         style="?attrPrimaryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/item_time_preset_barrier"
         tools:text="Preset name" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        style="?attrSecondaryButton"
+        android:id="@+id/item_time_preset_options_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_more_vert_24"
+        android:layout_marginTop="@dimen/_4dp"
+        android:layout_marginEnd="@dimen/_8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/item_time_preset_barrier"
+        android:layout_width="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="item_time_preset_options_button, item_time_preset_name"
+        android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_time_preset_recycler"
@@ -22,7 +42,20 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/item_time_preset_name"
+        app:layout_constraintTop_toBottomOf="@id/item_time_preset_barrier"
         tools:listitem="@layout/item_time_card_no_buttons" />
+
+    <View
+        android:id="@+id/item_time_preset_line"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_1dp"
+        android:layout_marginStart="@dimen/_32dp"
+        android:layout_marginTop="@dimen/_8dp"
+        android:layout_marginEnd="@dimen/_32dp"
+        android:background="@color/primary_text_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_time_preset_recycler" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

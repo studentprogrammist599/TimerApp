@@ -4,5 +4,7 @@
     <attr name="attrPrimaryButton" format="reference"/>
     <attr name="attrSecondaryButton" format="reference"/>
     <attr name="attrPrimaryTextView" format="reference"/>
+    <attr name="attrSecondaryTextView" format="reference"/>
     <attr name="attrProgressBar" format="reference"/>
+    <attr name="attrPrimaryCarView" format="reference"/>
 </resources>
