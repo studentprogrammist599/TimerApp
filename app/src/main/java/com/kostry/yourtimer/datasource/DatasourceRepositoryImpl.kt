@@ -7,9 +7,6 @@ import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.util.getTimeCardEntities
 import com.kostry.yourtimer.util.toPresetEntity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
 class DatasourceRepositoryImpl(
@@ -26,9 +23,9 @@ class DatasourceRepositoryImpl(
         Log.d("TEST_TAG", "TEST")
     }
 
-    override fun getAllPresets(): Flow<List<PresetModel>> {
-        return flow<List<PresetModel>> {
-            val presetList: List<PresetModel> = appDatabase.presetDao.getAll().map { presetEntity ->
+    override suspend fun getAllPresets(): List<PresetModel> {
+        return withContext(Dispatchers.IO) {
+            appDatabase.presetDao.getAll().map { presetEntity ->
                 PresetModel(
                     id = presetEntity.id,
                     name = presetEntity.name,
@@ -46,8 +43,7 @@ class DatasourceRepositoryImpl(
                         }
                 )
             }
-            emit(presetList)
-        }.flowOn(Dispatchers.IO)
+        }
     }
 }
 

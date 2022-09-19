@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
@@ -45,21 +44,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.homeFragmentRecycler.adapter = parentAdapter
         initNavigationToTimerFragment()
         initTimePicker()
         initPresetObserver()
-        binding.homeFragmentRecycler.adapter = parentAdapter
-        lifecycleScope.launchWhenCreated {
-            viewModel.presets.collectLatest {
-                parentAdapter.submitList(it)
-            }
-        }
     }
 
     private fun initPresetObserver() {
+        viewModel.getPresets()
         lifecycleScope.launchWhenCreated {
-            viewModel.presets.collectLatest { presetList ->
-                Log.d("TEST_TAG", " preset size: ${presetList.size}")
+            viewModel.presets.collectLatest {
+                parentAdapter.submitList(it)
             }
         }
     }

@@ -7,5 +7,5 @@ interface DatasourceRepository {
 
     suspend fun savePreset(presetModel: PresetModel)
     suspend fun deletePreset()
-    fun getAllPresets(): Flow<List<PresetModel>>
+    suspend fun getAllPresets(): List<PresetModel>
 }

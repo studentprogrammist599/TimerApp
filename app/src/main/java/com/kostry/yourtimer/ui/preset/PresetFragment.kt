@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.kostry.yourtimer.databinding.FragmentPresetBinding
 import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.di.provider.PresetSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.util.ViewModelFactory
-import com.kostry.yourtimer.util.mapTimeToMillis
 import javax.inject.Inject
 
 class PresetFragment : BaseFragment<FragmentPresetBinding>() {
@@ -50,7 +50,7 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.presetFragmentRecycler.adapter = adapter
-        binding.presetFragmentRecycler.recycledViewPool.setMaxRecycledViews(0,0)
+        binding.presetFragmentRecycler.recycledViewPool.setMaxRecycledViews(0, 0)
         viewModel.addListener(listener)
         binding.presetFragmentAddCardButton.setOnClickListener {
             viewModel.addCard()
@@ -58,26 +58,11 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
         }
         binding.presetFragmentSaveButton.setOnClickListener {
             val result = viewModel.savePreset(binding.presetFragmentPresetNameEditText.text.toString())
-            Toast.makeText(context, result.toString(), Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun fieldsIsEmpty(cardModel: TimeCardModel): Boolean {
-        when {
-            cardModel.name.isNullOrEmpty() -> {
-                return false
-            }
-            cardModel.reps == null || cardModel.reps == 0 -> {
-                return false
-            }
-            mapTimeToMillis(cardModel.hours ?: 0, cardModel.minutes ?: 0, cardModel.seconds ?: 0) == 0L -> {
-                return false
-            }
-            binding.presetFragmentPresetNameEditText.text.toString().isEmpty() ->{
-                return false
-            }
-            else -> {
-                return true
+            if(result){
+                Toast.makeText(context, "Preset saved", Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
+            }else{
+                Toast.makeText(context, "Preset fields is empty", Toast.LENGTH_SHORT).show()
             }
         }
     }

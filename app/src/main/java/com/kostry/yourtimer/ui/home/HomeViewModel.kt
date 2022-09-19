@@ -4,7 +4,9 @@ import com.kostry.yourtimer.datasource.DatasourceRepository
 import com.kostry.yourtimer.datasource.models.PresetModel
 import com.kostry.yourtimer.di.provider.HomeSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -13,11 +15,14 @@ class HomeViewModel @Inject constructor(
     private val repository: DatasourceRepository
 ) : BaseViewModel() {
 
-    val presets: StateFlow<List<PresetModel>> = repository.getAllPresets().stateIn(
-        scope = baseViewModelScope,
-        started = SharingStarted.Eagerly,
-        initialValue = emptyList()
-    )
+    private val _presets = MutableStateFlow<List<PresetModel>>(emptyList())
+    val presets: StateFlow<List<PresetModel>> = _presets.asStateFlow()
+
+    fun getPresets(){
+        baseViewModelScope.launch {
+            _presets.value = repository.getAllPresets()
+        }
+    }
 
     override fun onCleared() {
         homeSubcomponentProvider.destroyHomeSubcomponent()
