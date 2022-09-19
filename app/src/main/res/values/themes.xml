@@ -19,10 +19,14 @@
         <item name="attrNumberPicker">@style/NumberPickerStyle</item>
         <item name="attrPrimaryButton">@style/PrimaryButtonStyle</item>
         <item name="attrSecondaryButton">@style/SecondaryButtonStyle</item>
+        <item name="attrPrimaryImageButton">@style/PrimaryImageButtonStyle</item>
         <item name="attrPrimaryTextView">@style/PrimaryTextViewStyle</item>
         <item name="attrSecondaryTextView">@style/SecondaryTextViewStyle</item>
         <item name="attrProgressBar">@style/ProgressBarStyle</item>
         <item name="attrPrimaryCarView">@style/PrimaryCardViewStyle</item>
+        <item name="attrPrimaryTextInputLayout">@style/PrimaryTextInputLayoutStyle</item>
+        <item name="attrPrimaryEditText">@style/PrimaryEditTextStyle</item>
+        <item name="attrThirdTextView">@style/ThirdTextViewStyle</item>
     </style>
 
     <style name="NumberPickerStyle" parent="Theme.YourTimer">
@@ -36,12 +40,18 @@
         <item name="android:textColor">@color/secondary_text_color</item>
         <item name="android:textSize">@dimen/text_16_sp</item>
         <item name="cornerRadius">@dimen/_16dp</item>
+        <item name="iconTint">@color/secondary_text_color</item>
         <item name="elevation">@dimen/_8dp</item>
     </style>
 
     <style name="SecondaryButtonStyle" parent="PrimaryButtonStyle">
         <item name="android:backgroundTint">@color/secondary_button_color</item>
         <item name="android:textColor">@color/primary_text_color</item>
+    </style>
+
+    <style name="PrimaryImageButtonStyle">
+        <item name="android:background">@drawable/rounded_and_bordered_button</item>
+        <item name="android:padding">@dimen/_4dp</item>
     </style>
 
     <style name="PrimaryTextViewStyle">
@@ -51,6 +61,11 @@
 
     <style name="SecondaryTextViewStyle" parent="PrimaryTextViewStyle">
         <item name="android:textSize">@dimen/text_16_sp</item>
+    </style>
+
+    <style name="ThirdTextViewStyle">
+        <item name="android:textSize">@dimen/text_14_sp</item>
+        <item name="android:textColor">@color/third_text_color</item>
     </style>
 
     <style name="ProgressBarStyle">
@@ -67,5 +82,21 @@
         <item name="android:backgroundTint">@color/layout_background</item>
         <item name="cardCornerRadius">@dimen/_8dp</item>
         <item name="strokeColor">@color/primary_text_color</item>
+    </style>
+
+    <style name="PrimaryTextInputLayoutStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">@color/third_text_color</item>
+        <item name="boxStrokeColor">@color/third_text_color</item>
+        <item name="hintTextColor">@color/third_text_color</item>
+        <item name="placeholderTextColor">@color/third_text_color</item>
+    </style>
+
+    <style name="PrimaryEditTextStyle">
+        <item name="android:hint">@string/_00</item>
+        <item name="android:inputType">number</item>
+        <item name="android:textSize">@dimen/text_16_sp</item>
+        <item name="android:textColorHint">@color/third_text_color</item>
+        <item name="android:textColor">@color/primary_text_color</item>
+        <item name="android:maxLength">2</item>
     </style>
 </resources>

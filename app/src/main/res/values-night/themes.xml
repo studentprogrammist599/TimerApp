@@ -19,10 +19,14 @@
         <item name="attrNumberPicker">@style/NumberPickerStyle.DarkTheme</item>
         <item name="attrPrimaryButton">@style/PrimaryButtonStyle.DarkTheme</item>
         <item name="attrSecondaryButton">@style/SecondaryButtonStyle.DarkTheme</item>
+        <item name="attrPrimaryImageButton">@style/PrimaryImageButtonStyle</item>
         <item name="attrPrimaryTextView">@style/PrimaryTextViewStyle.DarkTheme</item>
         <item name="attrSecondaryTextView">@style/SecondaryTextViewStyle.DarkTheme</item>
         <item name="attrProgressBar">@style/ProgressBarStyle.DarkTheme</item>
         <item name="attrPrimaryCarView">@style/PrimaryCardViewStyle.DarkTheme</item>
+        <item name="attrPrimaryTextInputLayout">@style/PrimaryTextInputLayoutStyle.DarkTheme</item>
+        <item name="attrPrimaryEditText">@style/PrimaryEditTextStyle.DarkTheme</item>
+        <item name="attrThirdTextView">@style/ThirdTextViewStyle.DarkTheme</item>
     </style>
 
     <style name="NumberPickerStyle.DarkTheme" parent="Theme.YourTimer">
@@ -34,6 +38,7 @@
     <style name="PrimaryButtonStyle.DarkTheme">
         <item name="android:backgroundTint">@color/primary_button_color</item>
         <item name="android:textColor">@color/primary_text_color</item>
+        <item name="iconTint">@color/primary_text_color</item>
     </style>
 
     <style name="SecondaryButtonStyle.DarkTheme" parent="PrimaryButtonStyle">
@@ -49,6 +54,10 @@
         <item name="android:textColor">@color/primary_text_color</item>
     </style>
 
+    <style name="ThirdTextViewStyle.DarkTheme">
+        <item name="android:textColor">@color/third_text_color</item>
+    </style>
+
     <style name="ProgressBarStyle.DarkTheme">
         <item name="indicatorColor">@color/progress_bar_indicator_color</item>
         <item name="trackColor">@color/progress_bar_track_color</item>
@@ -57,5 +66,17 @@
     <style name="PrimaryCardViewStyle.DarkTheme">
         <item name="android:backgroundTint">@color/layout_background</item>
         <item name="strokeColor">@color/primary_text_color</item>
+    </style>
+
+    <style name="PrimaryTextInputLayoutStyle.DarkTheme">
+        <item name="android:textColorHint">@color/third_text_color</item>
+        <item name="boxStrokeColor">@color/third_text_color</item>
+        <item name="hintTextColor">@color/third_text_color</item>
+        <item name="placeholderTextColor">@color/third_text_color</item>
+    </style>
+
+    <style name="PrimaryEditTextStyle.DarkTheme">
+        <item name="android:textColorHint">@color/third_text_color</item>
+        <item name="android:textColor">@color/primary_text_color</item>
     </style>
 </resources>

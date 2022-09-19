@@ -3,8 +3,12 @@
     <attr name="attrNumberPicker" format="reference"/>
     <attr name="attrPrimaryButton" format="reference"/>
     <attr name="attrSecondaryButton" format="reference"/>
+    <attr name="attrPrimaryImageButton" format="reference"/>
     <attr name="attrPrimaryTextView" format="reference"/>
     <attr name="attrSecondaryTextView" format="reference"/>
+    <attr name="attrThirdTextView" format="reference"/>
     <attr name="attrProgressBar" format="reference"/>
     <attr name="attrPrimaryCarView" format="reference"/>
+    <attr name="attrPrimaryTextInputLayout" format="reference"/>
+    <attr name="attrPrimaryEditText" format="reference"/>
 </resources>

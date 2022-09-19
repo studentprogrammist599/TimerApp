@@ -18,4 +18,9 @@
     <string name="settings">settings</string>
     <string name="time">time</string>
     <string name="name">name</string>
+    <string name="save">save</string>
+    <string name="add_card">Add card</string>
+    <string name="new_preset">New preset</string>
+    <string name="enter_the_name">Enter the name</string>
+    <string name="card_name">Card name</string>
 </resources>

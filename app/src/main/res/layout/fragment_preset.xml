@@ -29,27 +29,22 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/preset_fragment_text_input_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="?attrPrimaryTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="New preset"
-        android:textColorHint="@color/third_text_color"
-        app:boxStrokeColor="@color/third_text_color"
+        android:hint="@string/new_preset"
         app:endIconMode="clear_text"
-        app:hintTextColor="@color/third_text_color"
         app:layout_constraintEnd_toEndOf="@id/preset_fragment_end_guideline"
         app:layout_constraintStart_toStartOf="@id/preset_fragment_start_guideline"
         app:layout_constraintTop_toTopOf="@id/preset_fragment_top_guideline"
-        app:placeholderText="Enter the name"
-        app:placeholderTextColor="@color/third_text_color">
+        app:placeholderText="@string/enter_the_name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/preset_fragment_preset_name_edit_text"
+            style="?attrPrimaryTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:textColor="@color/primary_text_color"
-            android:textSize="@dimen/text_20_sp" />
+            android:inputType="textMultiLine" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -58,9 +53,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8dp"
-        android:text="Add card"
+        android:text="@string/add_card"
         app:icon="@drawable/ic_baseline_add_24"
-        app:iconTint="@color/secondary_text_color"
         app:layout_constraintStart_toStartOf="@id/preset_fragment_start_guideline"
         app:layout_constraintTop_toBottomOf="@id/preset_fragment_text_input_layout" />
 
@@ -70,9 +64,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8dp"
-        android:text="save"
+        android:text="@string/save"
         app:icon="@drawable/ic_baseline_save_24"
-        app:iconTint="@color/secondary_text_color"
         app:layout_constraintEnd_toEndOf="@id/preset_fragment_end_guideline"
         app:layout_constraintTop_toBottomOf="@id/preset_fragment_text_input_layout" />
 
