@@ -20,13 +20,13 @@ class PresetViewModel @Inject constructor(
     private var index = 0
 
     private var timeCards = mutableListOf<TimeCardModel>(
-        TimeCardModel(name = "$index", id = index--)
+        TimeCardModel(id = index--)
     )
     private val listeners = mutableSetOf<PresetListener>()
 
     fun addCard() {
         timeCards = ArrayList(timeCards)
-        val card = TimeCardModel(name = "$index", id = index--)
+        val card = TimeCardModel(id = index--)
         timeCards.add(card)
     }
 
