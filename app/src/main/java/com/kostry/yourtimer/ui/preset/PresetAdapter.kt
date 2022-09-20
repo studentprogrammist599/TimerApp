@@ -61,119 +61,41 @@ class TimeCardAdapter(
         val binding: ItemTimeCardWithButtonsBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private fun getNewTimeCard(cardId: Int){}
+        private fun getActualTimeCard(cardId: Int): TimeCardModel {
+            return TimeCardModel(
+                id = cardId,
+                name = binding.itemTimeCardWithButtonsTextNameEditText.text.toString(),
+                reps = binding.itemTimeCardWithButtonsRepsEditText.text.toString().toIntOrNull(),
+                hours = binding.itemTimeCardWithButtonsHoursEditText.text.toString().toIntOrNull(),
+                minutes = binding.itemTimeCardWithButtonsMinutesEditText.text.toString().toIntOrNull(),
+                seconds = binding.itemTimeCardWithButtonsSecondsEditText.text.toString().toIntOrNull(),
+            )
+        }
 
         fun move(cardId: Int) {
             binding.itemTimeCardWithButtonsMoveUpButton.setOnClickListener {
-                actionListener.onMove(
-                    //создавать TimeCardModel и считывать значения полей только при клике, иначе баг
-                    TimeCardModel(
-                        id = cardId,
-                        name = binding.itemTimeCardWithButtonsTextNameEditText.text.toString(),
-                        reps = binding.itemTimeCardWithButtonsRepsEditText.text.toString()
-                            .toIntOrNull(),
-                        hours = binding.itemTimeCardWithButtonsHoursEditText.text.toString()
-                            .toIntOrNull(),
-                        minutes = binding.itemTimeCardWithButtonsMinutesEditText.text.toString()
-                            .toIntOrNull(),
-                        seconds = binding.itemTimeCardWithButtonsSecondsEditText.text.toString()
-                            .toIntOrNull(),
-                    ), -1
-                )
+                actionListener.onMove(getActualTimeCard(cardId), -1)
             }
             binding.itemTimeCardWithButtonsMoveDownButton.setOnClickListener {
-                actionListener.onMove(
-                    TimeCardModel(
-                        id = cardId,
-                        name = binding.itemTimeCardWithButtonsTextNameEditText.text.toString(),
-                        reps = binding.itemTimeCardWithButtonsRepsEditText.text.toString()
-                            .toIntOrNull(),
-                        hours = binding.itemTimeCardWithButtonsHoursEditText.text.toString()
-                            .toIntOrNull(),
-                        minutes = binding.itemTimeCardWithButtonsMinutesEditText.text.toString()
-                            .toIntOrNull(),
-                        seconds = binding.itemTimeCardWithButtonsSecondsEditText.text.toString()
-                            .toIntOrNull(),
-                    ), 1
-                )
+                actionListener.onMove(getActualTimeCard(cardId), 1)
             }
         }
 
         fun textChangeListeners(cardId: Int) {
             binding.itemTimeCardWithButtonsTextNameEditText.addTextChangedListener {
-                val changedCard = TimeCardModel(
-                    id = cardId,
-                    name = binding.itemTimeCardWithButtonsTextNameEditText.text.toString(),
-                    reps = binding.itemTimeCardWithButtonsRepsEditText.text.toString()
-                        .toIntOrNull(),
-                    hours = binding.itemTimeCardWithButtonsHoursEditText.text.toString()
-                        .toIntOrNull(),
-                    minutes = binding.itemTimeCardWithButtonsMinutesEditText.text.toString()
-                        .toIntOrNull(),
-                    seconds = binding.itemTimeCardWithButtonsSecondsEditText.text.toString()
-                        .toIntOrNull(),
-                )
-                actionListener.onTextChange(changedCard)
+                actionListener.onTextChange(getActualTimeCard(cardId))
             }
             binding.itemTimeCardWithButtonsRepsEditText.addTextChangedListener {
-                val changedCard = TimeCardModel(
-                    id = cardId,
-                    name = binding.itemTimeCardWithButtonsTextNameEditText.text.toString(),
-                    reps = binding.itemTimeCardWithButtonsRepsEditText.text.toString()
-                        .toIntOrNull(),
-                    hours = binding.itemTimeCardWithButtonsHoursEditText.text.toString()
-                        .toIntOrNull(),
-                    minutes = binding.itemTimeCardWithButtonsMinutesEditText.text.toString()
-                        .toIntOrNull(),
-                    seconds = binding.itemTimeCardWithButtonsSecondsEditText.text.toString()
-                        .toIntOrNull(),
-                )
-                actionListener.onTextChange(changedCard)
+                actionListener.onTextChange(getActualTimeCard(cardId))
             }
             binding.itemTimeCardWithButtonsHoursEditText.addTextChangedListener {
-                val changedCard = TimeCardModel(
-                    id = cardId,
-                    name = binding.itemTimeCardWithButtonsTextNameEditText.text.toString(),
-                    reps = binding.itemTimeCardWithButtonsRepsEditText.text.toString()
-                        .toIntOrNull(),
-                    hours = binding.itemTimeCardWithButtonsHoursEditText.text.toString()
-                        .toIntOrNull(),
-                    minutes = binding.itemTimeCardWithButtonsMinutesEditText.text.toString()
-                        .toIntOrNull(),
-                    seconds = binding.itemTimeCardWithButtonsSecondsEditText.text.toString()
-                        .toIntOrNull(),
-                )
-                actionListener.onTextChange(changedCard)
+                actionListener.onTextChange(getActualTimeCard(cardId))
             }
             binding.itemTimeCardWithButtonsMinutesEditText.addTextChangedListener {
-                val changedCard = TimeCardModel(
-                    id = cardId,
-                    name = binding.itemTimeCardWithButtonsTextNameEditText.text.toString(),
-                    reps = binding.itemTimeCardWithButtonsRepsEditText.text.toString()
-                        .toIntOrNull(),
-                    hours = binding.itemTimeCardWithButtonsHoursEditText.text.toString()
-                        .toIntOrNull(),
-                    minutes = binding.itemTimeCardWithButtonsMinutesEditText.text.toString()
-                        .toIntOrNull(),
-                    seconds = binding.itemTimeCardWithButtonsSecondsEditText.text.toString()
-                        .toIntOrNull(),
-                )
-                actionListener.onTextChange(changedCard)
+                actionListener.onTextChange(getActualTimeCard(cardId))
             }
             binding.itemTimeCardWithButtonsSecondsEditText.addTextChangedListener {
-                val changedCard = TimeCardModel(
-                    id = cardId,
-                    name = binding.itemTimeCardWithButtonsTextNameEditText.text.toString(),
-                    reps = binding.itemTimeCardWithButtonsRepsEditText.text.toString()
-                        .toIntOrNull(),
-                    hours = binding.itemTimeCardWithButtonsHoursEditText.text.toString()
-                        .toIntOrNull(),
-                    minutes = binding.itemTimeCardWithButtonsMinutesEditText.text.toString()
-                        .toIntOrNull(),
-                    seconds = binding.itemTimeCardWithButtonsSecondsEditText.text.toString()
-                        .toIntOrNull(),
-                )
-                actionListener.onTextChange(changedCard)
+                actionListener.onTextChange(getActualTimeCard(cardId))
             }
         }
     }
