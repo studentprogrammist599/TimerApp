@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.ItemTimeCardWithButtonsBinding
 import com.kostry.yourtimer.datasource.models.TimeCardModel
+import com.kostry.yourtimer.util.MinMaxTimeFilter
 import com.kostry.yourtimer.util.intSubTimeStringFormat
 
 interface TimeCardActionListener {
@@ -73,6 +74,8 @@ class TimeCardAdapter(
         holder.textChangeListeners(card.id)
         holder.binding.itemTimeCardWithButtonsDeleteButton.tag = card
         with(holder.binding) {
+            itemTimeCardWithButtonsMinutesEditText.filters = arrayOf(MinMaxTimeFilter())
+            itemTimeCardWithButtonsSecondsEditText.filters = arrayOf(MinMaxTimeFilter())
             card.name?.let { itemTimeCardWithButtonsTextNameEditText.setText(it) }
             card.reps?.let { itemTimeCardWithButtonsRepsEditText.setText(it.intSubTimeStringFormat()) }
             card.hours?.let { itemTimeCardWithButtonsHoursEditText.setText(it.intSubTimeStringFormat()) }
