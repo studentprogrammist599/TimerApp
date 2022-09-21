@@ -5,6 +5,7 @@ import com.kostry.yourtimer.di.provider.TimerSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseViewModel
 import com.kostry.yourtimer.util.MyTimer
 import com.kostry.yourtimer.util.TimerState
+import com.kostry.yourtimer.util.mapTimeToMillis
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -22,8 +23,8 @@ class TimerViewModel @Inject constructor(
             initialValue = TimerState.Stopped
         )
 
-    fun runTimer(preset: PresetModel){
-
+    fun runTimer(preset: PresetModel) {
+        myTimer.runTimer(preset)
     }
 
     fun restartTimer() {
@@ -34,11 +35,19 @@ class TimerViewModel @Inject constructor(
         myTimer.pauseTimer()
     }
 
-    fun stopTimer(){
+    fun stopTimer() {
         myTimer.stopTimer()
     }
 
-    fun getStartTime() = myTimer.getStartTime()
+    fun getStartTime(preset: PresetModel?): Long {
+        var totalTime = 0L
+        preset?.timeCards?.forEach {
+            val time =
+                mapTimeToMillis(it.hours ?: 0, it.minutes ?: 0, it.seconds ?: 0)
+            totalTime += time
+        }
+        return totalTime
+    }
 
     override fun onCleared() {
         timerSubcomponentProvider.destroyTimerSubcomponent()

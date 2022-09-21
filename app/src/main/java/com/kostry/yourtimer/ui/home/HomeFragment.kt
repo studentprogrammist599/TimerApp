@@ -6,17 +6,14 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.FragmentHomeBinding
 import com.kostry.yourtimer.datasource.models.PresetModel
 import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.di.provider.HomeSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
-import com.kostry.yourtimer.ui.timer.TimerFragment
 import com.kostry.yourtimer.util.*
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
@@ -124,8 +121,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 )
                 val preset = PresetModel(id = 0, name = "", timeCards = listOf(timeCard))
                 findNavController().navigate(
-                    R.id.action_homeFragment_to_timerFragment,
-                    bundleOf(TimerFragment.TIMER_FRAGMENT_PRESET_ARGS_KEY to preset)
+                    HomeFragmentDirections.actionHomeFragmentToTimerFragment().setPreset(preset)
                 )
             }
         }

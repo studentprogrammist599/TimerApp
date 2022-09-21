@@ -1,30 +1,38 @@
 package com.kostry.yourtimer.util
 
 import android.os.CountDownTimer
+import com.kostry.yourtimer.datasource.models.PresetModel
+import com.kostry.yourtimer.datasource.models.TimeCardModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class MyTimer {
 
+    private var presetModel: PresetModel? = null
+    private var timeCard: TimeCardModel? = null
     private var startTimeMillis: Long = 0L
     private var repsCount = 0
     private var timer: CountDownTimer? = null
     private val _timerState = MutableStateFlow<TimerState>(TimerState.Stopped)
     val timerState = _timerState.asStateFlow()
 
-    fun runTimer(reps: Int, millis: Long){
-        repsCount = reps
-        startTimeMillis = millis
-        startTimer(millis)
+    fun runTimer(preset: PresetModel){
+        presetModel = preset
+        timeCard = presetModel?.timeCards?.first()
+        repsCount = timeCard?.reps ?: 0
+        startTimeMillis = timeCard?.let {
+            mapTimeToMillis(it.hours ?: 0, it.minutes ?: 0, it.seconds ?: 0)
+        } ?: 0L
+        startTimer(startTimeMillis)
     }
 
-    fun restartTimer(){
-        if (timer == null && timerState.value is TimerState.Paused && repsCount != 0){
+    fun restartTimer() {
+        if (timer == null && timerState.value is TimerState.Paused) {
             startTimer((timerState.value as TimerState.Paused).millis)
         }
     }
 
-    fun stopTimer(){
+    fun stopTimer() {
         repsCount = 0
         onFinishTimer()
     }
@@ -37,9 +45,6 @@ class MyTimer {
         }
     }
 
-    fun getStartTime(): Long {
-        return startTimeMillis
-    }
 
     private fun startTimer(millis: Long) {
         if (timer == null && timerState.value !is TimerState.Running && millis != 0L && repsCount != 0) {
@@ -62,9 +67,9 @@ class MyTimer {
     private fun onFinishTimer() {
         timer?.cancel()
         timer = null
-        if (repsCount > 0){
+        if (repsCount > 0) {
             startTimer(startTimeMillis)
-        }else {
+        } else {
             _timerState.value = TimerState.Stopped
         }
     }

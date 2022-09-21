@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.FragmentTimerBinding
-import com.kostry.yourtimer.datasource.models.PresetModel
 import com.kostry.yourtimer.di.provider.TimerSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.ui.mainactivity.MainActivityCallback
@@ -25,13 +25,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         ViewModelProvider(this, viewModelFactory)[TimerViewModel::class.java]
     }
 
-    private val presetArgs: PresetModel? by lazy {
-        if (arguments == null) {
-            null
-        } else {
-            arguments?.getSerializable(TIMER_FRAGMENT_PRESET_ARGS_KEY) as PresetModel
-        }
-    }
+    private val args by navArgs<TimerFragmentArgs>()
 
     private val mainActivityCallback by lazy {
         activity as MainActivityCallback
@@ -51,9 +45,9 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         super.onViewCreated(view, savedInstanceState)
         if (viewModel.timerState.value !is TimerState.Paused
             && savedInstanceState == null
-            && presetArgs != null
+            && args.preset != null
         ) {
-            viewModel.runTimer(presetArgs!!)
+            viewModel.runTimer(args.preset!!)
         }
         initTimePicker()
         initViewState()
@@ -88,7 +82,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                             buttonCancelVisibility = View.VISIBLE,
                             setProgress = getPercentProgressTime(
                                 state.millis,
-                                viewModel.getStartTime()
+                                viewModel.getStartTime(args.preset)
                             ),
                             positiveButtonColor = requireContext().getColor(R.color.third_button_color),
                         )
@@ -101,7 +95,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                             buttonCancelVisibility = View.VISIBLE,
                             setProgress = getPercentProgressTime(
                                 state.millis,
-                                viewModel.getStartTime()
+                                viewModel.getStartTime(args.preset)
                             ),
                             positiveButtonColor = requireContext().getColor(R.color.primary_button_color),
                         )
