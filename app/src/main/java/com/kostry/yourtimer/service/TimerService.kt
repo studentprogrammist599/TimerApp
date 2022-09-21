@@ -12,13 +12,11 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.os.bundleOf
 import androidx.navigation.NavDeepLinkBuilder
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.broadcastreceiver.AlarmReceiver
 import com.kostry.yourtimer.di.provider.AppComponentProvider
 import com.kostry.yourtimer.ui.mainactivity.MainActivity.Companion.NOTIFICATION_CHANNEL_ID
-import com.kostry.yourtimer.ui.timer.TimerFragment
 import com.kostry.yourtimer.util.MyTimer
 import com.kostry.yourtimer.util.TIMER_NOTIFICATION_ID
 import com.kostry.yourtimer.util.TimerState
@@ -42,7 +40,10 @@ class TimerService : Service() {
             .provideAppComponent()
             .inject(this)
         super.onCreate()
-        startForeground(TIMER_NOTIFICATION_ID, createNotification(TIMER_IS_STOPPED.toInt(),TIMER_IS_STOPPED))
+        startForeground(
+            TIMER_NOTIFICATION_ID,
+            createNotification(TIMER_IS_STOPPED.toInt(), TIMER_IS_STOPPED)
+        )
         log("onCreate")
 
     }
@@ -108,12 +109,6 @@ class TimerService : Service() {
         val pendingIntent: PendingIntent = NavDeepLinkBuilder(this)
             .setGraph(R.navigation.main_nav_graph)
             .setDestination(R.id.timerFragment)
-            .setArguments(
-                bundleOf(
-                    TimerFragment.TIMER_FRAGMENT_TIME_ARGS_KEY to timeMillis,
-                    TimerFragment.TIMER_FRAGMENT_ROUND_ARGS_KEY to reps
-                )
-            )
             .createPendingIntent()
 
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)

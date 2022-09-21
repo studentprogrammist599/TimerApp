@@ -1,5 +1,6 @@
 package com.kostry.yourtimer.ui.timer
 
+import com.kostry.yourtimer.datasource.models.PresetModel
 import com.kostry.yourtimer.di.provider.TimerSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseViewModel
 import com.kostry.yourtimer.util.MyTimer
@@ -21,8 +22,8 @@ class TimerViewModel @Inject constructor(
             initialValue = TimerState.Stopped
         )
 
-    fun runTimer(rounds: Int, timeMillis: Long){
-        myTimer.runTimer(rounds, timeMillis)
+    fun runTimer(preset: PresetModel){
+
     }
 
     fun restartTimer() {

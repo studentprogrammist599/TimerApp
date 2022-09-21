@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.FragmentTimerBinding
+import com.kostry.yourtimer.datasource.models.PresetModel
 import com.kostry.yourtimer.di.provider.TimerSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.ui.mainactivity.MainActivityCallback
@@ -24,12 +25,12 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         ViewModelProvider(this, viewModelFactory)[TimerViewModel::class.java]
     }
 
-    private val roundArgs: Int? by lazy {
-        arguments?.getInt(TIMER_FRAGMENT_ROUND_ARGS_KEY)
-    }
-
-    private val timeArgs: Long? by lazy {
-        arguments?.getLong(TIMER_FRAGMENT_TIME_ARGS_KEY)
+    private val presetArgs: PresetModel? by lazy {
+        if (arguments == null) {
+            null
+        } else {
+            arguments?.getSerializable(TIMER_FRAGMENT_PRESET_ARGS_KEY) as PresetModel
+        }
     }
 
     private val mainActivityCallback by lazy {
@@ -50,10 +51,9 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         super.onViewCreated(view, savedInstanceState)
         if (viewModel.timerState.value !is TimerState.Paused
             && savedInstanceState == null
-            && roundArgs != null
-            && timeArgs != null
+            && presetArgs != null
         ) {
-            viewModel.runTimer(roundArgs!!, timeArgs!!)
+            viewModel.runTimer(presetArgs!!)
         }
         initTimePicker()
         initViewState()
@@ -181,7 +181,6 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
     }
 
     companion object {
-        const val TIMER_FRAGMENT_ROUND_ARGS_KEY = "TIMER_FRAGMENT_ROUND_ARGS_KEY"
-        const val TIMER_FRAGMENT_TIME_ARGS_KEY = "TIMER_FRAGMENT_TIME_ARGS_KEY"
+        const val TIMER_FRAGMENT_PRESET_ARGS_KEY = "TIMER_FRAGMENT_PRESET_ARGS_KEY"
     }
 }

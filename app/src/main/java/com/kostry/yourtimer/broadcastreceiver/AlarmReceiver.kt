@@ -7,11 +7,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.os.bundleOf
 import androidx.navigation.NavDeepLinkBuilder
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.ui.mainactivity.MainActivity
-import com.kostry.yourtimer.ui.timer.TimerFragment
 import com.kostry.yourtimer.util.TIMER_NOTIFICATION_ID
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -19,8 +17,10 @@ class AlarmReceiver : BroadcastReceiver() {
         context?.let {
             NotificationManagerCompat
                 .from(context)
-                .notify(TIMER_NOTIFICATION_ID,
-                    createNotification(context.getString(R.string.time_is_out), context))
+                .notify(
+                    TIMER_NOTIFICATION_ID,
+                    createNotification(context.getString(R.string.time_is_out), context)
+                )
         }
     }
 
@@ -28,7 +28,6 @@ class AlarmReceiver : BroadcastReceiver() {
         val pendingIntent: PendingIntent = NavDeepLinkBuilder(context)
             .setGraph(R.navigation.main_nav_graph)
             .setDestination(R.id.timerFragment)
-            .setArguments(args = bundleOf(TimerFragment.TIMER_FRAGMENT_TIME_ARGS_KEY to 0))
             .createPendingIntent()
 
         return NotificationCompat.Builder(context, MainActivity.NOTIFICATION_CHANNEL_ID)
