@@ -6,6 +6,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -27,9 +28,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private val parentAdapter by lazy {
-        HomeParentAdapter(object : HomeParentAdapter.HomeParentAdapterListener{
+        HomeParentAdapter(object : HomeParentAdapterListener {
             override fun onDelete(presetModel: PresetModel) {
-                viewModel.deletePreset(presetModel)
+                Toast.makeText(context, "onDelete ${presetModel.name}", Toast.LENGTH_LONG).show()
+//                viewModel.deletePreset(presetModel)
+            }
+
+            override fun onEdit(presetModel: PresetModel) {
+                Toast.makeText(context, "onEdit ${presetModel.name}", Toast.LENGTH_LONG).show()
             }
         })
     }

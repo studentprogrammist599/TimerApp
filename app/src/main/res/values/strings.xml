@@ -23,4 +23,6 @@
     <string name="new_preset">New preset</string>
     <string name="enter_the_name">Enter the name</string>
     <string name="card_name">Card name</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
 </resources>

@@ -1,8 +1,10 @@
 package com.kostry.yourtimer.ui.home
 
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,22 +12,25 @@ import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.ItemTimePresetBinding
 import com.kostry.yourtimer.datasource.models.PresetModel
 
+interface HomeParentAdapterListener {
+    fun onDelete(presetModel: PresetModel)
+    fun onEdit(presetModel: PresetModel)
+}
+
+private const val ID_ON_DELETE = 1
+private const val ID_ON_EDIT = 2
+
 class HomeParentAdapter(
     private val listener: HomeParentAdapterListener
 ) : ListAdapter<PresetModel, HomeParentAdapter.ParentViewHolder>(ParentDiffCallback), View.OnClickListener {
-
-    interface HomeParentAdapterListener {
-        fun onDelete(presetModel: PresetModel)
-    }
 
     class ParentViewHolder(
         val binding: ItemTimePresetBinding
     ) : RecyclerView.ViewHolder(binding.root)
 
     override fun onClick(v: View) {
-        val presetModel = v.tag as PresetModel
         when(v.id) {
-            R.id.item_time_preset_options_button -> listener.onDelete(presetModel)
+            R.id.item_time_preset_options_button -> showPopupMenu(v)
         }
     }
 
@@ -42,13 +47,34 @@ class HomeParentAdapter(
         val presetModel = getItem(position)
         val childAdapter = HomeChildAdapter()
         with(holder.binding) {
-            root.tag = presetModel
             itemTimePresetOptionsButton.tag = presetModel
 
             itemTimePresetName.text = presetModel.name
             itemTimePresetRecycler.adapter = childAdapter
             childAdapter.submitList(presetModel.timeCards)
         }
+    }
+
+    private fun showPopupMenu(view: View){
+        val presetModel = view.tag as PresetModel
+        val popupMenu = PopupMenu(view.context, view)
+
+        popupMenu.menu.add(0, ID_ON_DELETE, Menu.NONE, view.context.getString(R.string.delete))
+        popupMenu.menu.add(0, ID_ON_EDIT, Menu.NONE, view.context.getString(R.string.edit))
+
+        popupMenu.setOnMenuItemClickListener {
+            when(it.itemId){
+                ID_ON_DELETE -> {
+                    listener.onDelete(presetModel)
+                }
+                ID_ON_EDIT -> {
+                    listener.onEdit(presetModel)
+                }
+            }
+            return@setOnMenuItemClickListener true
+        }
+
+        popupMenu.show()
     }
 
     companion object ParentDiffCallback : DiffUtil.ItemCallback<PresetModel>() {
