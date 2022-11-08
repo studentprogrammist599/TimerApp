@@ -1,7 +1,7 @@
 package com.kostry.yourtimer.datasource
 
-import android.util.Log
 import com.kostry.yourtimer.datasource.database.AppDatabase
+import com.kostry.yourtimer.datasource.database.models.PresetEntity
 import com.kostry.yourtimer.datasource.models.PresetModel
 import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.util.getTimeCardEntities
@@ -19,8 +19,10 @@ class DatasourceRepositoryImpl(
         }
     }
 
-    override suspend fun deletePreset() {
-        Log.d("TEST_TAG", "TEST")
+    override suspend fun deletePreset(presetModel: PresetModel) {
+        withContext(Dispatchers.IO){
+            appDatabase.presetDao.delete(presetEntity = PresetEntity(presetModel.id, presetModel.name))
+        }
     }
 
     override suspend fun getAllPresets(): List<PresetModel> {

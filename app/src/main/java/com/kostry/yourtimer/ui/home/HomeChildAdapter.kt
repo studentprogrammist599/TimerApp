@@ -12,7 +12,7 @@ import com.kostry.yourtimer.util.intSubTimeStringFormat
 class HomeChildAdapter :
     ListAdapter<TimeCardModel, HomeChildAdapter.ChildViewHolder>(ChildDiffCallback) {
 
-    inner class ChildViewHolder(
+    class ChildViewHolder(
         val binding: ItemTimeCardNoButtonsBinding,
     ) : RecyclerView.ViewHolder(binding.root)
 

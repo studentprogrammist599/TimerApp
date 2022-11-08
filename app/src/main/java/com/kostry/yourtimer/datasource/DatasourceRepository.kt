@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface DatasourceRepository {
 
     suspend fun savePreset(presetModel: PresetModel)
-    suspend fun deletePreset()
+    suspend fun deletePreset(presetModel: PresetModel)
     suspend fun getAllPresets(): List<PresetModel>
 }

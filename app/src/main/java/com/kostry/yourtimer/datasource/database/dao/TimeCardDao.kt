@@ -2,7 +2,6 @@ package com.kostry.yourtimer.datasource.database.dao
 
 import androidx.room.*
 import com.kostry.yourtimer.datasource.database.models.TimeCardEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TimeCardDao {

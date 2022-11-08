@@ -24,6 +24,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun deletePreset(presetModel: PresetModel){
+        baseViewModelScope.launch {
+            repository.deletePreset(presetModel)
+            getPresets()
+        }
+    }
+
     override fun onCleared() {
         homeSubcomponentProvider.destroyHomeSubcomponent()
         super.onCleared()

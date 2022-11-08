@@ -27,7 +27,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private val parentAdapter by lazy {
-        HomeParentAdapter()
+        HomeParentAdapter(object : HomeParentAdapter.HomeParentAdapterListener{
+            override fun onDelete(presetModel: PresetModel) {
+                viewModel.deletePreset(presetModel)
+            }
+        })
     }
 
     override fun onAttach(context: Context) {
