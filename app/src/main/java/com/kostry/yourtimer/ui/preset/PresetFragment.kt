@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.kostry.yourtimer.databinding.FragmentPresetBinding
 import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.di.provider.PresetSubcomponentProvider
@@ -21,6 +22,9 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
     private val viewModel: PresetViewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[PresetViewModel::class.java]
     }
+
+    private val args by navArgs<PresetFragmentArgs>()
+
     private val adapter: TimeCardAdapter by lazy {
         TimeCardAdapter(actionListener = object : TimeCardActionListener {
             override fun onMove(cardModel: TimeCardModel, moveBy: Int) {
@@ -49,6 +53,7 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Toast.makeText(context, "${args.preset?.name}", Toast.LENGTH_LONG).show()
         binding.presetFragmentRecycler.adapter = adapter
         binding.presetFragmentRecycler.recycledViewPool.setMaxRecycledViews(0, 0)
         viewModel.addListener(listener)

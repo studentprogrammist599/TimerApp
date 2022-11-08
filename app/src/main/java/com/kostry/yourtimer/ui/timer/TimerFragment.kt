@@ -173,8 +173,4 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
             secondsPicker.value = timeMillis.fromMillisGetSeconds().toInt()
         }
     }
-
-    companion object {
-        const val TIMER_FRAGMENT_PRESET_ARGS_KEY = "TIMER_FRAGMENT_PRESET_ARGS_KEY"
-    }
 }

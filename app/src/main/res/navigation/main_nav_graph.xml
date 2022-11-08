@@ -13,22 +13,31 @@
         <action
             android:id="@+id/action_homeFragment_to_timerFragment"
             app:destination="@id/timerFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_presetFragment"
+            app:destination="@id/presetFragment" />
     </fragment>
     <fragment
         android:id="@+id/timerFragment"
         android:name="com.kostry.yourtimer.ui.timer.TimerFragment"
         android:label="fragment_timer"
-        tools:layout="@layout/fragment_timer" >
+        tools:layout="@layout/fragment_timer">
         <argument
             android:name="preset"
+            android:defaultValue="@null"
             app:argType="com.kostry.yourtimer.datasource.models.PresetModel"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/presetFragment"
         android:name="com.kostry.yourtimer.ui.preset.PresetFragment"
         android:label="fragment_preset"
-        tools:layout="@layout/fragment_preset" />
+        tools:layout="@layout/fragment_preset">
+        <argument
+            android:name="preset"
+            android:defaultValue="@null"
+            app:argType="com.kostry.yourtimer.datasource.models.PresetModel"
+            app:nullable="true" />
+    </fragment>
 
 </navigation>

@@ -9,8 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.get
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.ActivityMainBinding
 import com.kostry.yourtimer.service.TimerService
@@ -28,15 +26,8 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        initBottomNavigationView()
         createNotificationChannel()
         checkTimerService()
-    }
-
-    private fun initBottomNavigationView() {
-        val bottomNavView = binding.mainBnv
-        NavigationUI.setupWithNavController(bottomNavView, navController)
-        bottomNavView.setupWithNavController(navController)
     }
 
     override fun startTimerService() {

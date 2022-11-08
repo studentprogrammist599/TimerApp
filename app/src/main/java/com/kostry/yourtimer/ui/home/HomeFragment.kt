@@ -6,10 +6,10 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.FragmentHomeBinding
 import com.kostry.yourtimer.datasource.models.PresetModel
 import com.kostry.yourtimer.datasource.models.TimeCardModel
@@ -30,12 +30,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val parentAdapter by lazy {
         HomeParentAdapter(object : HomeParentAdapterListener {
             override fun onDelete(presetModel: PresetModel) {
-                Toast.makeText(context, "onDelete ${presetModel.name}", Toast.LENGTH_LONG).show()
-//                viewModel.deletePreset(presetModel)
+                viewModel.deletePreset(presetModel)
             }
 
             override fun onEdit(presetModel: PresetModel) {
-                Toast.makeText(context, "onEdit ${presetModel.name}", Toast.LENGTH_LONG).show()
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToPresetFragment()
+                        .setPreset(presetModel)
+                )
             }
         })
     }
@@ -55,6 +57,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.homeFragmentRecycler.adapter = parentAdapter
         initNavigationToTimerFragment()
+        initNavigationToPresetFragment()
         initTimePicker()
         initPresetObserver()
     }
@@ -134,6 +137,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     HomeFragmentDirections.actionHomeFragmentToTimerFragment().setPreset(preset)
                 )
             }
+        }
+    }
+
+    private fun initNavigationToPresetFragment() {
+        binding.homeFragmentToPresetButton.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_presetFragment)
         }
     }
 }
