@@ -54,9 +54,12 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Toast.makeText(context, "${args.preset?.name}", Toast.LENGTH_LONG).show()
-        binding.presetFragmentRecycler.adapter = adapter
-        binding.presetFragmentRecycler.recycledViewPool.setMaxRecycledViews(0, 0)
+        initAdapter()
+        initClickListeners()
         viewModel.addListener(listener)
+    }
+
+    private fun initClickListeners() {
         binding.presetFragmentAddCardButton.setOnClickListener {
             viewModel.addCard()
             adapter.submitList(viewModel.getPreset())
@@ -70,6 +73,11 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
                 Toast.makeText(context, "Preset fields is empty", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun initAdapter() {
+        binding.presetFragmentRecycler.adapter = adapter
+        binding.presetFragmentRecycler.recycledViewPool.setMaxRecycledViews(0, 0)
     }
 
     override fun onDestroy() {
