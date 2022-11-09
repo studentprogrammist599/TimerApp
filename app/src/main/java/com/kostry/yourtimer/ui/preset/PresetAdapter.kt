@@ -13,24 +13,23 @@ import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.util.MinMaxTimeFilter
 import com.kostry.yourtimer.util.intSubTimeStringFormat
 
-interface TimeCardActionListener {
+interface PresetAdapterListener {
     fun onMove(cardModel: TimeCardModel, moveBy: Int)
     fun onTextChange(cardModel: TimeCardModel)
     fun onDelete(cardModel: TimeCardModel)
 }
 
-class TimeCardAdapter(
-    private val actionListener: TimeCardActionListener,
-) : ListAdapter<TimeCardModel, TimeCardAdapter.PresetViewHolder>(PresetDiffCallback),
+class PresetAdapter(
+    private val listener: PresetAdapterListener,
+) : ListAdapter<TimeCardModel, PresetAdapter.PresetViewHolder>(PresetDiffCallback),
     View.OnClickListener {
 
     override fun onClick(v: View) {
         val card = v.tag as TimeCardModel
         when (v.id) {
             R.id.item_time_card_with_buttons_delete_button -> {
-                actionListener.onDelete(card)
+                listener.onDelete(card)
             }
-            else -> {}
         }
     }
 
@@ -45,8 +44,8 @@ class TimeCardAdapter(
         val card = getItem(position)
         holder.move(card.id)
         holder.textChangeListeners(card.id)
-        holder.binding.itemTimeCardWithButtonsDeleteButton.tag = card
         with(holder.binding) {
+            itemTimeCardWithButtonsDeleteButton.tag = card
             itemTimeCardWithButtonsMinutesEditText.filters = arrayOf(MinMaxTimeFilter())
             itemTimeCardWithButtonsSecondsEditText.filters = arrayOf(MinMaxTimeFilter())
             card.name?.let { itemTimeCardWithButtonsTextNameEditText.setText(it) }
@@ -74,28 +73,28 @@ class TimeCardAdapter(
 
         fun move(cardId: Int) {
             binding.itemTimeCardWithButtonsMoveUpButton.setOnClickListener {
-                actionListener.onMove(getActualTimeCard(cardId), -1)
+                listener.onMove(getActualTimeCard(cardId), -1)
             }
             binding.itemTimeCardWithButtonsMoveDownButton.setOnClickListener {
-                actionListener.onMove(getActualTimeCard(cardId), 1)
+                listener.onMove(getActualTimeCard(cardId), 1)
             }
         }
 
         fun textChangeListeners(cardId: Int) {
             binding.itemTimeCardWithButtonsTextNameEditText.addTextChangedListener {
-                actionListener.onTextChange(getActualTimeCard(cardId))
+                listener.onTextChange(getActualTimeCard(cardId))
             }
             binding.itemTimeCardWithButtonsRepsEditText.addTextChangedListener {
-                actionListener.onTextChange(getActualTimeCard(cardId))
+                listener.onTextChange(getActualTimeCard(cardId))
             }
             binding.itemTimeCardWithButtonsHoursEditText.addTextChangedListener {
-                actionListener.onTextChange(getActualTimeCard(cardId))
+                listener.onTextChange(getActualTimeCard(cardId))
             }
             binding.itemTimeCardWithButtonsMinutesEditText.addTextChangedListener {
-                actionListener.onTextChange(getActualTimeCard(cardId))
+                listener.onTextChange(getActualTimeCard(cardId))
             }
             binding.itemTimeCardWithButtonsSecondsEditText.addTextChangedListener {
-                actionListener.onTextChange(getActualTimeCard(cardId))
+                listener.onTextChange(getActualTimeCard(cardId))
             }
         }
     }
