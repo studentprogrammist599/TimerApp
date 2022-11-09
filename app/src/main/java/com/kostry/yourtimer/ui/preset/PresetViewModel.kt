@@ -6,11 +6,12 @@ import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.di.provider.PresetSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseViewModel
 import com.kostry.yourtimer.util.mapTimeToMillis
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
-
-typealias PresetListener = (cards: List<TimeCardModel>) -> Unit
 
 class PresetViewModel @Inject constructor(
     private val provider: PresetSubcomponentProvider,
@@ -18,72 +19,54 @@ class PresetViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private var index = 0
-
-    private var timeCards = mutableListOf<TimeCardModel>(
-        TimeCardModel(id = index--)
-    )
-    private val listeners = mutableSetOf<PresetListener>()
+    private var _timeCards= MutableStateFlow(mutableListOf(TimeCardModel(id = index--)))
+    var timeCards: StateFlow<List<TimeCardModel>> = _timeCards.asStateFlow()
 
     fun addCard() {
-        timeCards = ArrayList(timeCards)
         val card = TimeCardModel(id = index--)
-        timeCards.add(card)
-    }
-
-    fun getPreset(): MutableList<TimeCardModel> {
-        return timeCards
+        baseViewModelScope.launch {
+            val oldList = ArrayList(_timeCards.value)
+            oldList.add(card)
+            _timeCards.value = oldList
+        }
     }
 
     fun deleteCard(card: TimeCardModel) {
-        val indexToDelete = timeCards.indexOfFirst {
+        val indexToDelete = _timeCards.value.indexOfFirst {
             it.id == card.id
         }
         if (indexToDelete != -1) {
-            timeCards = ArrayList(timeCards)
-            timeCards.removeAt(indexToDelete)
-            notifyChanges()
+            baseViewModelScope.launch {
+                val oldList = ArrayList(_timeCards.value)
+                oldList.removeAt(indexToDelete)
+                _timeCards.value = oldList
+            }
         }
     }
 
     fun moveCard(card: TimeCardModel, moveBy: Int) {
-        val oldIndex = timeCards.indexOfFirst {
+        val oldIndex = _timeCards.value.indexOfFirst {
             it.id == card.id
         }
         if (oldIndex == -1) {
             return
         }
         val newIndex = oldIndex + moveBy
-        if (newIndex < 0 || newIndex >= timeCards.size) {
+        if (newIndex < 0 || newIndex >= _timeCards.value.size) {
             return
         }
-        timeCards = ArrayList(timeCards)
-        timeCards.removeAt(oldIndex)
-        timeCards.add(oldIndex, card)
-        Collections.swap(timeCards, oldIndex, newIndex)
-        notifyChanges()
-    }
-
-    fun addListener(listener: PresetListener) {
-        listeners.add(listener)
-        listener.invoke(timeCards)
-    }
-
-    fun removeListener(listener: PresetListener) {
-        listeners.remove(listener)
-    }
-
-    private fun notifyChanges() {
-        listeners.forEach { it.invoke(timeCards) }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        provider.destroyPresetSubcomponent()
+        baseViewModelScope.launch {
+            val oldList = ArrayList(_timeCards.value)
+            oldList.removeAt(oldIndex)
+            oldList.add(oldIndex, card)
+            Collections.swap(oldList, oldIndex, newIndex)
+            _timeCards.value = oldList
+        }
     }
 
     fun savePreset(name: String): Boolean {
-        if (timeCards.isNotEmpty() && name.isNotEmpty() && cardFieldsIsEmpty()) {
-            timeCards.forEachIndexed { index, timeCardModel ->
+        if (_timeCards.value.isNotEmpty() && name.isNotEmpty() && cardFieldsIsEmpty()) {
+            _timeCards.value.forEachIndexed { index, timeCardModel ->
                 timeCardModel.enqueue = index
                 if (timeCardModel.id <= 0) {
                     timeCardModel.id = 0
@@ -91,7 +74,7 @@ class PresetViewModel @Inject constructor(
             }
             val presetModel = PresetModel(
                 name = name,
-                timeCards = timeCards
+                timeCards = _timeCards.value
             )
             baseViewModelScope.launch {
                 repository.savePreset(presetModel)
@@ -102,8 +85,19 @@ class PresetViewModel @Inject constructor(
         }
     }
 
+    fun cardTextChange(cardModel: TimeCardModel) {
+        val indexToChange = _timeCards.value.indexOfFirst {
+            it.id == cardModel.id
+        }
+        if (indexToChange != -1) {
+            baseViewModelScope.launch {
+                _timeCards.value[indexToChange] = cardModel
+            }
+        }
+    }
+
     private fun cardFieldsIsEmpty(): Boolean {
-        val filtered = timeCards.filterNot { cardModel ->
+        val filtered = _timeCards.value.filterNot { cardModel ->
             cardModel.name.isNullOrEmpty()
         }.filterNot { cardModel ->
             cardModel.reps == null || cardModel.reps == 0
@@ -114,16 +108,11 @@ class PresetViewModel @Inject constructor(
                 cardModel.seconds ?: 0
             ) <= 0L
         }
-        return timeCards.size == filtered.size
+        return _timeCards.value.size == filtered.size
     }
 
-    fun cardTextChange(cardModel: TimeCardModel) {
-        val indexToChange = timeCards.indexOfFirst {
-            it.id == cardModel.id
-        }
-        if (indexToChange != -1) {
-            timeCards = ArrayList(timeCards)
-            timeCards[indexToChange] = cardModel
-        }
+    override fun onCleared() {
+        super.onCleared()
+        provider.destroyPresetSubcomponent()
     }
 }

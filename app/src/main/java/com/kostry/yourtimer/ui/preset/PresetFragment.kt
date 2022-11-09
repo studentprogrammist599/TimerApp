@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kostry.yourtimer.databinding.FragmentPresetBinding
@@ -13,6 +14,8 @@ import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.di.provider.PresetSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.util.ViewModelFactory
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PresetFragment : BaseFragment<FragmentPresetBinding>() {
@@ -56,13 +59,16 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
         Toast.makeText(context, "${args.preset?.name}", Toast.LENGTH_LONG).show()
         initAdapter()
         initClickListeners()
-        viewModel.addListener(listener)
+        lifecycleScope.launch {
+            viewModel.timeCards.collectLatest {
+                adapter.submitList(it)
+            }
+        }
     }
 
     private fun initClickListeners() {
         binding.presetFragmentAddCardButton.setOnClickListener {
             viewModel.addCard()
-            adapter.submitList(viewModel.getPreset())
         }
         binding.presetFragmentSaveButton.setOnClickListener {
             val result = viewModel.savePreset(binding.presetFragmentPresetNameEditText.text.toString())
@@ -78,14 +84,5 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
     private fun initAdapter() {
         binding.presetFragmentRecycler.adapter = adapter
         binding.presetFragmentRecycler.recycledViewPool.setMaxRecycledViews(0, 0)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.removeListener(listener)
-    }
-
-    private val listener: PresetListener = {
-        adapter.submitList(it)
     }
 }
