@@ -15,7 +15,6 @@ import com.kostry.yourtimer.di.provider.PresetSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.util.ViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PresetFragment : BaseFragment<FragmentPresetBinding>() {
@@ -57,9 +56,18 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Toast.makeText(context, "${args.preset?.name}", Toast.LENGTH_LONG).show()
+        if (args.preset != null) {
+            viewModel.presetFromArgs(args.preset!!)
+            binding.presetFragmentPresetNameEditText.setText(args.preset!!.name)
+        }
         initAdapter()
         initClickListeners()
-        lifecycleScope.launch {
+        initObserver()
+
+    }
+
+    private fun initObserver() {
+        lifecycleScope.launchWhenCreated {
             viewModel.timeCards.collectLatest {
                 adapter.submitList(it)
             }

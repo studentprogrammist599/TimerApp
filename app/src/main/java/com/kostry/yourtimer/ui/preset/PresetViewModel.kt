@@ -18,9 +18,15 @@ class PresetViewModel @Inject constructor(
     private val repository: DatasourceRepository
 ) : BaseViewModel() {
 
+    private var presetId = 0
     private var index = 0
     private var _timeCards= MutableStateFlow(mutableListOf(TimeCardModel(id = index--)))
     var timeCards: StateFlow<List<TimeCardModel>> = _timeCards.asStateFlow()
+
+    fun presetFromArgs(presetModel: PresetModel){
+        presetId = presetModel.id
+        _timeCards.value = presetModel.timeCards.toMutableList()
+    }
 
     fun addCard() {
         val card = TimeCardModel(id = index--)
@@ -73,6 +79,7 @@ class PresetViewModel @Inject constructor(
                 }
             }
             val presetModel = PresetModel(
+                id = presetId,
                 name = name,
                 timeCards = _timeCards.value
             )
