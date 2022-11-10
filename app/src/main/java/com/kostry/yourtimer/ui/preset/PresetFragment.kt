@@ -55,7 +55,6 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(context, "${args.preset?.name}", Toast.LENGTH_LONG).show()
         if (args.preset != null) {
             viewModel.presetFromArgs(args.preset!!)
             binding.presetFragmentPresetNameEditText.setText(args.preset!!.name)
@@ -79,11 +78,13 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
             viewModel.addCard()
         }
         binding.presetFragmentSaveButton.setOnClickListener {
-            val result = viewModel.savePreset(binding.presetFragmentPresetNameEditText.text.toString())
-            if(result){
+            val result = viewModel.savePreset(
+                binding.presetFragmentPresetNameEditText.text.toString()
+            )
+            if (result) {
                 Toast.makeText(context, "Preset saved", Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack()
-            }else{
+            } else {
                 Toast.makeText(context, "Preset fields is empty", Toast.LENGTH_SHORT).show()
             }
         }
