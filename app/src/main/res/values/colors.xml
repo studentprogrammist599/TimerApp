@@ -16,5 +16,6 @@
     <color name="four_button_color">#2A838383</color>
     <color name="progress_bar_indicator_color">#18FFFF</color>
     <color name="progress_bar_track_color">#119E9E</color>
-    <color name="layout_background">#FFFFFF</color>
+    <color name="primary_layout_background">#FFFFFF</color>
+    <color name="secondary_layout_background">#E6F8D0</color>
 </resources>
