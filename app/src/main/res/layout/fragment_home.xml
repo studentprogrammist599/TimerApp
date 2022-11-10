@@ -10,8 +10,8 @@
         android:id="@+id/home_fragment_card_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:elevation="@dimen/_32dp"
         android:backgroundTint="@color/layout_background"
+        android:elevation="@dimen/_32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -35,25 +35,45 @@
                 style="?attrPrimaryButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_16dp"
-                android:text="@string/start"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/home_fragment_to_preset_button"
-                app:layout_constraintTop_toBottomOf="@id/home_fragment_quick_start_timer_view" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/home_fragment_to_preset_button"
-                style="?attrPrimaryButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_16dp"
-                android:text="@string/set_up"
-                app:layout_constraintStart_toEndOf="@id/home_fragment_quick_start_button"
+                android:layout_marginTop="@dimen/_8dp"
+                android:text="@string/quick_start"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/home_fragment_quick_start_timer_view" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/home_fragment_preset_label_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?attrPrimaryTextView"
+        android:text="@string/your_presets"
+        app:layout_constraintEnd_toStartOf="@id/home_fragment_to_preset_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/home_fragment_preset_bottom_barrier"
+        app:layout_constraintTop_toBottomOf="@id/home_fragment_card_view" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/home_fragment_to_preset_button"
+        style="?attrSecondaryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_up"
+        app:icon="@drawable/ic_baseline_add_24"
+        app:iconTint="@color/primary_text_color"
+        app:layout_constraintStart_toEndOf="@id/home_fragment_preset_label_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/home_fragment_preset_bottom_barrier"
+        app:layout_constraintTop_toBottomOf="@id/home_fragment_card_view" />
+
+    <androidx.constraintlayout.widget.Barrier
+        app:constraint_referenced_ids="home_fragment_to_preset_button, home_fragment_preset_label_text_view"
+        android:id="@+id/home_fragment_preset_bottom_barrier"
+        android:layout_width="wrap_content"
+        app:barrierDirection="bottom"
+        android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_fragment_recycler"
@@ -63,7 +83,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_fragment_card_view"
+        app:layout_constraintTop_toBottomOf="@id/home_fragment_preset_bottom_barrier"
         tools:listitem="@layout/item_time_preset" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
