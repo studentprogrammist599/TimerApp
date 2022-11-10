@@ -13,6 +13,7 @@ import com.kostry.yourtimer.databinding.ItemTimePresetBinding
 import com.kostry.yourtimer.datasource.models.PresetModel
 
 interface HomeParentAdapterListener {
+    fun onStart(presetModel: PresetModel)
     fun onDelete(presetModel: PresetModel)
     fun onEdit(presetModel: PresetModel)
 }
@@ -30,8 +31,10 @@ class HomeParentAdapter(
     ) : RecyclerView.ViewHolder(binding.root)
 
     override fun onClick(v: View) {
+        val presetModel = v.tag as PresetModel
         when (v.id) {
             R.id.item_time_preset_options_button -> showPopupMenu(v)
+            R.id.item_time_preset_start_button -> listener.onStart(presetModel)
         }
     }
 
@@ -40,6 +43,7 @@ class HomeParentAdapter(
         val binding = ItemTimePresetBinding.inflate(inflater, parent, false)
 
         binding.itemTimePresetOptionsButton.setOnClickListener(this)
+        binding.itemTimePresetStartButton.setOnClickListener(this)
 
         return ParentViewHolder(binding)
     }
@@ -50,7 +54,9 @@ class HomeParentAdapter(
         val context = holder.itemView.context
         with(holder.binding) {
             itemTimePresetOptionsButton.tag = presetModel
-            itemTimeStartButton.text = String.format(
+            itemTimePresetStartButton.tag = presetModel
+
+            itemTimePresetStartButton.text = String.format(
                 context.resources.getString(R.string.start_time_card),
                 presetModel.name
             )

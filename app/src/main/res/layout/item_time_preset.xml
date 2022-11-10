@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/item_time_start_button"
+        android:id="@+id/item_time_preset_start_button"
         style="?attrThirdButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="item_time_preset_options_button, item_time_start_button" />
+        app:constraint_referenced_ids="item_time_preset_options_button, item_time_preset_start_button" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_time_preset_recycler"
