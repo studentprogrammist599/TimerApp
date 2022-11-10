@@ -22,14 +22,15 @@ private const val ID_ON_EDIT = 2
 
 class HomeParentAdapter(
     private val listener: HomeParentAdapterListener
-) : ListAdapter<PresetModel, HomeParentAdapter.ParentViewHolder>(ParentDiffCallback), View.OnClickListener {
+) : ListAdapter<PresetModel, HomeParentAdapter.ParentViewHolder>(ParentDiffCallback),
+    View.OnClickListener {
 
     class ParentViewHolder(
         val binding: ItemTimePresetBinding
     ) : RecyclerView.ViewHolder(binding.root)
 
     override fun onClick(v: View) {
-        when(v.id) {
+        when (v.id) {
             R.id.item_time_preset_options_button -> showPopupMenu(v)
         }
     }
@@ -46,16 +47,19 @@ class HomeParentAdapter(
     override fun onBindViewHolder(holder: ParentViewHolder, position: Int) {
         val presetModel = getItem(position)
         val childAdapter = HomeChildAdapter()
+        val context = holder.itemView.context
         with(holder.binding) {
             itemTimePresetOptionsButton.tag = presetModel
-
-            itemTimePresetName.text = presetModel.name
+            itemTimeStartButton.text = String.format(
+                context.resources.getString(R.string.start_time_card),
+                presetModel.name
+            )
             itemTimePresetRecycler.adapter = childAdapter
             childAdapter.submitList(presetModel.timeCards)
         }
     }
 
-    private fun showPopupMenu(view: View){
+    private fun showPopupMenu(view: View) {
         val presetModel = view.tag as PresetModel
         val popupMenu = PopupMenu(view.context, view)
 
@@ -63,7 +67,7 @@ class HomeParentAdapter(
         popupMenu.menu.add(0, ID_ON_EDIT, Menu.NONE, view.context.getString(R.string.edit))
 
         popupMenu.setOnMenuItemClickListener {
-            when(it.itemId){
+            when (it.itemId) {
                 ID_ON_DELETE -> {
                     listener.onDelete(presetModel)
                 }
