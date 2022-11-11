@@ -101,7 +101,6 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                             positiveButtonColor = requireContext().getColor(R.color.primary_button_color),
                         )
                     }
-                    is TimerState.OnFinished -> {}
                 }
             }
         }
@@ -132,7 +131,6 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                 is TimerState.Stopped -> {
                     findNavController().popBackStack()
                 }
-                is TimerState.OnFinished -> {}
             }
         }
         binding.timerFragmentNegativeButton.setOnClickListener {

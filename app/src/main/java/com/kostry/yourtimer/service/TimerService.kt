@@ -66,7 +66,6 @@ class TimerService : Service() {
                         sendBroadcast(AlarmReceiver.newIntent(this@TimerService))
                         stopSelf()
                     }
-                    is TimerState.OnFinished -> {}
                 }
             }
         }
@@ -146,7 +145,6 @@ class TimerService : Service() {
                                 myTimer.restartTimer()
                             }
                             is TimerState.Stopped -> {}
-                            is TimerState.OnFinished -> {}
                         }
                     }
                     TIMER_COMMAND_STOP -> {
