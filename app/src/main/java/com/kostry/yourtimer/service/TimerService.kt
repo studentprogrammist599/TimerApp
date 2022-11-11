@@ -20,7 +20,7 @@ import com.kostry.yourtimer.ui.mainactivity.MainActivity.Companion.NOTIFICATION_
 import com.kostry.yourtimer.util.MyTimer
 import com.kostry.yourtimer.util.TIMER_NOTIFICATION_ID
 import com.kostry.yourtimer.util.TimerState
-import com.kostry.yourtimer.util.secondsToStringFormat
+import com.kostry.yourtimer.util.millisToStringFormat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -54,12 +54,12 @@ class TimerService : Service() {
             myTimer.timerState.collectLatest { state ->
                 when (state) {
                     is TimerState.Running -> {
-                        log("onStartCommand -> TimerState.Running: ${state.seconds.secondsToStringFormat()}")
-                        sendNotification(state.reps, state.seconds)
+                        log("onStartCommand -> TimerState.Running: ${state.millis.millisToStringFormat()}")
+                        sendNotification(state.reps, state.millis)
                     }
                     is TimerState.Paused -> {
-                        log("onStartCommand -> TimerState.Paused: ${state.seconds.secondsToStringFormat()}")
-                        sendNotification(state.reps, state.seconds)
+                        log("onStartCommand -> TimerState.Paused: ${state.millis.millisToStringFormat()}")
+                        sendNotification(state.reps, state.millis)
                     }
                     is TimerState.Stopped -> {
                         log("onStartCommand -> TimerState.Finished")
@@ -84,14 +84,14 @@ class TimerService : Service() {
         Log.d("SERVICE_TAG", "MyForegroundService: $message")
     }
 
-    private fun sendNotification(reps: Int, timeSeconds: Long) {
+    private fun sendNotification(reps: Int, millis: Long) {
         log("sendNotification")
         NotificationManagerCompat
             .from(this)
-            .notify(TIMER_NOTIFICATION_ID, createNotification(reps, timeSeconds))
+            .notify(TIMER_NOTIFICATION_ID, createNotification(reps, millis))
     }
 
-    private fun createNotification(reps: Int, timeSeconds: Long): Notification {
+    private fun createNotification(reps: Int, millis: Long): Notification {
         log("createNotification")
         initBroadcastReceiver()
 
@@ -111,7 +111,7 @@ class TimerService : Service() {
             .createPendingIntent()
 
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-            .setContentText(timeSeconds.secondsToStringFormat())
+            .setContentText(millis.millisToStringFormat())
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentIntent(pendingIntent)
             .setSilent(true)

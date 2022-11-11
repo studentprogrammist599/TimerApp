@@ -5,7 +5,7 @@ import com.kostry.yourtimer.datasource.models.PresetModel
 import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.di.provider.PresetSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseViewModel
-import com.kostry.yourtimer.util.mapTimeToSeconds
+import com.kostry.yourtimer.util.mapTimeToMillis
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -109,7 +109,7 @@ class PresetViewModel @Inject constructor(
         }.filterNot { cardModel ->
             cardModel.reps == null || cardModel.reps == 0
         }.filterNot { cardModel ->
-            mapTimeToSeconds(
+            mapTimeToMillis(
                 cardModel.hours ?: 0,
                 cardModel.minutes ?: 0,
                 cardModel.seconds ?: 0

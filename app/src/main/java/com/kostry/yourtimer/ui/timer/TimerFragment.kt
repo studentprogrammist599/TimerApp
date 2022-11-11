@@ -77,7 +77,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                     is TimerState.Running -> {
                         renderState(
                             reps = state.reps,
-                            timeMillis = state.seconds,
+                            timeMillis = state.millis,
                             buttonStartPauseText = getString(R.string.pause),
                             buttonCancelVisibility = View.VISIBLE,
                             positiveButtonColor = requireContext().getColor(R.color.third_button_color),
@@ -86,7 +86,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                     is TimerState.Paused -> {
                         renderState(
                             reps = state.reps,
-                            timeMillis = state.seconds,
+                            timeMillis = state.millis,
                             buttonStartPauseText = getString(R.string.start),
                             buttonCancelVisibility = View.VISIBLE,
                             positiveButtonColor = requireContext().getColor(R.color.primary_button_color),
@@ -155,9 +155,9 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
     private fun setTime(reps: Int, timeMillis: Long) {
         with(binding.timerFragmentTimerView) {
             repsPicker.value = reps
-            hoursPicker.value = timeMillis.fromSecondsGetHours().toInt()
-            minutesPicker.value = timeMillis.fromSecondsGetMinutes().toInt()
-            secondsPicker.value = timeMillis.fromSecondsGetSeconds().toInt()
+            hoursPicker.value = timeMillis.fromMillisGetHours().toInt()
+            minutesPicker.value = timeMillis.fromMillisGetMinutes().toInt()
+            secondsPicker.value = timeMillis.fromMillisGetSeconds().toInt()
         }
     }
 }
