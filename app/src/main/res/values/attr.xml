@@ -12,7 +12,6 @@
     <attr name="attrThirdTextView" format="reference"/>
     <attr name="attrPrimaryTextInputLayout" format="reference"/>
 
-    <attr name="attrProgressBar" format="reference"/>
     <attr name="attrPrimaryCarView" format="reference"/>
     <attr name="attrPrimaryEditText" format="reference"/>
 </resources>

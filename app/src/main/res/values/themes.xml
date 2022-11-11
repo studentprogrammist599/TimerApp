@@ -29,7 +29,6 @@
         <item name="attrThirdTextView">@style/ThirdTextViewStyle</item>
         <item name="attrPrimaryEditText">@style/PrimaryEditTextStyle</item>
 
-        <item name="attrProgressBar">@style/ProgressBarStyle</item>
         <item name="attrPrimaryCarView">@style/PrimaryCardViewStyle</item>
         <item name="attrPrimaryTextInputLayout">@style/PrimaryTextInputLayoutStyle</item>
     </style>
@@ -77,15 +76,6 @@
     <style name="ThirdTextViewStyle">
         <item name="android:textSize">@dimen/text_14_sp</item>
         <item name="android:textColor">@color/third_text_color</item>
-    </style>
-
-    <style name="ProgressBarStyle">
-        <item name="indicatorColor">@color/progress_bar_indicator_color</item>
-        <item name="indicatorDirectionCircular">counterclockwise</item>
-        <item name="indicatorSize">@dimen/_350dp</item>
-        <item name="trackColor">@color/progress_bar_track_color</item>
-        <item name="trackCornerRadius">@dimen/_16dp</item>
-        <item name="trackThickness">@dimen/_4dp</item>
     </style>
 
     <style name="PrimaryCardViewStyle" parent="@style/Widget.Material3.CardView.Outlined">

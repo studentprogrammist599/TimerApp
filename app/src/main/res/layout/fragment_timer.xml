@@ -26,16 +26,6 @@
         app:layout_constraintStart_toStartOf="@id/timer_fragment_timer_view"
         app:layout_constraintTop_toTopOf="@id/timer_fragment_timer_view" />
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/timer_fragment_progress_bar"
-        style="?attrProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/timer_fragment_negative_button"
         style="?attrSecondaryButton"

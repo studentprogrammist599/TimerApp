@@ -29,7 +29,6 @@
         <item name="attrThirdTextView">@style/ThirdTextViewStyle.DarkTheme</item>
         <item name="attrPrimaryEditText">@style/PrimaryEditTextStyle.DarkTheme</item>
 
-        <item name="attrProgressBar">@style/ProgressBarStyle.DarkTheme</item>
         <item name="attrPrimaryCarView">@style/PrimaryCardViewStyle.DarkTheme</item>
         <item name="attrPrimaryTextInputLayout">@style/PrimaryTextInputLayoutStyle.DarkTheme</item>
     </style>
@@ -66,11 +65,6 @@
 
     <style name="ThirdTextViewStyle.DarkTheme">
         <item name="android:textColor">@color/third_text_color</item>
-    </style>
-
-    <style name="ProgressBarStyle.DarkTheme">
-        <item name="indicatorColor">@color/progress_bar_indicator_color</item>
-        <item name="trackColor">@color/progress_bar_track_color</item>
     </style>
 
     <style name="PrimaryCardViewStyle.DarkTheme">
