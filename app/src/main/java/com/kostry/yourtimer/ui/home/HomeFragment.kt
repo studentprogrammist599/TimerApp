@@ -6,7 +6,6 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -31,7 +30,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val parentAdapter by lazy {
         HomeParentAdapter(object : HomeParentAdapterListener {
             override fun onStart(presetModel: PresetModel) {
-                Toast.makeText(context, "onStart: ${presetModel.name}", Toast.LENGTH_LONG).show()
+                navigateToTimerFragment(presetModel)
             }
 
             override fun onDelete(presetModel: PresetModel) {
@@ -61,7 +60,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.homeFragmentRecycler.adapter = parentAdapter
-        initNavigationToTimerFragment()
+        initQuickStartListener()
         initNavigationToPresetFragment()
         initTimePicker()
         initPresetObserver()
@@ -122,7 +121,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun initNavigationToTimerFragment() {
+    private fun initQuickStartListener() {
         binding.homeFragmentQuickStartButton.setOnClickListener {
             val seconds = binding.homeFragmentQuickStartTimerView.secondsPicker.value
             val minutes = binding.homeFragmentQuickStartTimerView.minutesPicker.value
@@ -137,10 +136,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     minutes = minutes,
                     seconds = seconds
                 )
-                val preset = PresetModel(id = 0, name = "", timeCards = listOf(timeCard))
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToTimerFragment().setPreset(preset)
-                )
+                val presetModel = PresetModel(id = 0, name = "", timeCards = listOf(timeCard))
+                navigateToTimerFragment(presetModel)
             }
         }
     }
@@ -149,5 +146,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.homeFragmentToPresetButton.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_presetFragment)
         }
+    }
+
+    private fun navigateToTimerFragment(presetModel: PresetModel) {
+        findNavController().navigate(
+            HomeFragmentDirections.actionHomeFragmentToTimerFragment().setPreset(presetModel)
+        )
     }
 }
