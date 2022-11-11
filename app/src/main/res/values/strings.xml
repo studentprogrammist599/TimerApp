@@ -8,15 +8,12 @@
     <string name="start_time_card">START: %s</string>
     <string name="pause">pause</string>
     <string name="stop">stop</string>
-    <string name="finished">Finished</string>
     <string name="back">Back</string>
     <string name="time_is_out">Time is out</string>
     <string name="hour">hour</string>
     <string name="min">min</string>
     <string name="sec">sec</string>
     <string name="reps">reps</string>
-    <string name="home">home</string>
-    <string name="settings">settings</string>
     <string name="time">time</string>
     <string name="name">name</string>
     <string name="save">save</string>
@@ -26,6 +23,6 @@
     <string name="card_name">Card name</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
-    <string name="set_up">set up</string>
+    <string name="add_new_set_up">add</string>
     <string name="your_presets">Your presets</string>
 </resources>
