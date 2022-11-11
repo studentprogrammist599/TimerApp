@@ -127,8 +127,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             val minutes = binding.homeFragmentQuickStartTimerView.minutesPicker.value
             val hours = binding.homeFragmentQuickStartTimerView.hoursPicker.value
             val reps = binding.homeFragmentQuickStartTimerView.repsPicker.value
-            val millis: Long = mapTimeToMillis(hours, minutes, seconds)
-            if (millis != 0L && reps != 0) {
+            val time: Long = mapTimeToSeconds(hours, minutes, seconds)
+            if (time != 0L && reps != 0) {
                 val timeCard = TimeCardModel(
                     id = 0,
                     reps = reps,

@@ -2,27 +2,27 @@ package com.kostry.yourtimer.util
 
 import java.util.concurrent.TimeUnit
 
-fun Long.millisToStringFormat() = String.format("%02d:%02d:%02d",
-    TimeUnit.MILLISECONDS.toHours(this),
-    TimeUnit.MILLISECONDS.toMinutes(this) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(
+fun Long.secondsToStringFormat() = String.format("%02d:%02d:%02d",
+    TimeUnit.SECONDS.toHours(this),
+    TimeUnit.SECONDS.toMinutes(this) - TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(
         this)),
-    TimeUnit.MILLISECONDS.toSeconds(this) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(
+    TimeUnit.SECONDS.toSeconds(this) - TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(
         this)))
 
-fun Long.fromMillisGetHours() = TimeUnit.MILLISECONDS.toHours(this)
+fun Long.fromSecondsGetHours() = TimeUnit.SECONDS.toHours(this)
 
-fun Long.fromMillisGetMinutes() =
-    TimeUnit.MILLISECONDS.toMinutes(this) - TimeUnit.HOURS.toMinutes(
-        TimeUnit.MILLISECONDS.toHours(this)
+fun Long.fromSecondsGetMinutes() =
+    TimeUnit.SECONDS.toMinutes(this) - TimeUnit.HOURS.toMinutes(
+        TimeUnit.SECONDS.toHours(this)
     )
 
-fun Long.fromMillisGetSeconds() =
-    TimeUnit.MILLISECONDS.toSeconds(this) - TimeUnit.MINUTES.toSeconds(
-        TimeUnit.MILLISECONDS.toMinutes(this)
+fun Long.fromSecondsGetSeconds() =
+    TimeUnit.SECONDS.toSeconds(this) - TimeUnit.MINUTES.toSeconds(
+        TimeUnit.SECONDS.toMinutes(this)
     )
 
-fun mapTimeToMillis(hour: Int, minutes: Int, seconds: Int): Long {
-    return ((seconds * 1000) + (minutes * 1000 * 60) + (hour * 1000 * 60 * 60)).toLong()
+fun mapTimeToSeconds(hour: Int, minutes: Int, seconds: Int): Long {
+    return (seconds + (minutes * 60) + (hour * 60 * 60)).toLong()
 }
 
 fun Int.intSubTimeStringFormat():String {
