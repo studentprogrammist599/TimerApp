@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.asStateFlow
 class MyTimer {
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
-    private var presetModel: PresetModel? = null
+    private var cardList: MutableList<Card> = mutableListOf()
     private val _timerState = MutableStateFlow<TimerState>(TimerState.Stopped)
     val timerState = _timerState.asStateFlow()
 
     fun runTimer(preset: PresetModel) {
-        presetModel = preset
+        cardList = preset.toListTimeCard()
         startTimer()
     }
 
@@ -27,17 +27,19 @@ class MyTimer {
     }
 
     fun pauseTimer() {
-        _timerState.value = TimerState.Paused(getActualReps(), getActualMillis())
+        _timerState.value = TimerState.Paused(getActualReps(), getActualTimeSeconds())
         coroutineScope.coroutineContext.cancelChildren()
     }
 
     private fun startTimer() {
         coroutineScope.launch {
-            _timerState.value = TimerState.Running(getActualReps(), getActualMillis())
+            _timerState.value = TimerState.Running(getActualReps(), getActualTimeSeconds())
             while (_timerState.value is TimerState.Running) {
-                for (r in getActualReps() downTo 0) {
-                    for (t in getActualMillis() downTo 0){
-                        _timerState.value = TimerState.Running(r, t)
+                val startTimeSecond = getActualTimeSeconds()
+                for (reps in getActualReps() downTo 0) {
+                    for (timeSeconds in getActualTimeSeconds() downTo 0) {
+                        _timerState.value = TimerState.Running(reps, timeSeconds)
+                        checkActualData(reps, timeSeconds, startTimeSecond)
                         delay(TIMER_INTERVAL)
                     }
                 }
@@ -45,21 +47,57 @@ class MyTimer {
         }
     }
 
-    private fun getActualReps(): Int {
-        return presetModel?.timeCards?.first()?.reps ?: 0
+    private fun checkActualData(reps: Int, actualTime: Long, startTime: Long) {
+        if (reps == 1 && actualTime ==0L){
+            stopTimer()
+        }
+        if (actualTime == 0L && reps > 1){
+            setActualData(reps, startTime)
+        }
     }
 
-    private fun getActualMillis(): Long {
-        return presetModel?.timeCards?.first()?.let { timeCard ->
+    private fun setActualData(repsCount: Int, timeSeconds: Long) {
+        with(cardList.first()){
+            reps = repsCount
+            hours = timeSeconds.fromSecondsGetHours().toInt()
+            minutes = timeSeconds.fromSecondsGetMinutes().toInt()
+            seconds = timeSeconds.fromSecondsGetSeconds().toInt()
+        }
+    }
+
+    private fun getActualReps(): Int {
+        return cardList.first().reps
+    }
+
+    private fun getActualTimeSeconds(): Long {
+        return cardList.first().let { timeCard ->
             mapTimeToSeconds(
-                hour = timeCard.hours ?: 0,
-                minutes = timeCard.minutes ?: 0,
-                seconds = timeCard.seconds ?: 0
+                hour = timeCard.hours,
+                minutes = timeCard.minutes,
+                seconds = timeCard.seconds
             )
-        } ?: 0L
+        }
     }
 
     companion object {
         private const val TIMER_INTERVAL: Long = 1000L
     }
 }
+
+fun PresetModel.toListTimeCard(): MutableList<Card> {
+    return this.timeCards.map { timeCardModel ->
+        Card(
+            reps = timeCardModel.reps ?: 0,
+            hours = timeCardModel.hours ?: 0,
+            minutes = timeCardModel.minutes ?: 0,
+            seconds = timeCardModel.seconds ?: 0,
+        )
+    }.toMutableList()
+}
+
+data class Card(
+    var reps: Int,
+    var hours: Int,
+    var minutes: Int,
+    var seconds: Int,
+)
