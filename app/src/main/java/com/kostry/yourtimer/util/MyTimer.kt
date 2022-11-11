@@ -48,8 +48,17 @@ class MyTimer {
     }
 
     private fun checkActualData(reps: Int, actualTime: Long, startTime: Long) {
-        if (reps == 1 && actualTime ==0L){
+        if (reps == 0 && actualTime == 0L){
             stopTimer()
+        }
+        if (reps == 1 && actualTime ==0L){
+            if(cardList.size == 0){
+                stopTimer()
+            }else{
+                cardList.removeAt(0)
+                coroutineScope.coroutineContext.cancelChildren()
+                startTimer()
+            }
         }
         if (actualTime == 0L && reps > 1){
             setActualData(reps, startTime)
@@ -66,17 +75,26 @@ class MyTimer {
     }
 
     private fun getActualReps(): Int {
-        return cardList.first().reps
+        return if (cardList.isNotEmpty()){
+            cardList.first().reps
+        } else {
+            0
+        }
     }
 
     private fun getActualTimeSeconds(): Long {
-        return cardList.first().let { timeCard ->
-            mapTimeToSeconds(
-                hour = timeCard.hours,
-                minutes = timeCard.minutes,
-                seconds = timeCard.seconds
-            )
+        return if (cardList.isNotEmpty()){
+            cardList.first().let { timeCard ->
+                mapTimeToSeconds(
+                    hour = timeCard.hours,
+                    minutes = timeCard.minutes,
+                    seconds = timeCard.seconds
+                )
+            }
+        } else {
+            0
         }
+
     }
 
     companion object {
