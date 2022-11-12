@@ -14,7 +14,7 @@
     <string name="hour">час</string>
     <string name="min">мин</string>
     <string name="sec">сек</string>
-    <string name="reps">штук</string>
+    <string name="reps">повтор</string>
     <string name="time">время</string>
     <string name="name">имя</string>
     <string name="save">сохранить</string>
@@ -26,4 +26,5 @@
     <string name="edit">Редактировать</string>
     <string name="add_new_set_up">добавить</string>
     <string name="your_presets">Ваши преднастройки</string>
+    <string name="x">X</string>
 </resources>

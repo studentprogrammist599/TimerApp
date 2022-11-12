@@ -9,39 +9,10 @@
         style="?attrSecondaryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:text="@string/reps"
-        app:layout_constraintEnd_toEndOf="@id/reps_picker"
-        app:layout_constraintStart_toStartOf="@id/reps_picker"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/hours_text_view"
-        style="?attrSecondaryTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hour"
-        app:layout_constraintEnd_toEndOf="@id/hours_picker"
-        app:layout_constraintStart_toStartOf="@id/hours_picker"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/minutes_text_view"
-        style="?attrSecondaryTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/min"
-        app:layout_constraintEnd_toEndOf="@id/minutes_picker"
-        app:layout_constraintStart_toStartOf="@id/minutes_picker"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/seconds_text_view"
-        style="?attrSecondaryTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sec"
-        app:layout_constraintEnd_toEndOf="@id/seconds_picker"
-        app:layout_constraintStart_toStartOf="@id/seconds_picker"
+        app:layout_constraintEnd_toStartOf="@id/reps_picker_end_barrier"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <NumberPicker
@@ -49,8 +20,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:theme="?attrNumberPicker"
+        app:layout_constraintEnd_toStartOf="@id/reps_picker_end_barrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reps_text_view" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/reps_picker_end_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="reps_picker, reps_text_view" />
 
     <TextView
         android:id="@+id/reps_dots_text_view"
@@ -63,6 +42,16 @@
         app:layout_constraintStart_toEndOf="@id/reps_picker"
         app:layout_constraintTop_toTopOf="@id/reps_picker"
         app:layout_constraintVertical_bias="0.49" />
+
+    <TextView
+        android:id="@+id/hours_text_view"
+        style="?attrSecondaryTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hour"
+        app:layout_constraintEnd_toEndOf="@id/hours_picker"
+        app:layout_constraintStart_toStartOf="@id/hours_picker"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <NumberPicker
         android:id="@+id/hours_picker"
@@ -84,6 +73,16 @@
         app:layout_constraintTop_toTopOf="@id/hours_picker"
         app:layout_constraintVertical_bias="0.49" />
 
+    <TextView
+        android:id="@+id/minutes_text_view"
+        style="?attrSecondaryTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/min"
+        app:layout_constraintEnd_toEndOf="@id/minutes_picker"
+        app:layout_constraintStart_toStartOf="@id/minutes_picker"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <NumberPicker
         android:id="@+id/minutes_picker"
         android:layout_width="wrap_content"
@@ -103,6 +102,16 @@
         app:layout_constraintStart_toEndOf="@id/minutes_picker"
         app:layout_constraintTop_toTopOf="@id/minutes_picker"
         app:layout_constraintVertical_bias="0.49" />
+
+    <TextView
+        android:id="@+id/seconds_text_view"
+        style="?attrSecondaryTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sec"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/seconds_picker"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <NumberPicker
         android:id="@+id/seconds_picker"
