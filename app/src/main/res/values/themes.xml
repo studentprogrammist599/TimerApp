@@ -27,10 +27,14 @@
         <item name="attrPrimaryTextView">@style/PrimaryTextViewStyle</item>
         <item name="attrSecondaryTextView">@style/SecondaryTextViewStyle</item>
         <item name="attrThirdTextView">@style/ThirdTextViewStyle</item>
+
         <item name="attrPrimaryEditText">@style/PrimaryEditTextStyle</item>
+        <item name="attrSecondaryEditText">@style/SecondaryEditTextStyle</item>
+
+        <item name="attrPrimaryTextInputLayout">@style/PrimaryTextInputLayoutStyle</item>
 
         <item name="attrPrimaryCarView">@style/PrimaryCardViewStyle</item>
-        <item name="attrPrimaryTextInputLayout">@style/PrimaryTextInputLayoutStyle</item>
+        <item name="attrSecondaryCarView">@style/SecondaryCardViewStyle</item>
     </style>
 
     <style name="NumberPickerStyle" parent="Theme.YourTimer">
@@ -79,10 +83,13 @@
     </style>
 
     <style name="PrimaryCardViewStyle" parent="@style/Widget.Material3.CardView.Outlined">
-        <item name="android:layout_margin">@dimen/_4dp</item>
         <item name="android:backgroundTint">@color/primary_layout_background</item>
-        <item name="cardCornerRadius">@dimen/_8dp</item>
+        <item name="cardCornerRadius">@dimen/_4dp</item>
         <item name="strokeColor">@color/primary_text_color</item>
+    </style>
+
+    <style name="SecondaryCardViewStyle" parent="PrimaryCardViewStyle">
+        <item name="android:backgroundTint">@color/third_layout_background</item>
     </style>
 
     <style name="PrimaryTextInputLayoutStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -100,4 +107,11 @@
         <item name="android:textColor">@color/primary_text_color</item>
         <item name="android:maxLength">2</item>
     </style>
+
+    <style name="SecondaryEditTextStyle" parent="PrimaryEditTextStyle">
+        <item name="android:textColorHint">@color/secondary_text_color</item>
+        <item name="android:textCursorDrawable">@drawable/secondary_cursor</item>
+        <item name="android:textColor">@color/secondary_text_color</item>
+    </style>
+
 </resources>

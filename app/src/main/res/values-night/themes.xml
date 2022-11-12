@@ -27,10 +27,14 @@
         <item name="attrPrimaryTextView">@style/PrimaryTextViewStyle.DarkTheme</item>
         <item name="attrSecondaryTextView">@style/SecondaryTextViewStyle.DarkTheme</item>
         <item name="attrThirdTextView">@style/ThirdTextViewStyle.DarkTheme</item>
+
         <item name="attrPrimaryEditText">@style/PrimaryEditTextStyle.DarkTheme</item>
+        <item name="attrSecondaryEditText">@style/SecondaryEditTextStyle.DarkTheme</item>
+
+        <item name="attrPrimaryTextInputLayout">@style/PrimaryTextInputLayoutStyle.DarkTheme</item>
 
         <item name="attrPrimaryCarView">@style/PrimaryCardViewStyle.DarkTheme</item>
-        <item name="attrPrimaryTextInputLayout">@style/PrimaryTextInputLayoutStyle.DarkTheme</item>
+        <item name="attrSecondaryCarView">@style/SecondaryCardViewStyle.DarkTheme</item>
     </style>
 
     <style name="NumberPickerStyle.DarkTheme" parent="Theme.YourTimer">
@@ -72,6 +76,10 @@
         <item name="strokeColor">@color/primary_text_color</item>
     </style>
 
+    <style name="SecondaryCardViewStyle.DarkTheme">
+        <item name="android:backgroundTint">@color/third_layout_background</item>
+    </style>
+
     <style name="PrimaryTextInputLayoutStyle.DarkTheme">
         <item name="android:textColorHint">@color/third_text_color</item>
         <item name="boxStrokeColor">@color/third_text_color</item>
@@ -82,5 +90,11 @@
     <style name="PrimaryEditTextStyle.DarkTheme">
         <item name="android:textColorHint">@color/third_text_color</item>
         <item name="android:textColor">@color/primary_text_color</item>
+    </style>
+
+    <style name="SecondaryEditTextStyle.DarkTheme">
+        <item name="android:textColorHint">@color/secondary_text_color</item>
+        <item name="android:textCursorDrawable">@drawable/secondary_cursor</item>
+        <item name="android:textColor">@color/secondary_text_color</item>
     </style>
 </resources>
