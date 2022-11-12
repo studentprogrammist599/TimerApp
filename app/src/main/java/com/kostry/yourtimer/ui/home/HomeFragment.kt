@@ -2,8 +2,6 @@ package com.kostry.yourtimer.ui.home
 
 import android.content.Context
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
@@ -85,39 +83,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             minutesPicker.minValue = TIMER_MINUTE_SECOND_PICKER_MIN_VALUE
             secondsPicker.maxValue = TIMER_MINUTE_SECOND_PICKER_MAX_VALUE
             secondsPicker.minValue = TIMER_MINUTE_SECOND_PICKER_MIN_VALUE
-            val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            hoursPicker.setOnValueChangedListener { _, _, _ ->
-                vibrator.vibrate(
-                    VibrationEffect.createOneShot(
-                        TIMER_PICKER_VIBRATE_TIME,
-                        VibrationEffect.DEFAULT_AMPLITUDE
-                    )
-                )
-            }
-            repsPicker.setOnValueChangedListener { _, _, _ ->
-                vibrator.vibrate(
-                    VibrationEffect.createOneShot(
-                        TIMER_PICKER_VIBRATE_TIME,
-                        VibrationEffect.DEFAULT_AMPLITUDE
-                    )
-                )
-            }
-            minutesPicker.setOnValueChangedListener { _, _, _ ->
-                vibrator.vibrate(
-                    VibrationEffect.createOneShot(
-                        TIMER_PICKER_VIBRATE_TIME,
-                        VibrationEffect.DEFAULT_AMPLITUDE
-                    )
-                )
-            }
-            secondsPicker.setOnValueChangedListener { _, _, _ ->
-                vibrator.vibrate(
-                    VibrationEffect.createOneShot(
-                        TIMER_PICKER_VIBRATE_TIME,
-                        VibrationEffect.DEFAULT_AMPLITUDE
-                    )
-                )
-            }
         }
     }
 
