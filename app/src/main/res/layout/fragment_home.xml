@@ -69,6 +69,7 @@
                     android:layout_height="wrap_content"
                     style="?attrPrimaryTextView"
                     android:text="@string/your_presets"
+                    android:layout_marginStart="@dimen/_8dp"
                     app:layout_constraintEnd_toStartOf="@id/home_fragment_to_preset_button"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constrainedWidth="true"
