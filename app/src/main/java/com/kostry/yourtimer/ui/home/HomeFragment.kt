@@ -2,8 +2,11 @@ package com.kostry.yourtimer.ui.home
 
 import android.content.Context
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.View
 import android.view.ViewGroup
+import android.widget.NumberPicker
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -75,6 +78,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun initTimePicker() {
         with(binding.homeFragmentQuickStartTimerView) {
+            repsPicker.setOnScrollListener(ScrollListener)
+            hoursPicker.setOnScrollListener(ScrollListener)
+            minutesPicker.setOnScrollListener(ScrollListener)
+            secondsPicker.setOnScrollListener(ScrollListener)
             repsPicker.maxValue = TIMER_HOUR_PICKER_MAX_VALUE
             repsPicker.minValue = TIMER_HOUR_PICKER_MIN_VALUE
             hoursPicker.maxValue = TIMER_HOUR_PICKER_MAX_VALUE
@@ -117,5 +124,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         findNavController().navigate(
             HomeFragmentDirections.actionHomeFragmentToTimerFragment().setPreset(presetModel)
         )
+    }
+
+    companion object ScrollListener : NumberPicker.OnScrollListener {
+        override fun onScrollStateChange(view: NumberPicker?, scrollState: Int) {
+            val vibrator = view?.context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            vibrator.vibrate(
+                VibrationEffect.createOneShot(
+                    TIMER_PICKER_VIBRATE_TIME,
+                    VibrationEffect.DEFAULT_AMPLITUDE
+                )
+            )
+        }
     }
 }
