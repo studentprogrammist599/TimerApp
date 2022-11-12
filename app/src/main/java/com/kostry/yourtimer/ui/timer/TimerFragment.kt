@@ -134,6 +134,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
             }
         }
         binding.timerFragmentNegativeButton.setOnClickListener {
+            binding.timerFragmentPositiveButton.visibility = View.GONE
             viewModel.stopTimer()
             findNavController().popBackStack()
         }
