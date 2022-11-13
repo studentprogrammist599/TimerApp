@@ -28,6 +28,7 @@
         android:hint="@string/card_name"
         android:minWidth="150dp"
         app:endIconMode="clear_text"
+        app:errorEnabled="true"
         app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toTopOf="@id/item_time_card_with_buttons_picker_card_view"
         app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_space"

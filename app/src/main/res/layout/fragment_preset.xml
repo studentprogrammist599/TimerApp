@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/new_preset"
         app:endIconMode="clear_text"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/preset_fragment_end_guideline"
         app:layout_constraintStart_toStartOf="@id/preset_fragment_start_guideline"
         app:layout_constraintTop_toTopOf="@id/preset_fragment_top_guideline"

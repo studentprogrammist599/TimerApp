@@ -19,8 +19,13 @@ interface PresetAdapterListener {
     fun onDelete(cardModel: TimeCardModel)
 }
 
+interface PresetAdapterBindingsCatcher{
+    fun catchBinding(binding: ItemTimeCardWithButtonsBinding)
+}
+
 class PresetAdapter(
     private val listener: PresetAdapterListener,
+    private val bindingsCatcher: PresetAdapterBindingsCatcher,
 ) : ListAdapter<TimeCardModel, PresetAdapter.PresetViewHolder>(PresetDiffCallback),
     View.OnClickListener {
 
@@ -60,14 +65,23 @@ class PresetAdapter(
         val binding: ItemTimeCardWithButtonsBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        init {
+            bindingsCatcher.catchBinding(binding)
+            binding.itemTimeCardWithButtonsTextNameEditText.addTextChangedListener {
+                binding.itemTimeCardWithButtonsTextInputLayout.error = null
+            }
+        }
+
         private fun getActualTimeCard(cardId: Int): TimeCardModel {
             return TimeCardModel(
                 id = cardId,
                 name = binding.itemTimeCardWithButtonsTextNameEditText.text.toString(),
                 reps = binding.itemTimeCardWithButtonsRepsEditText.text.toString().toIntOrNull(),
                 hours = binding.itemTimeCardWithButtonsHoursEditText.text.toString().toIntOrNull(),
-                minutes = binding.itemTimeCardWithButtonsMinutesEditText.text.toString().toIntOrNull(),
-                seconds = binding.itemTimeCardWithButtonsSecondsEditText.text.toString().toIntOrNull(),
+                minutes = binding.itemTimeCardWithButtonsMinutesEditText.text.toString()
+                    .toIntOrNull(),
+                seconds = binding.itemTimeCardWithButtonsSecondsEditText.text.toString()
+                    .toIntOrNull(),
             )
         }
 

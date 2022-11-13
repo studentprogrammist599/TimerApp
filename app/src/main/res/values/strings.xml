@@ -26,4 +26,5 @@
     <string name="add_new_set_up">add</string>
     <string name="your_presets">Your presets</string>
     <string name="x">X</string>
+    <string name="error_field_is_empty">Field is empty</string>
 </resources>
