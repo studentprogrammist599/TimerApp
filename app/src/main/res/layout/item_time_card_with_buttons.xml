@@ -27,10 +27,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/card_name"
         app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toTopOf="@id/item_time_card_with_buttons_picker_card_view"
-        app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_picker_card_view"
+        app:layout_constraintBottom_toTopOf="@id/item_time_card_with_buttons_reps_input_layout"
+        app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_seconds_text_input_layout"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/item_time_card_with_buttons_start_guideline"
         app:layout_constraintTop_toTopOf="parent"
@@ -44,125 +42,83 @@
             android:inputType="textMultiLine" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/item_time_card_with_buttons_picker_card_view"
-        style="?attrSecondaryCarView"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/item_time_card_with_buttons_reps_input_layout"
+        style="?attrPrimaryTextInputLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_options_button_start_barrier"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:hint="@string/reps"
+        app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_hours_text_input_layout"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="@id/item_time_card_with_buttons_start_guideline"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout">
+        app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
+        app:placeholderText="@string/_00">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/item_time_card_with_buttons_reps_edit_text"
+            style="?attrSecondaryTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/item_time_card_with_buttons_reps_input_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_reps_text_view"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/item_time_card_with_buttons_hours_text_input_layout"
+        style="?attrPrimaryTextInputLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/hour"
+        app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_minutes_text_input_layout"
+        app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_reps_input_layout"
+        app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
+        app:placeholderText="@string/_00">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/item_time_card_with_buttons_reps_edit_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textSize="@dimen/text_16_sp" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/item_time_card_with_buttons_hours_edit_text"
+            style="?attrSecondaryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/item_time_card_with_buttons_minutes_text_input_layout"
+        style="?attrPrimaryTextInputLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/min"
+        app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_seconds_text_input_layout"
+        app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_hours_text_input_layout"
+        app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
+        app:placeholderText="@string/_00">
 
-            <TextView
-                android:id="@+id/item_time_card_with_buttons_reps_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8dp"
-                android:text="@string/x"
-                android:textColor="@color/secondary_text_color"
-                android:textSize="@dimen/text_36_sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_reps_input_layout"
-                app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/item_time_card_with_buttons_minutes_edit_text"
+            style="?attrSecondaryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.card.MaterialCardView
-                style="?attrPrimaryCarView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_reps_text_view"
-                app:layout_constraintTop_toTopOf="parent">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/item_time_card_with_buttons_seconds_text_input_layout"
+        style="?attrPrimaryTextInputLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/sec"
+        app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_options_button_start_barrier"
+        app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_minutes_text_input_layout"
+        app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
+        app:placeholderText="@string/_00">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/item_time_card_with_buttons_hours_text_input_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_minutes_text_input_layout"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/item_time_card_with_buttons_hours_edit_text"
-                            style="?attrSecondaryTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:inputType="number" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/item_time_card_with_buttons_minutes_text_input_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_seconds_text_input_layout"
-                        app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_hours_text_input_layout"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/item_time_card_with_buttons_minutes_edit_text"
-                            style="?attrSecondaryTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:inputType="number" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/item_time_card_with_buttons_seconds_text_input_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_minutes_text_input_layout"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/item_time_card_with_buttons_seconds_edit_text"
-                            style="?attrSecondaryTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:inputType="number" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/item_time_card_with_buttons_seconds_edit_text"
+            style="?attrSecondaryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/item_time_card_with_buttons_options_button_start_barrier"

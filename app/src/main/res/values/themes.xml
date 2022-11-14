@@ -10,7 +10,8 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/primary_layout_background</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/primary_layout_background
+        </item>
         <!-- Customize your theme here. -->
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/black</item>
@@ -96,7 +97,9 @@
 
     <style name="PrimaryTextInputLayoutStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:textColorHint">@color/third_text_color</item>
-        <item name="boxStrokeColor">@color/primary_text_color</item>
+        <item name="boxStrokeColor">@color/color_text_input_layout_stroke_color</item>
+<!--        <item name="layout_constrainedWidth">true</item>-->
+        <item name="errorEnabled">true</item>
         <item name="hintTextColor">@color/third_text_color</item>
         <item name="placeholderTextColor">@color/third_text_color</item>
     </style>
