@@ -68,7 +68,19 @@ class PresetAdapter(
         init {
             bindingsCatcher.catchBinding(binding)
             binding.itemTimeCardWithButtonsTextNameEditText.addTextChangedListener {
-                binding.itemTimeCardWithButtonsTextNameInputLayout.error = null
+                binding.itemTimeCardWithButtonsNameError.visibility = View.INVISIBLE
+            }
+            binding.itemTimeCardWithButtonsRepsEditText.addTextChangedListener {
+                binding.itemTimeCardWithButtonsTimeError.visibility = View.INVISIBLE
+            }
+            binding.itemTimeCardWithButtonsHoursEditText.addTextChangedListener {
+                binding.itemTimeCardWithButtonsTimeError.visibility = View.INVISIBLE
+            }
+            binding.itemTimeCardWithButtonsMinutesEditText.addTextChangedListener {
+                binding.itemTimeCardWithButtonsTimeError.visibility = View.INVISIBLE
+            }
+            binding.itemTimeCardWithButtonsSecondsEditText.addTextChangedListener {
+                binding.itemTimeCardWithButtonsTimeError.visibility = View.INVISIBLE
             }
         }
 

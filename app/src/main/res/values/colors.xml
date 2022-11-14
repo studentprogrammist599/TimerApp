@@ -21,4 +21,5 @@
     <color name="primary_layout_background">#FFFFFF</color>
     <color name="secondary_layout_background">#F5FFEA</color>
     <color name="third_layout_background">#000000</color>
+    <color name="red">#B71C1C</color>
 </resources>

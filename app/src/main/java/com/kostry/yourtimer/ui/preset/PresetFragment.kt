@@ -116,7 +116,23 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
         var returnedBoolean = true
         adapterItems.forEach { item ->
             if (item.itemTimeCardWithButtonsTextNameEditText.text.toString().isEmpty()) {
-                item.itemTimeCardWithButtonsTextNameInputLayout.error = getErrorTextName()
+                item.itemTimeCardWithButtonsNameError.visibility = View.VISIBLE
+                returnedBoolean = false
+            }
+            if (item.itemTimeCardWithButtonsRepsEditText.text.toString().isEmpty()) {
+                item.itemTimeCardWithButtonsTimeError.visibility = View.VISIBLE
+                returnedBoolean = false
+            }
+            if (item.itemTimeCardWithButtonsHoursEditText.text.toString().isEmpty()) {
+                item.itemTimeCardWithButtonsTimeError.visibility = View.VISIBLE
+                returnedBoolean = false
+            }
+            if (item.itemTimeCardWithButtonsMinutesEditText.text.toString().isEmpty()) {
+                item.itemTimeCardWithButtonsTimeError.visibility = View.VISIBLE
+                returnedBoolean = false
+            }
+            if (item.itemTimeCardWithButtonsSecondsEditText.text.toString().isEmpty()) {
+                item.itemTimeCardWithButtonsTimeError.visibility = View.VISIBLE
                 returnedBoolean = false
             }
         }
