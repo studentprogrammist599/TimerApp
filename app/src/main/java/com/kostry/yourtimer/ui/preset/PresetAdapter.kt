@@ -68,7 +68,7 @@ class PresetAdapter(
         init {
             bindingsCatcher.catchBinding(binding)
             binding.itemTimeCardWithButtonsTextNameEditText.addTextChangedListener {
-                binding.itemTimeCardWithButtonsTextInputLayout.error = null
+                binding.itemTimeCardWithButtonsTextNameInputLayout.error = null
             }
         }
 

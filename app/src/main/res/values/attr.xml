@@ -15,6 +15,4 @@
     <attr name="attrPrimaryCarView" format="reference"/>
     <attr name="attrSecondaryCarView" format="reference"/>
 
-    <attr name="attrPrimaryEditText" format="reference"/>
-    <attr name="attrSecondaryEditText" format="reference"/>
 </resources>

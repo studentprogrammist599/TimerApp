@@ -116,7 +116,7 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
         var returnedBoolean = true
         adapterItems.forEach { item ->
             if (item.itemTimeCardWithButtonsTextNameEditText.text.toString().isEmpty()) {
-                item.itemTimeCardWithButtonsTextInputLayout.error = getErrorTextName()
+                item.itemTimeCardWithButtonsTextNameInputLayout.error = getErrorTextName()
                 returnedBoolean = false
             }
         }

@@ -32,7 +32,7 @@
         style="?attrPrimaryTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/new_preset"
+        android:hint="@string/preset"
         app:endIconMode="clear_text"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/preset_fragment_end_guideline"

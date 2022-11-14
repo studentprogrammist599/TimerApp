@@ -28,9 +28,6 @@
         <item name="attrSecondaryTextView">@style/SecondaryTextViewStyle</item>
         <item name="attrThirdTextView">@style/ThirdTextViewStyle</item>
 
-        <item name="attrPrimaryEditText">@style/PrimaryEditTextStyle</item>
-        <item name="attrSecondaryEditText">@style/SecondaryEditTextStyle</item>
-
         <item name="attrPrimaryTextInputLayout">@style/PrimaryTextInputLayoutStyle</item>
 
         <item name="attrPrimaryCarView">@style/PrimaryCardViewStyle</item>
@@ -99,25 +96,9 @@
 
     <style name="PrimaryTextInputLayoutStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:textColorHint">@color/third_text_color</item>
-        <item name="boxStrokeColor">@color/third_text_color</item>
+        <item name="boxStrokeColor">@color/primary_text_color</item>
         <item name="hintTextColor">@color/third_text_color</item>
         <item name="placeholderTextColor">@color/third_text_color</item>
-    </style>
-
-    <style name="PrimaryEditTextStyle">
-        <item name="android:breakStrategy">balanced</item>
-        <item name="android:hint">@string/_00</item>
-        <item name="android:inputType">number</item>
-        <item name="android:textSize">@dimen/text_16_sp</item>
-        <item name="android:textColorHint">@color/third_text_color</item>
-        <item name="android:textColor">@color/primary_text_color</item>
-        <item name="android:maxLength">2</item>
-    </style>
-
-    <style name="SecondaryEditTextStyle" parent="PrimaryEditTextStyle">
-        <item name="android:textColorHint">@color/secondary_text_color</item>
-        <item name="android:textCursorDrawable">@drawable/secondary_cursor</item>
-        <item name="android:textColor">@color/secondary_text_color</item>
     </style>
 
 </resources>

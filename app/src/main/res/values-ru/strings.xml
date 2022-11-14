@@ -19,7 +19,7 @@
     <string name="name">имя</string>
     <string name="save">сохранить</string>
     <string name="add_card">Добавить карточку</string>
-    <string name="new_preset">Новая предустановка</string>
+    <string name="preset">Предустановка</string>
     <string name="enter_the_name">Введите название</string>
     <string name="card_name">Карточка</string>
     <string name="delete">Удалить</string>
@@ -27,4 +27,5 @@
     <string name="add_new_set_up">добавить</string>
     <string name="your_presets">Ваши преднастройки</string>
     <string name="x">X</string>
+    <string name="error_field_is_empty">Пустое поле</string>
 </resources>
