@@ -19,6 +19,6 @@
     <color name="four_button_color">#2A838383</color>
 
     <color name="primary_layout_background">#FFFFFF</color>
-    <color name="secondary_layout_background">#E6F8D0</color>
+    <color name="secondary_layout_background">#F5FFEA</color>
     <color name="third_layout_background">#000000</color>
 </resources>

@@ -1,159 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/item_time_card_with_buttons_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_8dp">
+    android:backgroundTint="@color/secondary_layout_background"
+    android:elevation="@dimen/_8dp"
+    app:cardCornerRadius="@dimen/_4dp"
+    app:cardUseCompatPadding="true">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/item_time_card_with_buttons_start_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/_8dp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_time_card_with_buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/item_time_card_with_buttons_end_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/_8dp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/item_time_card_with_buttons_text_name_input_layout"
-        style="?attrPrimaryTextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/card_name"
-        app:endIconMode="clear_text"
-        app:layout_constraintBottom_toTopOf="@id/item_time_card_with_buttons_reps_input_layout"
-        app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_seconds_text_input_layout"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/item_time_card_with_buttons_start_guideline"
-        app:layout_constraintTop_toTopOf="parent"
-        app:placeholderText="@string/enter_the_name">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/item_time_card_with_buttons_text_name_edit_text"
-            style="?attrSecondaryTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/item_time_card_with_buttons_reps_input_layout"
-        style="?attrPrimaryTextInputLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/reps"
-        app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_hours_text_input_layout"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@id/item_time_card_with_buttons_start_guideline"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
-        app:placeholderText="@string/_00">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/item_time_card_with_buttons_reps_edit_text"
-            style="?attrSecondaryTextView"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/item_time_card_with_buttons_start_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_8dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/item_time_card_with_buttons_hours_text_input_layout"
-        style="?attrPrimaryTextInputLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/hour"
-        app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_minutes_text_input_layout"
-        app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_reps_input_layout"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
-        app:placeholderText="@string/_00">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/item_time_card_with_buttons_hours_edit_text"
-            style="?attrSecondaryTextView"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/item_time_card_with_buttons_end_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_8dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/item_time_card_with_buttons_minutes_text_input_layout"
-        style="?attrPrimaryTextInputLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/min"
-        app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_seconds_text_input_layout"
-        app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_hours_text_input_layout"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
-        app:placeholderText="@string/_00">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/item_time_card_with_buttons_text_name_input_layout"
+            style="?attrPrimaryTextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/card_name"
+            app:endIconMode="clear_text"
+            app:layout_constraintBottom_toTopOf="@id/item_time_card_with_buttons_reps_input_layout"
+            app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_seconds_text_input_layout"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/item_time_card_with_buttons_start_guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholderText="@string/enter_the_name">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/item_time_card_with_buttons_minutes_edit_text"
-            style="?attrSecondaryTextView"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/item_time_card_with_buttons_text_name_edit_text"
+                style="?attrSecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/item_time_card_with_buttons_reps_input_layout"
+            style="?attrPrimaryTextInputLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:hint="@string/reps"
+            app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_hours_text_input_layout"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/item_time_card_with_buttons_start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
+            app:placeholderText="@string/_00">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/item_time_card_with_buttons_seconds_text_input_layout"
-        style="?attrPrimaryTextInputLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/sec"
-        app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_options_button_start_barrier"
-        app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_minutes_text_input_layout"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
-        app:placeholderText="@string/_00">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/item_time_card_with_buttons_reps_edit_text"
+                style="?attrSecondaryTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/item_time_card_with_buttons_seconds_edit_text"
-            style="?attrSecondaryTextView"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/item_time_card_with_buttons_hours_text_input_layout"
+            style="?attrPrimaryTextInputLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:hint="@string/hour"
+            app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_minutes_text_input_layout"
+            app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_reps_input_layout"
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
+            app:placeholderText="@string/_00">
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/item_time_card_with_buttons_options_button_start_barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="start"
-        app:constraint_referenced_ids="item_time_card_with_buttons_move_down_button, item_time_card_with_buttons_move_down_button, item_time_card_with_buttons_delete_button" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/item_time_card_with_buttons_hours_edit_text"
+                style="?attrSecondaryTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/item_time_card_with_buttons_move_up_button"
-        style="?attrPrimaryImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
-        app:layout_constraintBottom_toTopOf="@id/item_time_card_with_buttons_delete_button"
-        app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_end_guideline"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/item_time_card_with_buttons_minutes_text_input_layout"
+            style="?attrPrimaryTextInputLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/min"
+            app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_seconds_text_input_layout"
+            app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_hours_text_input_layout"
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
+            app:placeholderText="@string/_00">
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/item_time_card_with_buttons_delete_button"
-        style="?attrPrimaryImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_outline_delete_outline_24"
-        app:layout_constraintBottom_toTopOf="@id/item_time_card_with_buttons_move_down_button"
-        app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_end_guideline"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_move_up_button" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/item_time_card_with_buttons_minutes_edit_text"
+                style="?attrSecondaryTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/item_time_card_with_buttons_move_down_button"
-        style="?attrPrimaryImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_end_guideline"
-        app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_delete_button" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/item_time_card_with_buttons_seconds_text_input_layout"
+            style="?attrPrimaryTextInputLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/sec"
+            app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_options_button_start_barrier"
+            app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_minutes_text_input_layout"
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
+            app:placeholderText="@string/_00">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/item_time_card_with_buttons_seconds_edit_text"
+                style="?attrSecondaryTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/item_time_card_with_buttons_options_button_start_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="start"
+            app:constraint_referenced_ids="item_time_card_with_buttons_move_down_button, item_time_card_with_buttons_move_down_button, item_time_card_with_buttons_delete_button" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/item_time_card_with_buttons_move_up_button"
+            style="?attrPrimaryImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
+            app:layout_constraintBottom_toTopOf="@id/item_time_card_with_buttons_delete_button"
+            app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_end_guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/item_time_card_with_buttons_delete_button"
+            style="?attrPrimaryImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_outline_delete_outline_24"
+            app:layout_constraintBottom_toTopOf="@id/item_time_card_with_buttons_move_down_button"
+            app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_end_guideline"
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_move_up_button" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/item_time_card_with_buttons_move_down_button"
+            style="?attrPrimaryImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_end_guideline"
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_delete_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
