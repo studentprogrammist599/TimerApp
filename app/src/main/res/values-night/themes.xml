@@ -78,10 +78,6 @@
     </style>
 
     <style name="PrimaryTextInputLayoutStyle.DarkTheme">
-        <item name="android:textColorHint">@color/third_text_color</item>
-        <item name="boxStrokeColor">@color/third_text_color</item>
-        <item name="hintTextColor">@color/third_text_color</item>
-        <item name="placeholderTextColor">@color/third_text_color</item>
     </style>
 
 </resources>

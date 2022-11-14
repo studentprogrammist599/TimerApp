@@ -97,7 +97,7 @@
 
     <style name="PrimaryTextInputLayoutStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:textColorHint">@color/third_text_color</item>
-        <item name="boxStrokeColor">@color/primary_text_color</item>
+        <item name="boxStrokeColor">@color/text_input_layout_stroke_color</item>
         <item name="layout_constrainedWidth">true</item>
         <item name="hintTextColor">@color/third_text_color</item>
         <item name="placeholderTextColor">@color/third_text_color</item>
