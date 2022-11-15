@@ -18,6 +18,7 @@ import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.di.provider.PresetSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.util.ViewModelFactory
+import com.kostry.yourtimer.util.mapTimeToMillis
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
@@ -90,7 +91,7 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
             viewModel.addCard()
         }
         binding.presetFragmentSaveButton.setOnClickListener {
-            val presetNameIsEmpty = checkPresetNameTextIsEmpty()
+            val presetNameIsEmpty = checkPresetNameIsEmpty()
             val cardsNamesIsEmpty = checkTimeCardNameIsEmpty()
             val cardsTimesIsEmpty = checkTimeCardTimeIsEmpty()
             val cardsRepsIsEmpty = checkTimeCardRepsIsEmpty()
@@ -106,16 +107,16 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
         binding.presetFragmentPresetNameEditText.addTextChangedListener {
             setBoxStrokeColor(
                 binding.presetFragmentTextInputLayout,
-                R.color.text_input_layout_stroke_color
+                color = R.color.text_input_layout_stroke_color
             )
         }
     }
 
-    private fun checkPresetNameTextIsEmpty(): Boolean {
+    private fun checkPresetNameIsEmpty(): Boolean {
         if (binding.presetFragmentPresetNameEditText.text.toString().isEmpty()) {
             setBoxStrokeColor(
                 binding.presetFragmentTextInputLayout,
-                R.color.text_input_layout_stroke_error_color
+                color = R.color.text_input_layout_stroke_error_color
             )
             return false
         }
@@ -128,7 +129,7 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
             if (item.itemTimeCardWithButtonsTextNameEditText.text.toString().isEmpty()) {
                 setBoxStrokeColor(
                     item.itemTimeCardWithButtonsTextNameInputLayout,
-                    R.color.text_input_layout_stroke_error_color
+                    color = R.color.text_input_layout_stroke_error_color
                 )
                 returnedBoolean = false
             }
@@ -136,13 +137,13 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
         return returnedBoolean
     }
 
-    private fun checkTimeCardRepsIsEmpty(): Boolean{
+    private fun checkTimeCardRepsIsEmpty(): Boolean {
         var returnedBoolean = true
         adapterItems.forEach { item ->
             if (item.itemTimeCardWithButtonsRepsEditText.text.toString().isEmpty()) {
                 setBoxStrokeColor(
                     item.itemTimeCardWithButtonsRepsInputLayout,
-                    R.color.text_input_layout_stroke_error_color
+                    color = R.color.text_input_layout_stroke_error_color
                 )
                 returnedBoolean = false
             }
@@ -153,24 +154,15 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
     private fun checkTimeCardTimeIsEmpty(): Boolean {
         var returnedBoolean = true
         adapterItems.forEach { item ->
-            if (item.itemTimeCardWithButtonsHoursEditText.text.toString().isEmpty()) {
+            val hour = item.itemTimeCardWithButtonsHoursEditText.text.toString().toIntOrNull() ?: 0
+            val min = item.itemTimeCardWithButtonsMinutesEditText.text.toString().toIntOrNull() ?: 0
+            val sec = item.itemTimeCardWithButtonsSecondsEditText.text.toString().toIntOrNull() ?: 0
+            if (mapTimeToMillis(hour, min, sec) == 0L){
                 setBoxStrokeColor(
                     item.itemTimeCardWithButtonsHoursTextInputLayout,
-                    R.color.text_input_layout_stroke_error_color
-                )
-                returnedBoolean = false
-            }
-            if (item.itemTimeCardWithButtonsMinutesEditText.text.toString().isEmpty()) {
-                setBoxStrokeColor(
                     item.itemTimeCardWithButtonsMinutesTextInputLayout,
-                    R.color.text_input_layout_stroke_error_color
-                )
-                returnedBoolean = false
-            }
-            if (item.itemTimeCardWithButtonsSecondsEditText.text.toString().isEmpty()) {
-                setBoxStrokeColor(
                     item.itemTimeCardWithButtonsSecondsTextInputLayout,
-                    R.color.text_input_layout_stroke_error_color
+                    color = R.color.text_input_layout_stroke_error_color
                 )
                 returnedBoolean = false
             }
@@ -178,10 +170,12 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
         return returnedBoolean
     }
 
-    private fun setBoxStrokeColor(inputLayout: TextInputLayout, color: Int) {
-        inputLayout.setBoxStrokeColorStateList(
-            AppCompatResources.getColorStateList(requireContext(), color)
-        )
+    private fun setBoxStrokeColor(vararg inputLayout: TextInputLayout, color: Int) {
+        inputLayout.forEach {
+            it.setBoxStrokeColorStateList(
+                AppCompatResources.getColorStateList(requireContext(), color)
+            )
+        }
     }
 
     private fun initAdapter() {

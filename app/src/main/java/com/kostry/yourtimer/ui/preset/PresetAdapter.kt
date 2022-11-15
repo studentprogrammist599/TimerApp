@@ -21,7 +21,7 @@ interface PresetAdapterListener {
     fun onDelete(cardModel: TimeCardModel)
 }
 
-interface PresetAdapterBindingsCatcher{
+interface PresetAdapterBindingsCatcher {
     fun catchBinding(binding: ItemTimeCardWithButtonsBinding)
 }
 
@@ -76,23 +76,37 @@ class PresetAdapter(
                 setDefaultStrokeColor(binding.itemTimeCardWithButtonsRepsInputLayout)
             }
             binding.itemTimeCardWithButtonsHoursEditText.addTextChangedListener {
-                setDefaultStrokeColor(binding.itemTimeCardWithButtonsHoursTextInputLayout)
+                setDefaultStrokeColor(
+                    binding.itemTimeCardWithButtonsHoursTextInputLayout,
+                    binding.itemTimeCardWithButtonsMinutesTextInputLayout,
+                    binding.itemTimeCardWithButtonsSecondsTextInputLayout
+                )
             }
             binding.itemTimeCardWithButtonsMinutesEditText.addTextChangedListener {
-                setDefaultStrokeColor(binding.itemTimeCardWithButtonsMinutesTextInputLayout)
+                setDefaultStrokeColor(
+                    binding.itemTimeCardWithButtonsHoursTextInputLayout,
+                    binding.itemTimeCardWithButtonsMinutesTextInputLayout,
+                    binding.itemTimeCardWithButtonsSecondsTextInputLayout
+                )
             }
             binding.itemTimeCardWithButtonsSecondsEditText.addTextChangedListener {
-                setDefaultStrokeColor(binding.itemTimeCardWithButtonsSecondsTextInputLayout)
+                setDefaultStrokeColor(
+                    binding.itemTimeCardWithButtonsHoursTextInputLayout,
+                    binding.itemTimeCardWithButtonsMinutesTextInputLayout,
+                    binding.itemTimeCardWithButtonsSecondsTextInputLayout
+                )
             }
         }
 
-        private fun setDefaultStrokeColor(inputLayout: TextInputLayout) {
-            inputLayout.setBoxStrokeColorStateList(
-                AppCompatResources.getColorStateList(
-                    inputLayout.context,
-                    R.color.text_input_layout_stroke_color
+        private fun setDefaultStrokeColor(vararg inputLayout: TextInputLayout) {
+            inputLayout.forEach {
+                it.setBoxStrokeColorStateList(
+                    AppCompatResources.getColorStateList(
+                        it.context,
+                        R.color.text_input_layout_stroke_color
+                    )
                 )
-            )
+            }
         }
 
         private fun getActualTimeCard(cardId: Int): TimeCardModel {
