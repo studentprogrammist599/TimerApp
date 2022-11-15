@@ -27,7 +27,11 @@ class MyTimer {
     }
 
     fun pauseTimer() {
-        _timerState.value = TimerState.Paused(getActualReps(), getActualTimeSeconds())
+        _timerState.value = TimerState.Paused(
+            reps = getActualReps(),
+            millis = getActualTimeSeconds(),
+            cardName = getActualCardName()
+        )
         timer?.cancel()
     }
 
@@ -35,7 +39,11 @@ class MyTimer {
         val startTimeSecond = getActualTimeSeconds()
         timer = object : CountDownTimer(getActualTimeSeconds(), TIMER_INTERVAL) {
             override fun onTick(millisUntilFinished: Long) {
-                _timerState.value = TimerState.Running(getActualReps(), millisUntilFinished)
+                _timerState.value = TimerState.Running(
+                    reps = getActualReps(),
+                    millis = millisUntilFinished,
+                    cardName = getActualCardName()
+                )
                 setActualData(getActualReps(), millisUntilFinished)
             }
 
@@ -92,9 +100,18 @@ class MyTimer {
         }
     }
 
+    private fun getActualCardName(): String{
+        return if (cardList.isNotEmpty()) {
+            cardList.first().cardName
+        } else {
+            ""
+        }
+    }
+
     private fun toListTimeCard(presetModel: PresetModel): MutableList<Card> {
         return presetModel.timeCards.map { timeCardModel ->
             Card(
+                cardName = timeCardModel.name.toString(),
                 reps = timeCardModel.reps ?: 0,
                 hours = timeCardModel.hours ?: 0,
                 minutes = timeCardModel.minutes ?: 0,
@@ -109,6 +126,7 @@ class MyTimer {
 }
 
 private data class Card(
+    val cardName: String,
     var reps: Int,
     var hours: Int,
     var minutes: Int,

@@ -81,6 +81,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                             buttonStartPauseText = getString(R.string.pause),
                             buttonCancelVisibility = View.VISIBLE,
                             positiveButtonColor = requireContext().getColor(R.color.third_button_color),
+                            cardName = state.cardName
                         )
                     }
                     is TimerState.Paused -> {
@@ -90,6 +91,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                             buttonStartPauseText = getString(R.string.start),
                             buttonCancelVisibility = View.VISIBLE,
                             positiveButtonColor = requireContext().getColor(R.color.primary_button_color),
+                            cardName = state.cardName
                         )
                     }
                     is TimerState.Stopped -> {
@@ -99,6 +101,7 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
                             buttonStartPauseText = getString(R.string.back),
                             buttonCancelVisibility = View.GONE,
                             positiveButtonColor = requireContext().getColor(R.color.primary_button_color),
+                            cardName = ""
                         )
                     }
                 }
@@ -112,11 +115,13 @@ class TimerFragment : BaseFragment<FragmentTimerBinding>() {
         buttonStartPauseText: String,
         buttonCancelVisibility: Int,
         positiveButtonColor: Int,
+        cardName: String
     ) {
         setTime(reps, timeMillis)
         binding.timerFragmentPositiveButton.text = buttonStartPauseText
         binding.timerFragmentNegativeButton.visibility = buttonCancelVisibility
         binding.timerFragmentPositiveButton.setBackgroundColor(positiveButtonColor)
+        binding.timerFragmentCardName.text = cardName
     }
 
     private fun initButtonClickListener() {

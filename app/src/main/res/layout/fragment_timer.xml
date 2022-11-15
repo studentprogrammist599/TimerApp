@@ -6,15 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".ui.timer.TimerFragment">
 
+    <TextView
+        android:id="@+id/timer_fragment_card_name"
+        style="?attrPrimaryTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/timer_fragment_timer_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Card name" />
+
     <include
         android:id="@+id/timer_fragment_timer_view"
         layout="@layout/timer_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/_8dp"
+        app:layout_constraintBottom_toBottomOf="@id/timer_fragment_buttons_top_barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/timer_fragment_card_name" />
 
     <View
         android:layout_width="0dp"
@@ -25,6 +38,13 @@
         app:layout_constraintEnd_toEndOf="@id/timer_fragment_timer_view"
         app:layout_constraintStart_toStartOf="@id/timer_fragment_timer_view"
         app:layout_constraintTop_toTopOf="@id/timer_fragment_timer_view" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/timer_fragment_buttons_top_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="timer_fragment_negative_button, timer_fragment_positive_button" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/timer_fragment_negative_button"
