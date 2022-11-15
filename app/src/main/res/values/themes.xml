@@ -75,7 +75,7 @@
     </style>
 
     <style name="SecondaryTextViewStyle" parent="PrimaryTextViewStyle">
-        <item name="android:textSize">@dimen/text_16_sp</item>
+        <item name="android:textSize">@dimen/text_14_sp</item>
     </style>
 
     <style name="ThirdTextViewStyle">
