@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.textfield.TextInputLayout
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.FragmentPresetBinding
 import com.kostry.yourtimer.databinding.ItemTimeCardWithButtonsBinding
@@ -90,7 +92,9 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
         binding.presetFragmentSaveButton.setOnClickListener {
             val presetNameIsEmpty = checkPresetNameTextIsEmpty()
             val cardsNamesIsEmpty = checkTimeCardNameIsEmpty()
-            if (presetNameIsEmpty && cardsNamesIsEmpty) {
+            val cardsTimesIsEmpty = checkTimeCardTimeIsEmpty()
+            val cardsRepsIsEmpty = checkTimeCardRepsIsEmpty()
+            if (presetNameIsEmpty && cardsNamesIsEmpty && cardsTimesIsEmpty && cardsRepsIsEmpty) {
                 Toast.makeText(context, "Preset saved", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "Preset fields is empty", Toast.LENGTH_SHORT).show()
@@ -100,13 +104,19 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
 
     private fun initTextFieldsListeners() {
         binding.presetFragmentPresetNameEditText.addTextChangedListener {
-            binding.presetFragmentTextInputLayout.error = null
+            setBoxStrokeColor(
+                binding.presetFragmentTextInputLayout,
+                R.color.text_input_layout_stroke_color
+            )
         }
     }
 
     private fun checkPresetNameTextIsEmpty(): Boolean {
         if (binding.presetFragmentPresetNameEditText.text.toString().isEmpty()) {
-            binding.presetFragmentTextInputLayout.error = getErrorTextName()
+            setBoxStrokeColor(
+                binding.presetFragmentTextInputLayout,
+                R.color.text_input_layout_stroke_error_color
+            )
             return false
         }
         return true
@@ -116,31 +126,62 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
         var returnedBoolean = true
         adapterItems.forEach { item ->
             if (item.itemTimeCardWithButtonsTextNameEditText.text.toString().isEmpty()) {
-                item.itemTimeCardWithButtonsNameError.visibility = View.VISIBLE
-                returnedBoolean = false
-            }
-            if (item.itemTimeCardWithButtonsRepsEditText.text.toString().isEmpty()) {
-                item.itemTimeCardWithButtonsTimeError.visibility = View.VISIBLE
-                returnedBoolean = false
-            }
-            if (item.itemTimeCardWithButtonsHoursEditText.text.toString().isEmpty()) {
-                item.itemTimeCardWithButtonsTimeError.visibility = View.VISIBLE
-                returnedBoolean = false
-            }
-            if (item.itemTimeCardWithButtonsMinutesEditText.text.toString().isEmpty()) {
-                item.itemTimeCardWithButtonsTimeError.visibility = View.VISIBLE
-                returnedBoolean = false
-            }
-            if (item.itemTimeCardWithButtonsSecondsEditText.text.toString().isEmpty()) {
-                item.itemTimeCardWithButtonsTimeError.visibility = View.VISIBLE
+                setBoxStrokeColor(
+                    item.itemTimeCardWithButtonsTextNameInputLayout,
+                    R.color.text_input_layout_stroke_error_color
+                )
                 returnedBoolean = false
             }
         }
         return returnedBoolean
     }
 
-    private fun getErrorTextName(): String {
-        return requireContext().resources.getString(R.string.error_field_is_empty)
+    private fun checkTimeCardRepsIsEmpty(): Boolean{
+        var returnedBoolean = true
+        adapterItems.forEach { item ->
+            if (item.itemTimeCardWithButtonsRepsEditText.text.toString().isEmpty()) {
+                setBoxStrokeColor(
+                    item.itemTimeCardWithButtonsRepsInputLayout,
+                    R.color.text_input_layout_stroke_error_color
+                )
+                returnedBoolean = false
+            }
+        }
+        return returnedBoolean
+    }
+
+    private fun checkTimeCardTimeIsEmpty(): Boolean {
+        var returnedBoolean = true
+        adapterItems.forEach { item ->
+            if (item.itemTimeCardWithButtonsHoursEditText.text.toString().isEmpty()) {
+                setBoxStrokeColor(
+                    item.itemTimeCardWithButtonsHoursTextInputLayout,
+                    R.color.text_input_layout_stroke_error_color
+                )
+                returnedBoolean = false
+            }
+            if (item.itemTimeCardWithButtonsMinutesEditText.text.toString().isEmpty()) {
+                setBoxStrokeColor(
+                    item.itemTimeCardWithButtonsMinutesTextInputLayout,
+                    R.color.text_input_layout_stroke_error_color
+                )
+                returnedBoolean = false
+            }
+            if (item.itemTimeCardWithButtonsSecondsEditText.text.toString().isEmpty()) {
+                setBoxStrokeColor(
+                    item.itemTimeCardWithButtonsSecondsTextInputLayout,
+                    R.color.text_input_layout_stroke_error_color
+                )
+                returnedBoolean = false
+            }
+        }
+        return returnedBoolean
+    }
+
+    private fun setBoxStrokeColor(inputLayout: TextInputLayout, color: Int) {
+        inputLayout.setBoxStrokeColorStateList(
+            AppCompatResources.getColorStateList(requireContext(), color)
+        )
     }
 
     private fun initAdapter() {

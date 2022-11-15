@@ -101,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/sec"
-            app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_time_error"
+            app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_options_button_start_barrier"
             app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_minutes_text_input_layout"
             app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
             app:placeholderText="@string/_00">
@@ -113,32 +113,6 @@
                 android:layout_height="wrap_content"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageView
-            android:id="@+id/item_time_card_with_buttons_name_error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8dp"
-            android:src="@drawable/ic_baseline_error_outline_24"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
-            app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_time_error"
-            app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_text_name_input_layout"
-            app:layout_constraintTop_toTopOf="@id/item_time_card_with_buttons_text_name_input_layout"
-            app:tint="@color/red" />
-
-        <ImageView
-            android:id="@+id/item_time_card_with_buttons_time_error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8dp"
-            android:src="@drawable/ic_baseline_error_outline_24"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@id/item_time_card_with_buttons_seconds_text_input_layout"
-            app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_options_button_start_barrier"
-            app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_seconds_text_input_layout"
-            app:layout_constraintTop_toTopOf="@id/item_time_card_with_buttons_seconds_text_input_layout"
-            app:tint="@color/red" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/item_time_card_with_buttons_options_button_start_barrier"

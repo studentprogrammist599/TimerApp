@@ -3,10 +3,12 @@ package com.kostry.yourtimer.ui.preset
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputLayout
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.ItemTimeCardWithButtonsBinding
 import com.kostry.yourtimer.datasource.models.TimeCardModel
@@ -68,20 +70,29 @@ class PresetAdapter(
         init {
             bindingsCatcher.catchBinding(binding)
             binding.itemTimeCardWithButtonsTextNameEditText.addTextChangedListener {
-                binding.itemTimeCardWithButtonsNameError.visibility = View.INVISIBLE
+                setDefaultStrokeColor(binding.itemTimeCardWithButtonsTextNameInputLayout)
             }
             binding.itemTimeCardWithButtonsRepsEditText.addTextChangedListener {
-                binding.itemTimeCardWithButtonsTimeError.visibility = View.INVISIBLE
+                setDefaultStrokeColor(binding.itemTimeCardWithButtonsRepsInputLayout)
             }
             binding.itemTimeCardWithButtonsHoursEditText.addTextChangedListener {
-                binding.itemTimeCardWithButtonsTimeError.visibility = View.INVISIBLE
+                setDefaultStrokeColor(binding.itemTimeCardWithButtonsHoursTextInputLayout)
             }
             binding.itemTimeCardWithButtonsMinutesEditText.addTextChangedListener {
-                binding.itemTimeCardWithButtonsTimeError.visibility = View.INVISIBLE
+                setDefaultStrokeColor(binding.itemTimeCardWithButtonsMinutesTextInputLayout)
             }
             binding.itemTimeCardWithButtonsSecondsEditText.addTextChangedListener {
-                binding.itemTimeCardWithButtonsTimeError.visibility = View.INVISIBLE
+                setDefaultStrokeColor(binding.itemTimeCardWithButtonsSecondsTextInputLayout)
             }
+        }
+
+        private fun setDefaultStrokeColor(inputLayout: TextInputLayout) {
+            inputLayout.setBoxStrokeColorStateList(
+                AppCompatResources.getColorStateList(
+                    inputLayout.context,
+                    R.color.text_input_layout_stroke_color
+                )
+            )
         }
 
         private fun getActualTimeCard(cardId: Int): TimeCardModel {
