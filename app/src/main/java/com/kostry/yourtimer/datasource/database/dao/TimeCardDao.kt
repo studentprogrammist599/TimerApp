@@ -9,6 +9,6 @@ interface TimeCardDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(timeCardEntity: List<TimeCardEntity>)
 
-    @Query("SELECT * FROM TimeCardEntity WHERE ownerId = :ownerId")
+    @Query("SELECT * FROM TimeCardEntity WHERE ownerId = :ownerId ORDER BY enqueue ASC")
     suspend fun getByOwnerId(ownerId: Int): List<TimeCardEntity>
 }
