@@ -78,6 +78,9 @@ class PresetViewModel @Inject constructor(
         baseViewModelScope.launch {
             _timeCards.value.forEachIndexed { index, timeCardModel ->
                 timeCardModel.enqueue = index
+                if (timeCardModel.id < 0){
+                    timeCardModel.id = 0
+                }
             }
             val presetModel = PresetModel(
                 id = presetId,
