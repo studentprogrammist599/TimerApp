@@ -9,6 +9,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
 import com.kostry.yourtimer.R
@@ -91,14 +92,25 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
             viewModel.addCard()
         }
         binding.presetFragmentSaveButton.setOnClickListener {
+            viewModel.timeCards()
             val presetNameIsEmpty = checkPresetNameIsEmpty()
             val cardsNamesIsEmpty = checkTimeCardNameIsEmpty()
             val cardsTimesIsEmpty = checkTimeCardTimeIsEmpty()
             val cardsRepsIsEmpty = checkTimeCardRepsIsEmpty()
             if (presetNameIsEmpty && cardsNamesIsEmpty && cardsTimesIsEmpty && cardsRepsIsEmpty) {
-                Toast.makeText(context, "Preset saved", Toast.LENGTH_SHORT).show()
+                viewModel.savePreset(binding.presetFragmentPresetNameEditText.text.toString())
+                Toast.makeText(
+                    context,
+                    requireContext().resources.getString(R.string.preset_saved),
+                    Toast.LENGTH_SHORT
+                ).show()
+                findNavController().popBackStack()
             } else {
-                Toast.makeText(context, "Preset fields is empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    requireContext().resources.getString(R.string.preset_fields_is_empty),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -157,7 +169,7 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
             val hour = item.itemTimeCardWithButtonsHoursEditText.text.toString().toIntOrNull() ?: 0
             val min = item.itemTimeCardWithButtonsMinutesEditText.text.toString().toIntOrNull() ?: 0
             val sec = item.itemTimeCardWithButtonsSecondsEditText.text.toString().toIntOrNull() ?: 0
-            if (mapTimeToMillis(hour, min, sec) == 0L){
+            if (mapTimeToMillis(hour, min, sec) == 0L) {
                 setBoxStrokeColor(
                     item.itemTimeCardWithButtonsHoursTextInputLayout,
                     item.itemTimeCardWithButtonsMinutesTextInputLayout,

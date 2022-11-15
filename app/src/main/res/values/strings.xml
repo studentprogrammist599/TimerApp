@@ -27,4 +27,6 @@
     <string name="your_presets">Your presets</string>
     <string name="x">X</string>
     <string name="error_field_is_empty">Field is empty</string>
+    <string name="preset_saved">Preset saved</string>
+    <string name="preset_fields_is_empty">Preset fields is empty</string>
 </resources>

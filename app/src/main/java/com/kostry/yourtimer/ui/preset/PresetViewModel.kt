@@ -5,7 +5,6 @@ import com.kostry.yourtimer.datasource.models.PresetModel
 import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.di.provider.PresetSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseViewModel
-import com.kostry.yourtimer.util.mapTimeToMillis
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,10 +19,10 @@ class PresetViewModel @Inject constructor(
 
     private var presetId = 0
     private var index = 0
-    private var _timeCards= MutableStateFlow(mutableListOf(TimeCardModel(id = index--)))
+    private var _timeCards = MutableStateFlow(mutableListOf(TimeCardModel(id = index--)))
     var timeCards: StateFlow<List<TimeCardModel>> = _timeCards.asStateFlow()
 
-    fun presetFromArgs(presetModel: PresetModel){
+    fun presetFromArgs(presetModel: PresetModel) {
         presetId = presetModel.id
         _timeCards.value = presetModel.timeCards.toMutableList()
     }
@@ -70,25 +69,19 @@ class PresetViewModel @Inject constructor(
         }
     }
 
-    fun savePreset(name: String): Boolean {
-        if (_timeCards.value.isNotEmpty() && name.isNotEmpty() && cardFieldsIsEmpty()) {
-            _timeCards.value.forEachIndexed { index, timeCardModel ->
-                timeCardModel.enqueue = index
-                if (timeCardModel.id <= 0) {
-                    timeCardModel.id = 0
-                }
-            }
+    fun timeCards() {
+        val oldList = ArrayList(_timeCards.value)
+        _timeCards.value = oldList
+    }
+
+    fun savePreset(name: String) {
+        baseViewModelScope.launch {
             val presetModel = PresetModel(
                 id = presetId,
                 name = name,
                 timeCards = _timeCards.value
             )
-            baseViewModelScope.launch {
-                repository.savePreset(presetModel)
-            }
-            return true
-        } else {
-            return false
+            repository.savePreset(presetModel)
         }
     }
 
@@ -101,21 +94,6 @@ class PresetViewModel @Inject constructor(
                 _timeCards.value[indexToChange] = cardModel
             }
         }
-    }
-
-    private fun cardFieldsIsEmpty(): Boolean {
-        val filtered = _timeCards.value.filterNot { cardModel ->
-            cardModel.name.isNullOrEmpty()
-        }.filterNot { cardModel ->
-            cardModel.reps == null || cardModel.reps == 0
-        }.filterNot { cardModel ->
-            mapTimeToMillis(
-                cardModel.hours ?: 0,
-                cardModel.minutes ?: 0,
-                cardModel.seconds ?: 0
-            ) <= 0L
-        }
-        return _timeCards.value.size == filtered.size
     }
 
     override fun onCleared() {

@@ -28,4 +28,6 @@
     <string name="your_presets">Ваши преднастройки</string>
     <string name="x">X</string>
     <string name="error_field_is_empty">Пустое поле</string>
+    <string name="preset_saved">Преднастройка сохранена</string>
+    <string name="preset_fields_is_empty">Заполните необходимые поля</string>
 </resources>
