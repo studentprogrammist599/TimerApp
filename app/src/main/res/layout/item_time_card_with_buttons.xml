@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/secondary_layout_background"
+    android:layout_marginStart="@dimen/_8dp"
+    android:layout_marginTop="@dimen/_6dp"
+    android:layout_marginEnd="@dimen/_8dp"
+    android:layout_marginBottom="@dimen/_6dp"
     android:elevation="@dimen/_8dp"
-    app:cardCornerRadius="@dimen/_4dp"
-    app:cardUseCompatPadding="true">
+    app:cardCornerRadius="@dimen/_4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_time_card_with_buttons_layout"
@@ -22,8 +24,7 @@
             android:hint="@string/card_name"
             app:endIconMode="clear_text"
             app:layout_constraintBottom_toTopOf="@id/item_time_card_with_buttons_reps_input_layout"
-            app:layout_constraintEnd_toEndOf="@id/item_time_card_with_buttons_seconds_text_input_layout"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_options_button_start_barrier"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:placeholderText="@string/enter_the_name">
@@ -32,84 +33,87 @@
                 android:id="@+id/item_time_card_with_buttons_text_name_edit_text"
                 style="?attrSecondaryTextView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:inputType="textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/item_time_card_with_buttons_reps_input_layout"
             style="?attrPrimaryTextInputLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/reps"
             app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_hours_text_input_layout"
-            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout">
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
+            app:placeholderText="@string/_00">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/item_time_card_with_buttons_reps_edit_text"
                 style="?attrSecondaryTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/item_time_card_with_buttons_hours_text_input_layout"
             style="?attrPrimaryTextInputLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4dp"
             android:hint="@string/hour"
             app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_minutes_text_input_layout"
             app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_reps_input_layout"
-            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout">
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
+            app:placeholderText="@string/_00">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/item_time_card_with_buttons_hours_edit_text"
                 style="?attrSecondaryTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/item_time_card_with_buttons_minutes_text_input_layout"
             style="?attrPrimaryTextInputLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4dp"
             android:hint="@string/min"
             app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_seconds_text_input_layout"
             app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_hours_text_input_layout"
-            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout">
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
+            app:placeholderText="@string/_00">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/item_time_card_with_buttons_minutes_edit_text"
                 style="?attrSecondaryTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/item_time_card_with_buttons_seconds_text_input_layout"
             style="?attrPrimaryTextInputLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4dp"
             android:hint="@string/sec"
             app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_options_button_start_barrier"
             app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_minutes_text_input_layout"
-            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout">
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
+            app:placeholderText="@string/_00">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/item_time_card_with_buttons_seconds_edit_text"
                 style="?attrSecondaryTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,9 +129,11 @@
             style="?attrPrimaryImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
             android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
             app:layout_constraintBottom_toTopOf="@id/item_time_card_with_buttons_delete_button"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_options_button_start_barrier"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -135,9 +141,11 @@
             style="?attrPrimaryImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
             android:src="@drawable/ic_outline_delete_outline_24"
             app:layout_constraintBottom_toTopOf="@id/item_time_card_with_buttons_move_down_button"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_options_button_start_barrier"
             app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_move_up_button" />
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -145,9 +153,11 @@
             style="?attrPrimaryImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
             android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_options_button_start_barrier"
             app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_delete_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
