@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/preset_fragment_card_constraint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/_8dp">
@@ -48,6 +49,7 @@
                 android:text="@string/add_card"
                 app:icon="@drawable/ic_baseline_add_24"
                 app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="@id/preset_fragment_card_constraint"
                 app:layout_constraintEnd_toStartOf="@id/preset_fragment_save_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/preset_fragment_text_input_layout" />
@@ -60,6 +62,7 @@
                 android:text="@string/save"
                 app:icon="@drawable/ic_baseline_save_24"
                 app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="@id/preset_fragment_card_constraint"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/preset_fragment_add_card_button"
                 app:layout_constraintTop_toBottomOf="@id/preset_fragment_text_input_layout" />
