@@ -46,8 +46,7 @@
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
-            app:placeholderText="@string/_00">
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/item_time_card_with_buttons_reps_edit_text"
@@ -66,8 +65,7 @@
             android:hint="@string/hour"
             app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_minutes_text_input_layout"
             app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_reps_input_layout"
-            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
-            app:placeholderText="@string/_00">
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/item_time_card_with_buttons_hours_edit_text"
@@ -86,8 +84,7 @@
             android:hint="@string/min"
             app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_seconds_text_input_layout"
             app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_hours_text_input_layout"
-            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
-            app:placeholderText="@string/_00">
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/item_time_card_with_buttons_minutes_edit_text"
@@ -106,8 +103,7 @@
             android:hint="@string/sec"
             app:layout_constraintEnd_toStartOf="@id/item_time_card_with_buttons_options_button_start_barrier"
             app:layout_constraintStart_toEndOf="@id/item_time_card_with_buttons_minutes_text_input_layout"
-            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout"
-            app:placeholderText="@string/_00">
+            app:layout_constraintTop_toBottomOf="@id/item_time_card_with_buttons_text_name_input_layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/item_time_card_with_buttons_seconds_edit_text"

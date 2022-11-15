@@ -111,7 +111,7 @@ class MyTimer {
     private fun toListTimeCard(presetModel: PresetModel): MutableList<Card> {
         return presetModel.timeCards.map { timeCardModel ->
             Card(
-                cardName = timeCardModel.name.toString(),
+                cardName = timeCardModel.name.orEmpty(),
                 reps = timeCardModel.reps ?: 0,
                 hours = timeCardModel.hours ?: 0,
                 minutes = timeCardModel.minutes ?: 0,
