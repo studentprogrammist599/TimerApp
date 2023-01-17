@@ -69,7 +69,7 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (args.preset != null) {
+        if (args.preset != null && savedInstanceState == null) {
             viewModel.presetFromArgs(args.preset!!)
             binding.presetFragmentPresetNameEditText.setText(args.preset!!.name)
         }
