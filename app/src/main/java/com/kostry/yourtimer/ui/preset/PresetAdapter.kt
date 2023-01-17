@@ -49,8 +49,8 @@ class PresetAdapter(
 
     override fun onBindViewHolder(holder: PresetViewHolder, position: Int) {
         val card = getItem(position)
-        holder.move(card.id)
-        holder.textChangeListeners(card.id)
+        setTextChangeListeners(card.id, holder.binding)
+        setMoveButtonListeners(card.id, holder.binding)
         with(holder.binding) {
             itemTimeCardWithButtonsDeleteButton.tag = card
             itemTimeCardWithButtonsMinutesEditText.filters = arrayOf(MinMaxTimeFilter())
@@ -60,7 +60,51 @@ class PresetAdapter(
             card.hours?.let { itemTimeCardWithButtonsHoursEditText.setText(it.intSubTimeStringFormat()) }
             card.minutes?.let { itemTimeCardWithButtonsMinutesEditText.setText(it.intSubTimeStringFormat()) }
             card.seconds?.let { itemTimeCardWithButtonsSecondsEditText.setText(it.intSubTimeStringFormat()) }
+
         }
+    }
+
+    private fun setMoveButtonListeners(cardId: Int, binding: ItemTimeCardWithButtonsBinding) {
+        binding.itemTimeCardWithButtonsMoveUpButton.setOnClickListener {
+            listener.onMove(getActualTimeCard(cardId, binding), -1)
+        }
+        binding.itemTimeCardWithButtonsMoveDownButton.setOnClickListener {
+            listener.onMove(getActualTimeCard(cardId, binding), 1)
+        }
+    }
+
+    private fun setTextChangeListeners(cardId: Int, binding: ItemTimeCardWithButtonsBinding) {
+        binding.itemTimeCardWithButtonsTextNameEditText.addTextChangedListener {
+            listener.onTextChange(getActualTimeCard(cardId, binding))
+        }
+        binding.itemTimeCardWithButtonsRepsEditText.addTextChangedListener {
+            listener.onTextChange(getActualTimeCard(cardId, binding))
+        }
+        binding.itemTimeCardWithButtonsHoursEditText.addTextChangedListener {
+            listener.onTextChange(getActualTimeCard(cardId, binding))
+        }
+        binding.itemTimeCardWithButtonsMinutesEditText.addTextChangedListener {
+            listener.onTextChange(getActualTimeCard(cardId, binding))
+        }
+        binding.itemTimeCardWithButtonsSecondsEditText.addTextChangedListener {
+            listener.onTextChange(getActualTimeCard(cardId, binding))
+        }
+    }
+
+    private fun getActualTimeCard(
+        cardId: Int,
+        binding: ItemTimeCardWithButtonsBinding
+    ): TimeCardModel {
+        return TimeCardModel(
+            id = cardId,
+            name = binding.itemTimeCardWithButtonsTextNameEditText.text.toString(),
+            reps = binding.itemTimeCardWithButtonsRepsEditText.text.toString().toIntOrNull(),
+            hours = binding.itemTimeCardWithButtonsHoursEditText.text.toString().toIntOrNull(),
+            minutes = binding.itemTimeCardWithButtonsMinutesEditText.text.toString()
+                .toIntOrNull(),
+            seconds = binding.itemTimeCardWithButtonsSecondsEditText.text.toString()
+                .toIntOrNull(),
+        )
     }
 
     inner class PresetViewHolder(
@@ -106,46 +150,6 @@ class PresetAdapter(
                         R.color.text_input_layout_stroke_color
                     )
                 )
-            }
-        }
-
-        private fun getActualTimeCard(cardId: Int): TimeCardModel {
-            return TimeCardModel(
-                id = cardId,
-                name = binding.itemTimeCardWithButtonsTextNameEditText.text.toString(),
-                reps = binding.itemTimeCardWithButtonsRepsEditText.text.toString().toIntOrNull(),
-                hours = binding.itemTimeCardWithButtonsHoursEditText.text.toString().toIntOrNull(),
-                minutes = binding.itemTimeCardWithButtonsMinutesEditText.text.toString()
-                    .toIntOrNull(),
-                seconds = binding.itemTimeCardWithButtonsSecondsEditText.text.toString()
-                    .toIntOrNull(),
-            )
-        }
-
-        fun move(cardId: Int) {
-            binding.itemTimeCardWithButtonsMoveUpButton.setOnClickListener {
-                listener.onMove(getActualTimeCard(cardId), -1)
-            }
-            binding.itemTimeCardWithButtonsMoveDownButton.setOnClickListener {
-                listener.onMove(getActualTimeCard(cardId), 1)
-            }
-        }
-
-        fun textChangeListeners(cardId: Int) {
-            binding.itemTimeCardWithButtonsTextNameEditText.addTextChangedListener {
-                listener.onTextChange(getActualTimeCard(cardId))
-            }
-            binding.itemTimeCardWithButtonsRepsEditText.addTextChangedListener {
-                listener.onTextChange(getActualTimeCard(cardId))
-            }
-            binding.itemTimeCardWithButtonsHoursEditText.addTextChangedListener {
-                listener.onTextChange(getActualTimeCard(cardId))
-            }
-            binding.itemTimeCardWithButtonsMinutesEditText.addTextChangedListener {
-                listener.onTextChange(getActualTimeCard(cardId))
-            }
-            binding.itemTimeCardWithButtonsSecondsEditText.addTextChangedListener {
-                listener.onTextChange(getActualTimeCard(cardId))
             }
         }
     }
