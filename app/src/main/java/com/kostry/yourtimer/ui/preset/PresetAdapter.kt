@@ -51,6 +51,8 @@ class PresetAdapter(
         val card = getItem(position)
         setTextChangeListeners(card.id, holder.binding)
         setMoveButtonListeners(card.id, holder.binding)
+        setTextChangedListener(holder.binding)
+        bindingsCatcher.catchBinding(holder.binding)
         with(holder.binding) {
             itemTimeCardWithButtonsDeleteButton.tag = card
             itemTimeCardWithButtonsMinutesEditText.filters = arrayOf(MinMaxTimeFilter())
@@ -107,52 +109,51 @@ class PresetAdapter(
         )
     }
 
-    inner class PresetViewHolder(
-        val binding: ItemTimeCardWithButtonsBinding,
-    ) : RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            bindingsCatcher.catchBinding(binding)
-            binding.itemTimeCardWithButtonsTextNameEditText.addTextChangedListener {
-                setDefaultStrokeColor(binding.itemTimeCardWithButtonsTextNameInputLayout)
-            }
-            binding.itemTimeCardWithButtonsRepsEditText.addTextChangedListener {
-                setDefaultStrokeColor(binding.itemTimeCardWithButtonsRepsInputLayout)
-            }
-            binding.itemTimeCardWithButtonsHoursEditText.addTextChangedListener {
-                setDefaultStrokeColor(
-                    binding.itemTimeCardWithButtonsHoursTextInputLayout,
-                    binding.itemTimeCardWithButtonsMinutesTextInputLayout,
-                    binding.itemTimeCardWithButtonsSecondsTextInputLayout
-                )
-            }
-            binding.itemTimeCardWithButtonsMinutesEditText.addTextChangedListener {
-                setDefaultStrokeColor(
-                    binding.itemTimeCardWithButtonsHoursTextInputLayout,
-                    binding.itemTimeCardWithButtonsMinutesTextInputLayout,
-                    binding.itemTimeCardWithButtonsSecondsTextInputLayout
-                )
-            }
-            binding.itemTimeCardWithButtonsSecondsEditText.addTextChangedListener {
-                setDefaultStrokeColor(
-                    binding.itemTimeCardWithButtonsHoursTextInputLayout,
-                    binding.itemTimeCardWithButtonsMinutesTextInputLayout,
-                    binding.itemTimeCardWithButtonsSecondsTextInputLayout
-                )
-            }
+    private fun setTextChangedListener(binding: ItemTimeCardWithButtonsBinding) {
+        bindingsCatcher.catchBinding(binding)
+        binding.itemTimeCardWithButtonsTextNameEditText.addTextChangedListener {
+            setDefaultStrokeColor(binding.itemTimeCardWithButtonsTextNameInputLayout)
         }
-
-        private fun setDefaultStrokeColor(vararg inputLayout: TextInputLayout) {
-            inputLayout.forEach {
-                it.setBoxStrokeColorStateList(
-                    AppCompatResources.getColorStateList(
-                        it.context,
-                        R.color.text_input_layout_stroke_color
-                    )
-                )
-            }
+        binding.itemTimeCardWithButtonsRepsEditText.addTextChangedListener {
+            setDefaultStrokeColor(binding.itemTimeCardWithButtonsRepsInputLayout)
+        }
+        binding.itemTimeCardWithButtonsHoursEditText.addTextChangedListener {
+            setDefaultStrokeColor(
+                binding.itemTimeCardWithButtonsHoursTextInputLayout,
+                binding.itemTimeCardWithButtonsMinutesTextInputLayout,
+                binding.itemTimeCardWithButtonsSecondsTextInputLayout
+            )
+        }
+        binding.itemTimeCardWithButtonsMinutesEditText.addTextChangedListener {
+            setDefaultStrokeColor(
+                binding.itemTimeCardWithButtonsHoursTextInputLayout,
+                binding.itemTimeCardWithButtonsMinutesTextInputLayout,
+                binding.itemTimeCardWithButtonsSecondsTextInputLayout
+            )
+        }
+        binding.itemTimeCardWithButtonsSecondsEditText.addTextChangedListener {
+            setDefaultStrokeColor(
+                binding.itemTimeCardWithButtonsHoursTextInputLayout,
+                binding.itemTimeCardWithButtonsMinutesTextInputLayout,
+                binding.itemTimeCardWithButtonsSecondsTextInputLayout
+            )
         }
     }
+
+    private fun setDefaultStrokeColor(vararg inputLayout: TextInputLayout) {
+        inputLayout.forEach {
+            it.setBoxStrokeColorStateList(
+                AppCompatResources.getColorStateList(
+                    it.context,
+                    R.color.text_input_layout_stroke_color
+                )
+            )
+        }
+    }
+
+    inner class PresetViewHolder(
+        val binding: ItemTimeCardWithButtonsBinding,
+    ) : RecyclerView.ViewHolder(binding.root)
 
     companion object PresetDiffCallback : DiffUtil.ItemCallback<TimeCardModel>() {
         override fun areItemsTheSame(oldItem: TimeCardModel, newItem: TimeCardModel): Boolean {
