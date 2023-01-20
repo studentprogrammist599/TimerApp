@@ -32,7 +32,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
         return NotificationCompat.Builder(context, MainActivity.NOTIFICATION_CHANNEL_ID)
             .setContentText(message)
-            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setSmallIcon(R.drawable.ic_launcher_icon_foreground)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_MIN)
             .setAutoCancel(true)
