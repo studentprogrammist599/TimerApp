@@ -13,6 +13,7 @@ import com.kostry.yourtimer.databinding.ItemTimeCardWithButtonsBinding
 import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.util.MinMaxTimeFilter
 import com.kostry.yourtimer.util.intSubTimeStringFormat
+import com.kostry.yourtimer.util.mapTimeToMillis
 
 interface PresetAdapterListener {
     fun onMove(cardModel: TimeCardModel, moveBy: Int)
@@ -20,15 +21,11 @@ interface PresetAdapterListener {
     fun onDelete(cardModel: TimeCardModel)
 }
 
-interface PresetAdapterBindingsCatcher {
-    fun catchBinding(binding: ItemTimeCardWithButtonsBinding)
-    fun removeBinding(binding: ItemTimeCardWithButtonsBinding)
-}
-
 class PresetAdapter(
     private val listener: PresetAdapterListener,
-    private val bindingsCatcher: PresetAdapterBindingsCatcher,
 ) : ListAdapter<TimeCardModel, PresetAdapter.PresetViewHolder>(PresetDiffCallback) {
+
+    private val adapterItems = mutableSetOf<ItemTimeCardWithButtonsBinding>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PresetViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -38,10 +35,10 @@ class PresetAdapter(
 
     override fun onBindViewHolder(holder: PresetViewHolder, position: Int) {
         val card = getItem(position)
+        adapterItems.add(holder.binding)
         setTextChangeListeners(card.id, holder.binding)
         setButtonListeners(card.id, holder.binding)
         setTextChangedListener(holder.binding)
-        bindingsCatcher.catchBinding(holder.binding)
         with(holder.binding) {
             itemTimeCardWithButtonsMinutesEditText.filters = arrayOf(MinMaxTimeFilter())
             itemTimeCardWithButtonsSecondsEditText.filters = arrayOf(MinMaxTimeFilter())
@@ -63,7 +60,7 @@ class PresetAdapter(
         }
         binding.itemTimeCardWithButtonsDeleteButton.setOnClickListener {
             listener.onDelete(getActualTimeCard(cardId, binding))
-            bindingsCatcher.removeBinding(binding)
+            adapterItems.remove(binding)
         }
     }
 
@@ -102,45 +99,97 @@ class PresetAdapter(
     }
 
     private fun setTextChangedListener(binding: ItemTimeCardWithButtonsBinding) {
-        bindingsCatcher.catchBinding(binding)
         binding.itemTimeCardWithButtonsTextNameEditText.addTextChangedListener {
-            setDefaultStrokeColor(binding.itemTimeCardWithButtonsTextNameInputLayout)
+            setBoxStrokeColor(
+                binding.itemTimeCardWithButtonsTextNameInputLayout,
+                color = R.color.text_input_layout_stroke_color
+            )
         }
         binding.itemTimeCardWithButtonsRepsEditText.addTextChangedListener {
-            setDefaultStrokeColor(binding.itemTimeCardWithButtonsRepsInputLayout)
+            setBoxStrokeColor(
+                binding.itemTimeCardWithButtonsRepsInputLayout,
+                color = R.color.text_input_layout_stroke_color
+            )
         }
         binding.itemTimeCardWithButtonsHoursEditText.addTextChangedListener {
-            setDefaultStrokeColor(
+            setBoxStrokeColor(
                 binding.itemTimeCardWithButtonsHoursTextInputLayout,
                 binding.itemTimeCardWithButtonsMinutesTextInputLayout,
-                binding.itemTimeCardWithButtonsSecondsTextInputLayout
+                binding.itemTimeCardWithButtonsSecondsTextInputLayout,
+                color = R.color.text_input_layout_stroke_color
             )
         }
         binding.itemTimeCardWithButtonsMinutesEditText.addTextChangedListener {
-            setDefaultStrokeColor(
+            setBoxStrokeColor(
                 binding.itemTimeCardWithButtonsHoursTextInputLayout,
                 binding.itemTimeCardWithButtonsMinutesTextInputLayout,
-                binding.itemTimeCardWithButtonsSecondsTextInputLayout
+                binding.itemTimeCardWithButtonsSecondsTextInputLayout,
+                color = R.color.text_input_layout_stroke_color
             )
         }
         binding.itemTimeCardWithButtonsSecondsEditText.addTextChangedListener {
-            setDefaultStrokeColor(
+            setBoxStrokeColor(
                 binding.itemTimeCardWithButtonsHoursTextInputLayout,
                 binding.itemTimeCardWithButtonsMinutesTextInputLayout,
-                binding.itemTimeCardWithButtonsSecondsTextInputLayout
+                binding.itemTimeCardWithButtonsSecondsTextInputLayout,
+                color = R.color.text_input_layout_stroke_color
             )
         }
     }
 
-    private fun setDefaultStrokeColor(vararg inputLayout: TextInputLayout) {
+    private fun setBoxStrokeColor(vararg inputLayout: TextInputLayout, color: Int) {
         inputLayout.forEach {
             it.setBoxStrokeColorStateList(
-                AppCompatResources.getColorStateList(
-                    it.context,
-                    R.color.text_input_layout_stroke_color
-                )
+                AppCompatResources.getColorStateList(it.context, color)
             )
         }
+    }
+
+    fun checkTimeCardNameIsEmpty(): Boolean {
+        var returnedBoolean = true
+        adapterItems.forEach { item ->
+            if (item.itemTimeCardWithButtonsTextNameEditText.text.toString().isEmpty()) {
+                setBoxStrokeColor(
+                    item.itemTimeCardWithButtonsTextNameInputLayout,
+                    color = R.color.text_input_layout_stroke_error_color
+                )
+                returnedBoolean = false
+            }
+        }
+        return returnedBoolean
+    }
+
+    fun checkTimeCardRepsIsEmpty(): Boolean {
+        var returnedBoolean = true
+        adapterItems.forEach { item ->
+            if (item.itemTimeCardWithButtonsRepsEditText.text.toString().isEmpty()) {
+                setBoxStrokeColor(
+                    item.itemTimeCardWithButtonsRepsInputLayout,
+                    color = R.color.text_input_layout_stroke_error_color
+                )
+                returnedBoolean = false
+            }
+        }
+        return returnedBoolean
+    }
+
+    fun checkTimeCardTimeIsEmpty(): Boolean {
+        var returnedBoolean = true
+        adapterItems.forEach { item ->
+            val hour = item.itemTimeCardWithButtonsHoursEditText.text.toString().toIntOrNull() ?: 0
+            val min = item.itemTimeCardWithButtonsMinutesEditText.text.toString().toIntOrNull() ?: 0
+            val sec = item.itemTimeCardWithButtonsSecondsEditText.text.toString().toIntOrNull() ?: 0
+            if (mapTimeToMillis(hour, min, sec) == 0L) {
+                setBoxStrokeColor(
+                    item.itemTimeCardWithButtonsHoursTextInputLayout,
+                    item.itemTimeCardWithButtonsMinutesTextInputLayout,
+                    item.itemTimeCardWithButtonsSecondsTextInputLayout,
+                    color = R.color.text_input_layout_stroke_error_color
+                )
+                returnedBoolean = false
+            }
+        }
+        return returnedBoolean
     }
 
     inner class PresetViewHolder(

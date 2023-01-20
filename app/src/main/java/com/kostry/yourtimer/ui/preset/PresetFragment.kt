@@ -14,12 +14,10 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
 import com.kostry.yourtimer.R
 import com.kostry.yourtimer.databinding.FragmentPresetBinding
-import com.kostry.yourtimer.databinding.ItemTimeCardWithButtonsBinding
 import com.kostry.yourtimer.datasource.models.TimeCardModel
 import com.kostry.yourtimer.di.provider.PresetSubcomponentProvider
 import com.kostry.yourtimer.ui.base.BaseFragment
 import com.kostry.yourtimer.util.ViewModelFactory
-import com.kostry.yourtimer.util.mapTimeToMillis
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
@@ -32,7 +30,6 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
     }
 
     private val args by navArgs<PresetFragmentArgs>()
-    private val adapterItems = mutableSetOf<ItemTimeCardWithButtonsBinding>()
 
     private val adapter: PresetAdapter by lazy {
         PresetAdapter(
@@ -47,15 +44,6 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
 
                 override fun onDelete(cardModel: TimeCardModel) {
                     viewModel.deleteCard(cardModel)
-                }
-            },
-            bindingsCatcher = object : PresetAdapterBindingsCatcher {
-                override fun catchBinding(binding: ItemTimeCardWithButtonsBinding) {
-                    adapterItems.add(binding)
-                }
-
-                override fun removeBinding(binding: ItemTimeCardWithButtonsBinding) {
-                    adapterItems.remove(binding)
                 }
             }
         )
@@ -98,9 +86,9 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
         binding.presetFragmentSaveButton.setOnClickListener {
             viewModel.timeCards()
             val presetNameIsEmpty = checkPresetNameIsEmpty()
-            val cardsNamesIsEmpty = checkTimeCardNameIsEmpty()
-            val cardsTimesIsEmpty = checkTimeCardTimeIsEmpty()
-            val cardsRepsIsEmpty = checkTimeCardRepsIsEmpty()
+            val cardsNamesIsEmpty = adapter.checkTimeCardNameIsEmpty()
+            val cardsTimesIsEmpty = adapter.checkTimeCardTimeIsEmpty()
+            val cardsRepsIsEmpty = adapter.checkTimeCardRepsIsEmpty()
             if (presetNameIsEmpty && cardsNamesIsEmpty && cardsTimesIsEmpty && cardsRepsIsEmpty) {
                 viewModel.savePreset(binding.presetFragmentPresetNameEditText.text.toString())
                 Toast.makeText(
@@ -137,53 +125,6 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
             return false
         }
         return true
-    }
-
-    private fun checkTimeCardNameIsEmpty(): Boolean {
-        var returnedBoolean = true
-        adapterItems.forEach { item ->
-            if (item.itemTimeCardWithButtonsTextNameEditText.text.toString().isEmpty()) {
-                setBoxStrokeColor(
-                    item.itemTimeCardWithButtonsTextNameInputLayout,
-                    color = R.color.text_input_layout_stroke_error_color
-                )
-                returnedBoolean = false
-            }
-        }
-        return returnedBoolean
-    }
-
-    private fun checkTimeCardRepsIsEmpty(): Boolean {
-        var returnedBoolean = true
-        adapterItems.forEach { item ->
-            if (item.itemTimeCardWithButtonsRepsEditText.text.toString().isEmpty()) {
-                setBoxStrokeColor(
-                    item.itemTimeCardWithButtonsRepsInputLayout,
-                    color = R.color.text_input_layout_stroke_error_color
-                )
-                returnedBoolean = false
-            }
-        }
-        return returnedBoolean
-    }
-
-    private fun checkTimeCardTimeIsEmpty(): Boolean {
-        var returnedBoolean = true
-        adapterItems.forEach { item ->
-            val hour = item.itemTimeCardWithButtonsHoursEditText.text.toString().toIntOrNull() ?: 0
-            val min = item.itemTimeCardWithButtonsMinutesEditText.text.toString().toIntOrNull() ?: 0
-            val sec = item.itemTimeCardWithButtonsSecondsEditText.text.toString().toIntOrNull() ?: 0
-            if (mapTimeToMillis(hour, min, sec) == 0L) {
-                setBoxStrokeColor(
-                    item.itemTimeCardWithButtonsHoursTextInputLayout,
-                    item.itemTimeCardWithButtonsMinutesTextInputLayout,
-                    item.itemTimeCardWithButtonsSecondsTextInputLayout,
-                    color = R.color.text_input_layout_stroke_error_color
-                )
-                returnedBoolean = false
-            }
-        }
-        return returnedBoolean
     }
 
     private fun setBoxStrokeColor(vararg inputLayout: TextInputLayout, color: Int) {
