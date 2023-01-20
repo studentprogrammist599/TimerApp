@@ -43,7 +43,6 @@ class PresetAdapter(
         setTextChangedListener(holder.binding)
         bindingsCatcher.catchBinding(holder.binding)
         with(holder.binding) {
-            itemTimeCardWithButtonsDeleteButton.tag = card
             itemTimeCardWithButtonsMinutesEditText.filters = arrayOf(MinMaxTimeFilter())
             itemTimeCardWithButtonsSecondsEditText.filters = arrayOf(MinMaxTimeFilter())
             card.name?.let { itemTimeCardWithButtonsTextNameEditText.setText(it) }
