@@ -32,7 +32,7 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
     }
 
     private val args by navArgs<PresetFragmentArgs>()
-    private val adapterItems = mutableListOf<ItemTimeCardWithButtonsBinding>()
+    private val adapterItems = mutableSetOf<ItemTimeCardWithButtonsBinding>()
 
     private val adapter: PresetAdapter by lazy {
         PresetAdapter(
@@ -52,6 +52,10 @@ class PresetFragment : BaseFragment<FragmentPresetBinding>() {
             bindingsCatcher = object : PresetAdapterBindingsCatcher {
                 override fun catchBinding(binding: ItemTimeCardWithButtonsBinding) {
                     adapterItems.add(binding)
+                }
+
+                override fun removeBinding(binding: ItemTimeCardWithButtonsBinding) {
+                    adapterItems.remove(binding)
                 }
             }
         )

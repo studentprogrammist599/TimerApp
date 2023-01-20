@@ -20,7 +20,7 @@ class PresetViewModel @Inject constructor(
     private var presetId = 0
     private var index = 0
     private var _timeCards = MutableStateFlow(mutableListOf(TimeCardModel(id = index--)))
-    var timeCards: StateFlow<List<TimeCardModel>> = _timeCards.asStateFlow()
+    val timeCards: StateFlow<List<TimeCardModel>> = _timeCards.asStateFlow()
 
     fun presetFromArgs(presetModel: PresetModel) {
         presetId = presetModel.id

@@ -1,7 +1,6 @@
 package com.kostry.yourtimer.ui.preset
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.addTextChangedListener
@@ -23,34 +22,24 @@ interface PresetAdapterListener {
 
 interface PresetAdapterBindingsCatcher {
     fun catchBinding(binding: ItemTimeCardWithButtonsBinding)
+    fun removeBinding(binding: ItemTimeCardWithButtonsBinding)
 }
 
 class PresetAdapter(
     private val listener: PresetAdapterListener,
     private val bindingsCatcher: PresetAdapterBindingsCatcher,
-) : ListAdapter<TimeCardModel, PresetAdapter.PresetViewHolder>(PresetDiffCallback),
-    View.OnClickListener {
-
-    override fun onClick(v: View) {
-        val card = v.tag as TimeCardModel
-        when (v.id) {
-            R.id.item_time_card_with_buttons_delete_button -> {
-                listener.onDelete(card)
-            }
-        }
-    }
+) : ListAdapter<TimeCardModel, PresetAdapter.PresetViewHolder>(PresetDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PresetViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemTimeCardWithButtonsBinding.inflate(inflater, parent, false)
-        binding.itemTimeCardWithButtonsDeleteButton.setOnClickListener(this)
         return PresetViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: PresetViewHolder, position: Int) {
         val card = getItem(position)
         setTextChangeListeners(card.id, holder.binding)
-        setMoveButtonListeners(card.id, holder.binding)
+        setButtonListeners(card.id, holder.binding)
         setTextChangedListener(holder.binding)
         bindingsCatcher.catchBinding(holder.binding)
         with(holder.binding) {
@@ -66,12 +55,16 @@ class PresetAdapter(
         }
     }
 
-    private fun setMoveButtonListeners(cardId: Int, binding: ItemTimeCardWithButtonsBinding) {
+    private fun setButtonListeners(cardId: Int, binding: ItemTimeCardWithButtonsBinding) {
         binding.itemTimeCardWithButtonsMoveUpButton.setOnClickListener {
             listener.onMove(getActualTimeCard(cardId, binding), -1)
         }
         binding.itemTimeCardWithButtonsMoveDownButton.setOnClickListener {
             listener.onMove(getActualTimeCard(cardId, binding), 1)
+        }
+        binding.itemTimeCardWithButtonsDeleteButton.setOnClickListener {
+            listener.onDelete(getActualTimeCard(cardId, binding))
+            bindingsCatcher.removeBinding(binding)
         }
     }
 
