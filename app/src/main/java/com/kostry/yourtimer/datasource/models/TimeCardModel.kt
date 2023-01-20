@@ -10,4 +10,4 @@ data class TimeCardModel(
     val hours: Int? = null,
     val minutes: Int? = null,
     val seconds: Int? = null,
-): Serializable
+) : Serializable

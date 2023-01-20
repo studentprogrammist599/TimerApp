@@ -100,7 +100,7 @@ class MyTimer {
         }
     }
 
-    private fun getActualCardName(): String{
+    private fun getActualCardName(): String {
         return if (cardList.isNotEmpty()) {
             cardList.first().cardName
         } else {

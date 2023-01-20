@@ -20,7 +20,7 @@ interface TimerModule {
     @ViewModelKey(TimerViewModel::class)
     fun bindTimerViewModel(vm: TimerViewModel): ViewModel
 
-    companion object{
+    companion object {
 
         @TimerScope
         @Provides

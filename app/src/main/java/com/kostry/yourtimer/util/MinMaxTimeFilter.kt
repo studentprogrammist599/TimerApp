@@ -19,12 +19,12 @@ class MinMaxTimeFilter() : InputFilter {
                 return null
             }
             return ""
-        }catch (e: Exception){
+        } catch (e: Exception) {
             return ""
         }
     }
 
-    companion object{
+    companion object {
         private const val INT_MIN: Int = 0
         private const val INT_MAX: Int = 59
     }

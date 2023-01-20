@@ -18,13 +18,13 @@ class HomeViewModel @Inject constructor(
     private val _presets = MutableStateFlow<List<PresetModel>>(emptyList())
     val presets: StateFlow<List<PresetModel>> = _presets.asStateFlow()
 
-    fun getPresets(){
+    fun getPresets() {
         baseViewModelScope.launch {
             _presets.value = repository.getAllPresets()
         }
     }
 
-    fun deletePreset(presetModel: PresetModel){
+    fun deletePreset(presetModel: PresetModel) {
         baseViewModelScope.launch {
             repository.deletePreset(presetModel)
             getPresets()

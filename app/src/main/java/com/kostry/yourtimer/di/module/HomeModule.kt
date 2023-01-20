@@ -20,7 +20,7 @@ interface HomeModule {
     @ViewModelKey(HomeViewModel::class)
     fun bindHomeViewModel(vm: HomeViewModel): ViewModel
 
-    companion object{
+    companion object {
 
         @HomeScope
         @Provides
