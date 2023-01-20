@@ -112,7 +112,7 @@ class TimerService : Service() {
 
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
             .setContentText(millis.millisToStringFormat())
-            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setSmallIcon(R.drawable.ic_launcher_icon_foreground)
             .setContentIntent(pendingIntent)
             .setSilent(true)
             .setPriority(NotificationCompat.PRIORITY_MIN)
