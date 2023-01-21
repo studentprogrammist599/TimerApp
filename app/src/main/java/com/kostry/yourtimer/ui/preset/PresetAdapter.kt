@@ -21,6 +21,9 @@ interface PresetAdapterListener {
     fun onDelete(cardModel: TimeCardModel)
 }
 
+private const val MOVE_UP = -1
+private const val MOVE_DOWN = -1
+
 class PresetAdapter(
     private val listener: PresetAdapterListener,
 ) : ListAdapter<TimeCardModel, PresetAdapter.PresetViewHolder>(PresetDiffCallback) {
@@ -47,16 +50,15 @@ class PresetAdapter(
             card.hours?.let { itemTimeCardWithButtonsHoursEditText.setText(it.intSubTimeStringFormat()) }
             card.minutes?.let { itemTimeCardWithButtonsMinutesEditText.setText(it.intSubTimeStringFormat()) }
             card.seconds?.let { itemTimeCardWithButtonsSecondsEditText.setText(it.intSubTimeStringFormat()) }
-
         }
     }
 
     private fun setButtonListeners(cardId: Int, binding: ItemTimeCardWithButtonsBinding) {
         binding.itemTimeCardWithButtonsMoveUpButton.setOnClickListener {
-            listener.onMove(getActualTimeCard(cardId, binding), -1)
+            listener.onMove(getActualTimeCard(cardId, binding), MOVE_UP)
         }
         binding.itemTimeCardWithButtonsMoveDownButton.setOnClickListener {
-            listener.onMove(getActualTimeCard(cardId, binding), 1)
+            listener.onMove(getActualTimeCard(cardId, binding), MOVE_DOWN)
         }
         binding.itemTimeCardWithButtonsDeleteButton.setOnClickListener {
             listener.onDelete(getActualTimeCard(cardId, binding))
